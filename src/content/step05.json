@@ -1,0 +1,438 @@
+{
+ "id": 5,
+ "short": "Gate-in",
+ "title": "Gate-in, yard & stowage planning",
+ "scene": "terminal",
+ "sceneDesc": "The export terminal: a gate with cameras checks the truck and container, then the box is carried into the yard and stacked by a gantry crane. A bay plan shows where it will go on the ship.",
+ "beats": [
+  {
+   "id": "gate",
+   "ms": 2700,
+   "narration": {
+    "1": "I pass the terminal [[gate-in|gate]]. Cameras read my number, someone checks my seal and my condition, and I get a receipt.",
+    "2": "Gate-in: OCR reads container and truck, the pre-advice is matched, seal and damage checked, an [[eir]] is issued. Custody passes to the terminal acting for the carrier. [TO VERIFY:v60]",
+    "3": "Gate transaction = custody transfer and evidence point: seal, damage, VGM status, DG/OOG/reefer checks. Export detention stops per tariff; storage/demurrage free time starts. [TO VERIFY:v60] [TO VERIFY:v21]"
+   },
+   "caption": {
+    "2": "From now on, time in the terminal counts against demurrage/storage free time, not detention."
+   }
+  },
+  {
+   "id": "yard",
+   "ms": 3800,
+   "narration": {
+    "1": {
+     "_by": "family",
+     "reefer": "A gantry crane lifts me into the [[yard]]. As a reefer, I'm plugged into electricity so I stay cold.",
+     "tank": "A gantry crane lifts me into a special area for dangerous goods, away from incompatible cargo.",
+     "oog": "I can't be stacked like other boxes, so I wait in a special area for out-of-gauge cargo.",
+     "*": "A gantry crane ([[rtg]]) lifts me into the [[yard]], stacked with other boxes for the same ship."
+    },
+    "2": {
+     "_by": "family",
+     "reefer": "Reefer rack: plugged in and monitored by the terminal's reefer technicians. [TO VERIFY:v57]",
+     "tank": "DG stack with [[segregation]] per IMDG and port rules; documents checked against the booking. [TO VERIFY:v59]",
+     "oog": "OOG area: no stacking on top, special handling equipment for loading. [TO VERIFY:v58]",
+     "*": "Export stack grouped by vessel, port of discharge and weight class to make loading efficient. [TO VERIFY:v61]"
+    },
+    "3": "Yard planning groups boxes by vessel, POD and weight; reefers on plugs, DG segregated, OOG ungrouped. Dwell beyond free time triggers storage or demurrage. [TO VERIFY:v61]"
+   }
+  },
+  {
+   "id": "plan",
+   "ms": 1600,
+   "narration": {
+    "1": "Meanwhile, planners decide exactly where I'll sit on the ship: the [[stowage-plan|stowage plan]]. Heavy boxes low, boxes for the first port on top.",
+    "2": "Stowage planning uses VGMs, ports of discharge, DG, reefer plugs and stability. The terminal builds the loading sequence from the carrier's plan. [TO VERIFY:v61]",
+    "3": "Carrier central planner sends the pre-stow; terminal planner sequences moves; final bay plan exchanged as EDI BAPLIE. Only boxes on the load list with VGM and customs release are loaded. [TO VERIFY:v61]"
+   }
+  },
+  {
+   "id": "incident",
+   "levels": [
+    3
+   ],
+   "kind": "incident",
+   "narration": {
+    "3": "Twelve hours before the vessel arrives, the load list shows your box with status 'CUSTOMS HOLD — documentary check'. The customer hasn't been told."
+   }
+  }
+ ],
+ "fact": {
+  "beat": "plan",
+  "text": {
+   "1": "The biggest ships on Asia–Europe carry more than 20,000 TEU — and a plan places every single box. [TO VERIFY:v11]",
+   "2": "Every box needs a slot that respects its weight, its port of discharge, DG segregation and reefer plugs — on ships of up to 24,000 TEU. [TO VERIFY:v11] [TO VERIFY:v61]"
+  }
+ },
+ "hotspots": [
+  {
+   "id": "gatein",
+   "beat": "gate",
+   "essential": [
+    1,
+    2,
+    3
+   ],
+   "doc": {
+    "2": "gr",
+    "3": "gr"
+   },
+   "x": 148,
+   "y": 130,
+   "label": {
+    "1": "Gate check",
+    "2": "Gate-in receipt"
+   },
+   "kind": "Document",
+   "body": {
+    "1": "At the gate, my number is read by cameras, my seal and my condition are checked, and a receipt is printed. It proves I arrived in good order, on time."
+   }
+  },
+  {
+   "id": "clock",
+   "beat": "gate",
+   "levels": [
+    2,
+    3
+   ],
+   "x": 330,
+   "y": 250,
+   "label": "Clocks switch",
+   "kind": "Charge",
+   "body": {
+    "2": "Export detention stops at full gate-in; terminal storage or demurrage free time starts. Some carriers combine both. [TO VERIFY:v21]",
+    "3": "Long dwell before the vessel (e.g. early gate-in or rollings) can trigger storage charges — check who pays under the contract and the Incoterm. [TO VERIFY:v12]"
+   }
+  },
+  {
+   "id": "rtg",
+   "beat": "yard",
+   "x": 720,
+   "y": 104,
+   "label": "Yard crane (RTG)",
+   "kind": "Equipment",
+   "body": {
+    "1": "A big crane on tyres that stacks containers in the yard.",
+    "2": "RTGs or straddle carriers stack boxes; every extra move ('shifting') costs time, so yard planners avoid digging boxes out. [TO VERIFY:v61]"
+   }
+  },
+  {
+   "id": "zone",
+   "beat": "yard",
+   "x": 543,
+   "y": 150,
+   "when": {
+    "family": [
+     "reefer",
+     "tank",
+     "oog"
+    ]
+   },
+   "label": {
+    "_by": "family",
+    "reefer": "Reefer plug",
+    "tank": "DG segregation",
+    "oog": "OOG area"
+   },
+   "kind": "Rule",
+   "body": {
+    "_by": "family",
+    "reefer": {
+     "1": "I'm plugged into electricity so my cooling unit keeps {cargo} at {setPoint}.",
+     "2": "Terminal technicians monitor reefers on plugs; temperature records are kept for claims. Plug-in charges may apply. [TO VERIFY:v57]"
+    },
+    "tank": {
+     "1": "Dangerous goods are kept apart from cargo they could react with.",
+     "2": "IMDG segregation rules apply in the yard and on board; ports have DG declaration and dwell limits. [TO VERIFY:v59]"
+    },
+    "oog": {
+     "1": "Nothing can be stacked on me, so I need a special place.",
+     "2": "Out-of-gauge units take extra slots and special equipment; they are often delivered close to loading. [TO VERIFY:v58]"
+    }
+   }
+  },
+  {
+   "id": "plan",
+   "beat": "plan",
+   "essential": [
+    1,
+    2,
+    3
+   ],
+   "x": 156,
+   "y": 196,
+   "label": "Stowage plan",
+   "kind": "Planning",
+   "body": {
+    "1": "Planners place every box on the ship: heavy ones low, boxes for the first port of call on top, special boxes where they're allowed.",
+    "2": "Built from the booking list and VGMs; constraints: stability, lashing forces, port rotation, DG segregation, reefer plugs, OOG slots. Exchanged as EDI BAPLIE. [TO VERIFY:v61]",
+    "3": "Late VGMs or bookings force replanning; overweight or misdeclared boxes can compromise stability and lashing — one reason VGM rules exist. [TO VERIFY:v01]"
+   }
+  }
+ ],
+ "docs": {
+  "gr": {
+   "title": "Gate-in receipt (EIR)",
+   "heading": "TERMINAL GATE-IN RECEIPT",
+   "sub": "{polTerminal} · fictional example",
+   "stamp": "GATE IN",
+   "rows": [
+    {
+     "label": "Booking no.",
+     "value": "{bookingNo}"
+    },
+    {
+     "label": "Container",
+     "value": "{containerNo} · {boxCode} · FULL"
+    },
+    {
+     "label": "Seal",
+     "value": "{sealNo} · intact",
+     "zone": 1
+    },
+    {
+     "label": "Condition",
+     "value": "No visible damage · photos 6",
+     "zone": 2
+    },
+    {
+     "label": "VGM status",
+     "value": "Received · {vgm} kg",
+     "zone": 3
+    },
+    {
+     "label": "Vessel",
+     "value": "{vessel} {voyage}"
+    },
+    {
+     "label": "Gate time",
+     "value": "Day 5, 14:10 (cut-off {cyCutoff})"
+    }
+   ],
+   "points": {
+    "1": {
+     "2": "The seal is checked against the pre-advice and documents; a mismatch triggers a hold."
+    },
+    "2": {
+     "2": "Condition at handover. Damage noted here was there before the terminal took charge — key for claims and repair recharges. [TO VERIFY:v71]"
+    },
+    "3": {
+     "2": "Some terminals refuse or hold boxes without a VGM at gate-in; all refuse to load them. [TO VERIFY:v01]"
+    }
+   },
+   "check": {
+    "2": {
+     "prompt": "What does this gate-in receipt prove?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "When and in what condition the full box was handed over to the terminal"
+      },
+      {
+       "id": "b",
+       "text": "That the box is loaded on the ship",
+       "fb": "Loading comes later — at step 6."
+      },
+      {
+       "id": "c",
+       "text": "That customs has released the export",
+       "fb": "The release is a separate customs message."
+      },
+      {
+       "id": "d",
+       "text": "That freight has been paid",
+       "fb": "Payment is a commercial matter, not a gate event."
+      }
+     ],
+     "explain": "The gate-in EIR records time and condition at custody transfer: it stops export detention and anchors any damage claim."
+    },
+    "3": {
+     "prompt": "Clean EIR at depot gate-out, but a fresh dent is recorded on this gate-in EIR (merchant haulage). Who is usually charged for the repair?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "The merchant who held the box between the two interchanges"
+      },
+      {
+       "id": "b",
+       "text": "The terminal",
+       "fb": "The damage was recorded at the terminal's gate, before it took charge."
+      },
+      {
+       "id": "c",
+       "text": "The carrier absorbs it",
+       "fb": "Possible commercially, but the tariff normally allows a recharge."
+      },
+      {
+       "id": "d",
+       "text": "The buyer under any Incoterm",
+       "fb": "Equipment damage follows the equipment interchange terms, not the Incoterm."
+      }
+     ],
+     "explain": "Two EIRs bracket the period of custody; damage between them is recharged per the carrier's equipment terms. [TO VERIFY:v71]"
+    }
+   }
+  }
+ },
+ "dossier": {
+  "documents": [
+   "**Gate-in EIR** — time, seal, condition, VGM status. [TO VERIFY:v60]",
+   "**Load list** — boxes cleared for the vessel (VGM, customs, booking).",
+   "**Bay plan (BAPLIE)** — where every box goes. [TO VERIFY:v61]",
+   {
+    "text": "**DG manifest** — dangerous goods on board, for the master and ports. [TO VERIFY:v59]",
+    "when": {
+     "family": [
+      "tank"
+     ]
+    }
+   }
+  ],
+  "costs": [
+   "**Origin THC** — terminal handling, per tariff or contract. [TO VERIFY:v35]",
+   "**Storage / demurrage** beyond free time in the terminal. [TO VERIFY:v12]",
+   {
+    "text": "**Reefer plug-in / monitoring** charges at some terminals. [TO VERIFY:v57]",
+    "when": {
+     "family": [
+      "reefer"
+     ]
+    }
+   },
+   "**Late-gate fee** if accepted after the cut-off. [TO VERIFY:v12]"
+  ],
+  "risks": [
+   "**Customs hold** → box can't be loaded; rolled if not released.",
+   "**Missing VGM** → not on the load list. [TO VERIFY:v01]",
+   "**Damage at gate** → claims and repair recharges.",
+   "**Replanning** after late bookings or wrong weights."
+  ],
+  "jobs": [
+   "**Terminal operations liaison** — gate issues, holds, load list.",
+   "**Vessel / stowage planning** — central planners and terminal planners. [TO VERIFY:v61]",
+   "**Customer service** — informing customers of holds and rollings.",
+   "**Equipment (M&R)** — damage reports and recharges."
+  ]
+ },
+ "incoNote": {
+  "_by": "incoterm",
+  "FCA": "Under FCA (terminal), this is the delivery point: risk and cost passed to the buyer on arrival here, ready for unloading. [TO VERIFY:v14]",
+  "CPT": "Under CPT, risk passes on handover to the carrier here, though the seller pays carriage to destination.",
+  "CIP": "Under CIP, risk passes on handover to the carrier here; the seller pays carriage and insurance to destination.",
+  "FAS": "Under FAS, 'alongside' is effectively the terminal for containers — a poor fit; FCA is the right rule. [TO VERIFY:v15]",
+  "FOB": "Under FOB, the seller has lost physical control here but keeps the risk until on board — the classic container gap. [TO VERIFY:v15]",
+  "*": ""
+ },
+ "keyPoints": {
+  "1": [
+   "At the terminal gate, number, seal and condition are checked and a receipt is issued.",
+   "Boxes wait in the yard; reefers are plugged in, dangerous goods are kept apart.",
+   "Planners decide where every box goes on the ship."
+  ],
+  "2": [
+   "Gate-in = custody transfer and evidence point; export detention stops here (per tariff).",
+   "Yard planning groups boxes by vessel, port and weight; special cargo has its own areas.",
+   "The stowage plan needs correct VGMs, DG data and reefer details; only cleared boxes load."
+  ],
+  "3": [
+   "Holds must be escalated immediately: broker, shipper, customer — before the load list closes.",
+   "Two EIRs bracket custody: they decide who pays for damage.",
+   "Under FOB/CFR/CIF the seller still carries the risk here — prefer FCA/CPT/CIP for containers."
+  ]
+ },
+ "question": {
+  "1": {
+   "prompt": "I'm stacked in the yard and my place on the ship is planned. What happens next?",
+   "hint": "My ship is about to arrive at the quay.",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "When my ship arrives, a giant crane loads me on board.",
+     "confirm": "Yes! A quay crane lifts me from a terminal truck onto the ship, following the plan. Under {incoterm}, risk passes to the buyer at step {riskStep}."
+    },
+    {
+     "id": "b",
+     "text": "A truck takes me to the customer at destination.",
+     "why": "I haven't crossed the ocean yet!",
+     "realLife": "Delivery happens weeks later, after the voyage and import customs.",
+     "whenRight": "That's step 10."
+    },
+    {
+     "id": "c",
+     "text": "I go back to the shipper to be checked again.",
+     "why": "I was already checked at the gate. Going back would make me miss my ship.",
+     "realLife": "An extra trip, extra costs and a missed sailing.",
+     "whenRight": "Only if the shipper had to fix a real problem (e.g. damaged cargo)."
+    }
+   ]
+  },
+  "2": {
+   "prompt": "Box in the export yard, VGM received, customs released, stowage planned. What happens next?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "The vessel berths; quay cranes load boxes on the load list in planned sequence; lashing secures them.",
+     "confirm": "Correct. Only boxes on the load list — VGM, customs release, booking — are loaded, in the terminal's crane sequence. [TO VERIFY:v61]"
+    },
+    {
+     "id": "b",
+     "text": "The shipped-on-board B/L is issued now that the box is in the yard.",
+     "why": "'Shipped on board' needs the box to be on board.",
+     "realLife": "An early on-board B/L is a false statement.",
+     "whenRight": "After loading (step 6). [TO VERIFY:v50]"
+    },
+    {
+     "id": "c",
+     "text": "The box goes to a CFS for a final check of its contents.",
+     "why": "FCL boxes stay sealed; CFS handling is for LCL.",
+     "realLife": "Opening an FCL box without reason breaks the seal chain.",
+     "whenRight": "Only if customs orders an inspection."
+    },
+    {
+     "id": "d",
+     "text": "Boxes are loaded in the order they arrived at the terminal.",
+     "why": "Loading follows the stowage plan, not arrival order.",
+     "realLife": "Random loading would ruin stability and discharge planning.",
+     "whenRight": "Never."
+    }
+   ]
+  },
+  "3": {
+   "prompt": "Case: your box shows 'CUSTOMS HOLD — documentary check' 12 hours before vessel arrival. What do you do?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "Alert the customer and its broker now to supply the documents; track the hold; warn that the box will be rolled if not released before the load list closes.",
+     "confirm": "Right. Only the declarant can clear a customs hold; the carrier's role is fast communication and contingency (rolling). A held box is never loaded. [TO VERIFY:v45]"
+    },
+    {
+     "id": "b",
+     "text": "Ask the terminal to load it anyway: the hold is only documentary.",
+     "why": "A hold is a hold: terminals don't load held boxes.",
+     "realLife": "Loading would breach customs rules — fines for terminal and carrier.",
+     "whenRight": "Never."
+    },
+    {
+     "id": "c",
+     "text": "Wait: holds are usually lifted automatically.",
+     "why": "Documentary checks need documents from the declarant.",
+     "realLife": "The box misses the vessel and the customer hears it too late.",
+     "whenRight": "Never as a strategy."
+    },
+    {
+     "id": "d",
+     "text": "Contact customs yourself and send the commercial invoice you have on file.",
+     "why": "The carrier isn't the declarant and may not hold the right documents.",
+     "realLife": "Customs deals with the declarant; unofficial documents can make things worse.",
+     "whenRight": "Only if your company acts as customs broker under a mandate."
+    }
+   ]
+  }
+ }
+}

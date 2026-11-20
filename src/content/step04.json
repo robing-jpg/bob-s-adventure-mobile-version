@@ -1,0 +1,613 @@
+{
+ "id": 4,
+ "short": "Export docs",
+ "title": "Export documentation & customs",
+ "scene": "flow",
+ "sceneDesc": "Four illustrated stations show the paper journey that runs alongside the container: shipping instructions, draft Bill of Lading check, export declaration and customs release. The container moves from station to station.",
+ "flow": {
+  "strip": "Cut-offs · SI {siCutoff} · VGM {vgmCutoff} · port {cyCutoff} (illustrative)",
+  "stations": [
+   {
+    "beat": "si",
+    "icon": "laptop",
+    "title": "Shipping instructions",
+    "sub": "Shipper → Carrier"
+   },
+   {
+    "beat": "draft",
+    "icon": "bl",
+    "title": "Draft B/L check",
+    "sub": "Carrier → Shipper"
+   },
+   {
+    "beat": "export",
+    "icon": "customs",
+    "title": "Export declaration",
+    "sub": "Broker → {exportCustoms}"
+   },
+   {
+    "beat": "release",
+    "icon": "stamp",
+    "title": "Customs release",
+    "sub": "Customs → Terminal · ENS → EU"
+   }
+  ],
+  "incident": {
+   "station": 3,
+   "text": "DO NOT LOAD (ICS2)"
+  }
+ },
+ "beats": [
+  {
+   "id": "si",
+   "ms": 1800,
+   "narration": {
+    "1": "While I was on the road, my data travelled too. The shipper sends the carrier its [[si|shipping instructions]]: who sends, who receives, what's inside me, seal and weights.",
+    "2": "The [[si]] arrives before the SI cut-off ({siCutoff}): shipper, consignee (or 'to order'), [[notify-party]], description, [[hs-code|HS code]], packages, weights, seal, B/L type and freight terms. [TO VERIFY:v46]",
+    "3": "SI completeness drives everything downstream: B/L, manifest, ENS. Vague descriptions ('general cargo', 'FAK') are rejected by advance-filing regimes such as ICS2. [TO VERIFY:v23]"
+   },
+   "caption": {
+    "2": "Consignee 'to order' → [[negotiable-bl|negotiable B/L]]; named consignee, no bank → [[sea-waybill]] possible."
+   }
+  },
+  {
+   "id": "draft",
+   "ms": 1800,
+   "narration": {
+    "1": "The carrier sends back a draft Bill of Lading for checking. Checking now is free; correcting the final B/L is not.",
+    "2": "Documentation issues the [[draft-bl|draft B/L]]. The shipper must check it before issuance — amendments after issuance cost money. [TO VERIFY:v47]",
+    "3": "Draft approval: if the shipper doesn't answer by the deadline, many carriers issue as drafted. One field below is inconsistent — find it. [TO VERIFY:v47]"
+   }
+  },
+  {
+   "id": "export",
+   "ms": 2400,
+   "narration": {
+    "1": "Now customs. A [[customs-broker]] files an [[export-declaration]] for the exporter: what the goods are, their value and where they go.",
+    "2": "The exporter's broker lodges the [[export-declaration]] with invoice, packing list and HS codes. For sea exports, customs often matches it with the terminal's arrival data. [TO VERIFY:v45]",
+    "3": "Declarant = exporter (or broker under mandate). Liability for the declared data stays largely with the exporter. Under {incoterm}, export clearance: {exportBy}. [TO VERIFY:v45]"
+   },
+   "caption": {
+    "2": "Under {incoterm}, export clearance is done by the {exportBy}."
+   }
+  },
+  {
+   "id": "release",
+   "ms": 1800,
+   "narration": {
+    "1": "Customs decides: most containers get a green light without being opened. The release goes to the terminal electronically — no release, no loading.",
+    "2": "Risk assessment → electronic release to the terminal, or selection for inspection. The carrier files its [[manifest]] and, for the EU, the [[ens]] under [[ics2]] before loading. [TO VERIFY:v23]",
+    "3": "ICS2: ENS at least 24 h before loading at the foreign port for deep-sea containers; house-level data may come from the NVOCC. A 'do not load' message is binding. [TO VERIFY:v23] [TO VERIFY:v48]"
+   }
+  },
+  {
+   "id": "incident",
+   "levels": [
+    3
+   ],
+   "kind": "incident",
+   "narration": {
+    "3": "ICS2 returns a 'do not load' message for your box: the goods description in the ENS reads 'general cargo'. The vessel loads in 30 hours."
+   }
+  }
+ ],
+ "fact": {
+  "beat": "draft",
+  "text": {
+   "1": "An original 'to order' Bill of Lading works like a cheque for the goods: whoever lawfully holds it can claim the cargo.",
+   "2": "Electronic B/Ls are catching up: laws such as the UK Electronic Trade Documents Act 2023 recognise them. [TO VERIFY:v49]"
+  }
+ },
+ "hotspots": [
+  {
+   "id": "sihs",
+   "beat": "si",
+   "x": 132,
+   "y": 236,
+   "levels": [
+    2,
+    3
+   ],
+   "essential": [
+    2,
+    3
+   ],
+   "label": "Shipping instructions",
+   "kind": "Document",
+   "body": {
+    "2": "The SI is the shipper's instruction for the B/L: parties, description, HS code, packages, weights, seal, B/L type, freight terms, originals. Sent by portal, EDI (IFTMIN) or platform before the SI cut-off. [TO VERIFY:v46]",
+    "3": "Common SI errors: consignee vs notify confusion, description too vague for ICS2, seal not updated after inspection, weight inconsistent with VGM. Each one costs an amendment or a hold. [TO VERIFY:v12]"
+   }
+  },
+  {
+   "id": "blinfo",
+   "beat": "draft",
+   "levels": [
+    1
+   ],
+   "essential": [
+    1
+   ],
+   "x": 364,
+   "y": 236,
+   "label": "Bill of Lading",
+   "kind": "Document",
+   "body": {
+    "1": "The [[bl|Bill of Lading]] is the carrier's receipt for the goods and the contract of carriage. An original 'to order' B/L also gives the right to collect the goods at destination."
+   }
+  },
+  {
+   "id": "dbl",
+   "beat": "draft",
+   "levels": [
+    2,
+    3
+   ],
+   "essential": [
+    2,
+    3
+   ],
+   "doc": {
+    "2": "dbl",
+    "3": "dbl"
+   },
+   "x": 364,
+   "y": 236,
+   "label": "Draft B/L",
+   "kind": "Document"
+  },
+  {
+   "id": "broker",
+   "beat": "export",
+   "x": 596,
+   "y": 66,
+   "label": "Customs broker",
+   "kind": "Stakeholder",
+   "body": {
+    "1": "A specialist who files customs declarations for companies.",
+    "2": "Licensed declarant acting under the exporter's mandate; responsibility for the data largely stays with the exporter. [TO VERIFY:v45]"
+   }
+  },
+  {
+   "id": "exdec",
+   "beat": "export",
+   "levels": [
+    2,
+    3
+   ],
+   "essential": [
+    2,
+    3
+   ],
+   "doc": {
+    "2": "exdec",
+    "3": "exdec"
+   },
+   "x": 596,
+   "y": 236,
+   "label": "Export declaration",
+   "kind": "Document"
+  },
+  {
+   "id": "release",
+   "beat": "release",
+   "levels": [
+    1
+   ],
+   "essential": [
+    1
+   ],
+   "x": 828,
+   "y": 236,
+   "label": "Customs release",
+   "kind": "Rule",
+   "body": {
+    "1": "Customs checks the data and gives a green light — the 'release'. Without it, the terminal won't load me. Under {incoterm}, export customs is handled by the {exportBy}."
+   }
+  },
+  {
+   "id": "eu",
+   "beat": "release",
+   "x": 828,
+   "y": 66,
+   "label": "EU customs (ICS2)",
+   "kind": "Rule",
+   "body": {
+    "1": "Europe wants to know what's coming before the ship even leaves — for security.",
+    "2": "ICS2: ENS due at least 24 h before loading at the foreign port for deep-sea containerised cargo; the carrier files. [TO VERIFY:v23]"
+   }
+  }
+ ],
+ "docs": {
+  "dbl": {
+   "title": "Draft Bill of Lading",
+   "heading": "BILL OF LADING — DRAFT",
+   "sub": "Fictional draft for approval",
+   "stamp": "DRAFT",
+   "rows": [
+    {
+     "label": "Shipper",
+     "value": {
+      "_by": "incoterm",
+      "EXW": "Buyer's forwarder, {pol} office (fictional)",
+      "*": "Demo Exporter Co., {pol} (fictional)"
+     },
+     "zone": 1
+    },
+    {
+     "label": "Consignee",
+     "value": "To order of Demo Trade Bank (fictional)",
+     "zone": 2
+    },
+    {
+     "label": "Notify party",
+     "value": "Demo Import SAS (fictional)"
+    },
+    {
+     "label": "Vessel / ports",
+     "value": "{vessel} {voyage} · {pol} → {pod}"
+    },
+    {
+     "label": "Container / seal",
+     "value": "{containerNo} / seal {wrongSeal}",
+     "error": true,
+     "when": {
+      "container": [
+       "20DV",
+       "40DV",
+       "40HC",
+       "40RF",
+       "40OT",
+       "20TK"
+      ]
+     }
+    },
+    {
+     "label": "Container / seal",
+     "value": "{containerNo} / no seal (flat rack)",
+     "when": {
+      "container": [
+       "40FR"
+      ]
+     }
+    },
+    {
+     "label": "Description",
+     "value": "1 × {boxCode} STC {cargo}",
+     "zone": 3
+    },
+    {
+     "label": "Gross weight",
+     "value": "{cargoKg} kg · VGM {vgm} kg",
+     "when": {
+      "container": [
+       "20DV",
+       "40DV",
+       "40HC",
+       "40RF",
+       "40OT",
+       "20TK"
+      ]
+     }
+    },
+    {
+     "label": "Gross weight",
+     "value": "{vgm} kg · VGM {vgm} kg",
+     "error": true,
+     "when": {
+      "container": [
+       "40FR"
+      ]
+     }
+    },
+    {
+     "label": "Originals / freight",
+     "value": "3/3 originals · Freight {freightTerms}"
+    }
+   ],
+   "points": {
+    "1": {
+     "2": "B/L shipper — also the VGM party. Under {incoterm}: {vgmBy}."
+    },
+    "2": {
+     "2": "'To order of [bank]' → negotiable B/L, transferable by endorsement; used with letters of credit. A named consignee marked non-negotiable → straight B/L or sea waybill."
+    },
+    "3": {
+     "2": "STC = 'said to contain': the carrier didn't see inside. The description and HS code should be consistent with the customs declaration and precise enough for ICS2. [TO VERIFY:v46]"
+    }
+   },
+   "check": {
+    "_by": "container",
+    "40FR": {
+     "type": "spot",
+     "prompt": "One field is inconsistent with what you know from step 2 (the B/L gross weight excludes the tare). Tap it.",
+     "explain": "The B/L gross weight is the cargo weight ({cargoKg} kg); the VGM adds the tare ({vgm} kg). Corrected before issuance: no amendment fee. [TO VERIFY:v12]"
+    },
+    "*": {
+     "type": "spot",
+     "prompt": "One field doesn't match the seal on the door ({sealNo}). Tap it.",
+     "explain": "Seal on the door {sealNo} vs {wrongSeal} on the draft. Seal mismatches trigger customs and terminal checks and L/C discrepancies. Corrected before issuance: no amendment fee. [TO VERIFY:v12]"
+    }
+   }
+  },
+  "exdec": {
+   "title": "Export declaration",
+   "heading": "EXPORT DECLARATION (summary)",
+   "sub": "{exportCustoms} · fictional example",
+   "stamp": "LODGED",
+   "rows": [
+    {
+     "label": "Exporter",
+     "value": "Demo Exporter Co. (fictional)"
+    },
+    {
+     "label": "Declarant",
+     "value": {
+      "_by": "incoterm",
+      "EXW": "Broker acting for the buyer (fictional)",
+      "*": "Demo Customs Brokers, for the exporter (fictional)"
+     },
+     "zone": 1
+    },
+    {
+     "label": "Goods / HS",
+     "value": "{cargo} · HS code per tariff",
+     "zone": 2
+    },
+    {
+     "label": "Value",
+     "value": "Per commercial invoice · {incoterm}"
+    },
+    {
+     "label": "Destination",
+     "value": "{pod}"
+    },
+    {
+     "label": "Transport",
+     "value": "{containerNo} · {vessel} {voyage}",
+     "zone": 3
+    },
+    {
+     "label": "Status",
+     "value": "Lodged · awaiting risk assessment"
+    }
+   ],
+   "points": {
+    "1": {
+     "2": "The declarant files for the exporter. Under EXW the buyer must arrange it — often impractical abroad. [TO VERIFY:v14]"
+    },
+    "2": {
+     "2": "The HS code drives export controls and statistics; the description must match the SI and invoice. [TO VERIFY:v46]"
+    },
+    "3": {
+     "2": "Customs links the declaration to the container and vessel, and often to the terminal's arrival report, before releasing. [TO VERIFY:v45]"
+    }
+   },
+   "check": {
+    "2": {
+     "_by": "group",
+     "E": {
+      "prompt": "Under EXW, who must lodge this export declaration?",
+      "options": [
+       {
+        "id": "a",
+        "correct": true,
+        "text": "The buyer (through a broker in the export country)"
+       },
+       {
+        "id": "b",
+        "text": "The seller",
+        "fb": "Under EXW the seller only assists, at the buyer's request and cost."
+       },
+       {
+        "id": "c",
+        "text": "The carrier",
+        "fb": "The carrier is never the exporter's declarant by default."
+       },
+       {
+        "id": "d",
+        "text": "The terminal",
+        "fb": "The terminal reports arrivals; it doesn't declare goods."
+       }
+      ],
+      "explain": "EXW puts export clearance on the buyer — a common trap; ICC suggests FCA instead. [TO VERIFY:v14]"
+     },
+     "*": {
+      "prompt": "Under {incoterm}, who must lodge this export declaration?",
+      "options": [
+       {
+        "id": "a",
+        "correct": true,
+        "text": "The seller (exporter), usually through its customs broker"
+       },
+       {
+        "id": "b",
+        "text": "The buyer",
+        "fb": "Only under EXW does the buyer handle export clearance."
+       },
+       {
+        "id": "c",
+        "text": "The carrier",
+        "fb": "The carrier files manifests and ENS, not the export declaration."
+       },
+       {
+        "id": "d",
+        "text": "The terminal",
+        "fb": "The terminal reports arrivals; it doesn't declare goods."
+       }
+      ],
+      "explain": "In every rule except EXW, export clearance is the seller's obligation. [TO VERIFY:v14]"
+     }
+    },
+    "3": {
+     "prompt": "The export declaration describes 'electric appliances, HS 8516' while the SI says 'spare parts'. What's the risk?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "Inconsistent data across declaration, SI/B/L and ENS → holds, inspection, possible penalties"
+      },
+      {
+       "id": "b",
+       "text": "None — customs only reads the declaration",
+       "fb": "Customs and ICS2 cross-check data sources."
+      },
+      {
+       "id": "c",
+       "text": "Only a B/L amendment fee",
+       "fb": "The fee is the least of it; the box can be held."
+      },
+      {
+       "id": "d",
+       "text": "The Incoterm changes automatically",
+       "fb": "Data errors don't touch the sales contract."
+      }
+     ],
+     "explain": "Align descriptions and HS codes across all filings before the cut-offs. [TO VERIFY:v45] [TO VERIFY:v23]"
+    }
+   }
+  }
+ },
+ "dossier": {
+  "documents": [
+   "**SI** — portal or EDI. [TO VERIFY:v46]",
+   "**B/L types** — negotiable 'to order', straight, sea waybill, express release, eB/L. [TO VERIFY:v49]",
+   "**Export declaration** + customs release.",
+   "**Manifest**, **ICS2 ENS**; certificate of origin where needed."
+  ],
+  "costs": [
+   "**B/L / documentation fee**, **late SI fee**, **amendment fee** after issuance. [TO VERIFY:v12]",
+   "**ENS / advance filing fee** at some carriers. [TO VERIFY:v48]",
+   "**Brokerage** and, if selected, **inspection handling**. [TO VERIFY:v45]"
+  ],
+  "risks": [
+   "**SI after the cut-off** → late fee, possible shut-out. [TO VERIFY:v12]",
+   "**Wrong HS code or vague description** → hold, penalties, L/C discrepancy.",
+   "**Misdeclared dangerous goods** → serious safety risk and heavy penalties. [TO VERIFY:v25]",
+   "**Missing or wrong ENS** → 'do not load'. [TO VERIFY:v48]"
+  ],
+  "jobs": [
+   "**Documentation** — SI validation, drafts, B/L issuance, amendments.",
+   "**Customs & compliance** — manifests, ICS2, sanctions screening. [TO VERIFY:v48]",
+   "**DG desk** — dangerous goods declarations.",
+   "**Finance / credit control** — prepaid freight before release of originals. [TO VERIFY:v33]"
+  ]
+ },
+ "incoNote": {
+  "_by": "group",
+  "E": "Under EXW the buyer must handle export customs — a common trap: the seller holds the documents the buyer needs.",
+  "F": "The seller clears export; the B/L comes from the carrier the buyer booked. FCA allows an agreed on-board B/L to the seller. [TO VERIFY:v14]",
+  "C": "The seller clears export and must give the buyer the transport document (and the insurance document under CIF/CIP). [TO VERIFY:v18]",
+  "D": "The seller clears export; import is for the buyer (DAP/DPU) or the seller (DDP)."
+ },
+ "keyPoints": {
+  "1": [
+   "A container travels twice: physically, and as data.",
+   "The shipping instructions become the Bill of Lading — check the draft carefully.",
+   "Customs must release the export before loading; most boxes are released without being opened."
+  ],
+  "2": [
+   "SI → draft B/L → approval → issuance; amendments after issuance cost money.",
+   "B/L type matters: negotiable 'to order', straight, sea waybill, express release or eB/L.",
+   "Export clearance follows the Incoterm (EXW = the buyer!); release is electronic and risk-based.",
+   "Advance filings such as the EU ICS2 ENS are due before loading at origin."
+  ],
+  "3": [
+   "Data must be consistent across SI, B/L, export declaration and ENS.",
+   "ICS2 'do not load' is binding: fix the data and refile, or roll the box.",
+   "Never issue or date a B/L to fit commercial deadlines."
+  ]
+ },
+ "question": {
+  "1": {
+   "prompt": "My papers are sent and customs is on it. I'm at the terminal gate. What happens next?",
+   "hint": "The ship isn't here yet. Where do containers wait at a port?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "I pass the terminal gate: number, seal and condition are checked, then I'm stacked in the yard to wait for my ship.",
+     "confirm": "That's it! The terminal checks that I'm expected, my seal is intact and my condition is fine. Then I wait in the export yard — and my detention clock usually stops here."
+    },
+    {
+     "id": "b",
+     "text": "The original Bill of Lading is handed to the truck driver so it travels with me.",
+     "why": "The B/L doesn't travel with the container; originals go to the shipper, often through banks, to the buyer.",
+     "realLife": "An original lost with a driver would be serious: originals are needed to collect the goods.",
+     "whenRight": "Never with the driver."
+    },
+    {
+     "id": "c",
+     "text": "I wait outside the port until my ship arrives, then drive straight to it.",
+     "why": "Ships are loaded according to a plan made in advance, so boxes arrive days before.",
+     "realLife": "Arriving at the last minute means missing the cut-off — and the ship.",
+     "whenRight": "Some special cargo goes directly alongside, by prior agreement."
+    }
+   ]
+  },
+  "2": {
+   "prompt": "SI in, draft approved, export declaration lodged, ENS filed. The box is at the gate before {cyCutoff}. What happens next?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "Gate-in: pre-advice match, container number, seal and damage check (EIR), VGM status; the box is stacked in the export yard.",
+     "confirm": "Correct. Gate-in is the custody handover to the terminal acting for the carrier. Export detention typically stops here. [TO VERIFY:v21]"
+    },
+    {
+     "id": "b",
+     "text": "The carrier issues the shipped-on-board B/L now that SI, VGM and customs are in order.",
+     "why": "'Shipped on board' certifies the box is loaded — it's still at the gate.",
+     "realLife": "An early on-board B/L is a false statement: L/C fraud exposure.",
+     "whenRight": "A 'received for shipment' B/L can be issued after receipt and annotated on board later. [TO VERIFY:v50]"
+    },
+    {
+     "id": "c",
+     "text": "Direct delivery to the ship's side when the ship berths.",
+     "why": "Standard boxes are received into the yard before the cut-off so the stowage plan can be built.",
+     "realLife": "Turning up at berthing time = missing the CY cut-off = shut-out.",
+     "whenRight": "Some OOG or DG cargo by arrangement. [TO VERIFY:v51]"
+    },
+    {
+     "id": "d",
+     "text": "The box waits outside until the customs release arrives; terminals only accept released export boxes.",
+     "why": "In many ports the release can follow gate-in: the terminal blocks loading, not entry.",
+     "realLife": "Waiting outside costs truck time and risks the cut-off for nothing.",
+     "whenRight": "Some ports do require an export reference before gate-in. [TO VERIFY:v52]"
+    }
+   ]
+  },
+  "3": {
+   "prompt": "Case: ICS2 'do not load' because the ENS says 'general cargo'. Loading in 30 hours. What do you do?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "Block the box from loading, get a precise description (and HS code) from the shipper or NVOCC, amend and refile the ENS; if not resolved in time, roll the box.",
+     "confirm": "Right. 'Do not load' is binding. Precise goods descriptions are required; once refiled and cleared, the box can load — otherwise it waits for the next sailing. [TO VERIFY:v23] [TO VERIFY:v48]"
+    },
+    {
+     "id": "b",
+     "text": "Load anyway; correct the ENS after departure.",
+     "why": "Loading against a 'do not load' breaches EU requirements.",
+     "realLife": "Penalties for the carrier and the box can be refused entry at destination.",
+     "whenRight": "Never."
+    },
+    {
+     "id": "c",
+     "text": "Ask the terminal to override the message.",
+     "why": "The terminal has no authority over EU customs decisions.",
+     "realLife": "No terminal will take that liability.",
+     "whenRight": "Never."
+    },
+    {
+     "id": "d",
+     "text": "Change the description yourself to 'household appliances' so it passes.",
+     "why": "The carrier can't invent cargo data; it must come from the party that knows the goods.",
+     "realLife": "A false declaration makes the carrier liable for misdeclaration.",
+     "whenRight": "Never without the shipper's confirmed data."
+    }
+   ]
+  }
+ }
+}

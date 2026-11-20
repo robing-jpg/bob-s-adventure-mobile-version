@@ -1,0 +1,143 @@
+{
+  "id": 1, "short": "Booking", "title": "Booking & empty release", "scene": "depot",
+  "sceneDesc": "A booking request travels from the shipper to the carrier and a confirmation comes back. In an empty-container depot, a truck drives in, an empty container is lowered onto it, inspected at the gate and driven out.",
+  "beats": [
+    { "id": "book", "ms": 1800,
+      "narration": {
+        "1": "Before I travel, someone must reserve space for me on a ship: that's the [[booking]]. The [[shipper]] — or a [[freight-forwarder]] — asks the carrier for one {box}, from {pol} to {pod}.",
+        "2": "It starts with a [[booking]] request: equipment type and quantity, {pol} → {pod}, commodity ({cargo}), estimated weight, preferred sailing and the contract or quote behind the rate. [TO VERIFY:v30]",
+        "3": "Booking request via portal, platform or EDI against a service contract or spot quote. Special cargo — reefer, DG, OOG — needs approval before confirmation. [TO VERIFY:v30]" },
+      "caption": { "2": "Under {incoterm}, the {freightBy} side contracts the ocean freight with the carrier." } },
+    { "id": "confirm", "ms": 1800,
+      "narration": {
+        "1": "The carrier checks there is space and an empty box nearby, then sends a [[booking-confirmation]]. It's my travel plan: ship, places and deadlines.",
+        "2": "Customer service validates allocation, equipment and approvals, then issues the [[booking-confirmation]]. Open it: every line drives a later step.",
+        "3": "Confirmation against allocation and equipment availability. Watch the fine print: cut-offs, free time, pick-up and return locations, special-cargo approvals." },
+      "caption": { "2": "Carriers may accept slightly more bookings than slots to offset no-shows. [TO VERIFY:v31]" } },
+    { "id": "release", "ms": 3600,
+      "narration": {
+        "1": "A truck collects me at the [[depot]], a yard full of empty containers. A lifting machine puts me on the truck.",
+        "2": "The haulier presents the [[release-order|release reference]]. [[equipment-control|Equipment control]] allocated the type and, if needed, a grade (food quality, {family}).",
+        "3": "Empty release against the reference; grade and condition must match the commodity. Reefers need a passed [[pti]], tanks a cleanliness check, OOG equipment the right fittings. [TO VERIFY:v57]" },
+      "caption": { "2": { "_by": "family", "reefer": "Reefer: [[pti]] passed, [[set-point]] {setPoint} programmed before release. [TO VERIFY:v56]", "tank": "Tank: last cargo and cleaning checked — tanks are usually supplied by tank operators. [TO VERIFY:v59]", "oog": "Special equipment is scarce: the depot may need time to supply it. [TO VERIFY:v58]", "*": "Wrong box for the cargo (dirty, damaged) = refused at stuffing and a second truck trip." } } },
+    { "id": "gateout", "ms": 1600,
+      "narration": {
+        "1": "At the gate, someone checks me all around and writes down my condition on an [[eir]]. From now on, my [[detention]] clock is ticking.",
+        "2": "Gate-out inspection recorded on the [[eir]], often digital with photos. The export [[detention]] clock runs until full gate-in at the terminal. [TO VERIFY:v21]",
+        "3": "EIR at gate-out, movement reported to the carrier (EDI CODECO). Export detention clock starts per tariff. [TO VERIFY:v36] [TO VERIFY:v21]" } },
+    { "id": "incident", "levels": [3], "kind": "incident",
+      "narration": { "3": "Two days before the cut-off, capacity management cuts the allocation on {vessel}: your customer's box is on the list of bookings to roll to next week's sailing. The customer's letter of credit requires shipment by this week." } }
+  ],
+
+  "fact": { "beat": "release", "text": {
+    "1": "Asia ships far more goods to Europe than it receives, so many containers go back to Asia empty — at the carrier's cost. [TO VERIFY:v38]",
+    "2": "Empty boxes are estimated at around 20% of all container handling in ports — the price of trade imbalances. [TO VERIFY:v38]" } },
+
+  "hotspots": [
+    { "id": "booker", "beat": "book", "until": "confirm", "x": 413, "y": 128, "label": "Shipper / forwarder", "kind": "Stakeholder", "essential": [1],
+      "body": {
+        "1": "The exporter or its forwarder makes the booking. Under {incoterm}, the ocean freight is arranged by the {freightBy}; when that's the buyer, its forwarder near {pol} usually books for it.",
+        "2": "The booking party is not always the B/L shipper. A forwarder acting as [[nvocc]] books in its own name and issues its own house B/L. [TO VERIFY:v34]" } },
+    { "id": "desk", "beat": "book", "until": "confirm", "x": 590, "y": 128, "label": "Booking desk", "kind": "Stakeholder",
+      "body": {
+        "1": "The carrier's customer service checks space and equipment, then confirms. Many bookings are made online.",
+        "2": "Checks: allocation by trade and customer, equipment at the depot, rate validity, special approvals (DG desk, reefer, OOG). [TO VERIFY:v30]" } },
+    { "id": "rate", "beat": "confirm", "x": 760, "y": 40, "label": "Freight rate", "kind": "Charge",
+      "body": {
+        "1": "The price of the trip: ocean freight plus surcharges such as [[baf]] (fuel) and port handling ([[thc]]).",
+        "2": "All-in, or base rate + surcharges (BAF, peak season, origin/destination THC, documentation fee). Names and structures vary by carrier. [TO VERIFY:v35]" } },
+    { "id": "bc", "beat": "confirm", "x": 520, "y": 160, "label": { "1": "Booking confirmation", "2": "Booking confirmation" }, "kind": "Document", "essential": [2, 3], "doc": { "2": "bc", "3": "bc" }, "levels": [2, 3] },
+    { "id": "depot", "beat": "release", "x": 140, "y": 72, "label": "Empty depot", "kind": "Stakeholder", "essential": [1],
+      "body": {
+        "1": "A yard where empty containers wait between trips. They are inspected, cleaned and repaired there.",
+        "2": "Often run by a third party under contract: storage, maintenance and repair ([[mnr]]), cleaning, reefer PTI. Gate movements are reported electronically. [TO VERIFY:v36]" } },
+    { "id": "handler", "beat": "release", "x": 200, "y": 250, "label": "Empty handler", "kind": "Equipment",
+      "body": { "1": "A forklift-like machine built to lift and stack light, empty containers.", "2": "Designed for empty boxes only; full boxes need reach stackers or yard cranes. [TO VERIFY:v37]" } },
+    { "id": "special", "beat": "release", "until": "release", "x": 555, "y": 205, "when": { "family": ["reefer", "tank", "oog"] },
+      "label": { "_by": "family", "reefer": "PTI & set point", "tank": "Tank check", "oog": "Special equipment" }, "kind": "Equipment",
+      "body": { "_by": "family",
+        "reefer": { "1": "Before a reefer leaves the depot, its cooling machine is tested ([[pti]]) and set to the temperature the shipper asked for: {setPoint} for {cargo}.", "2": "PTI passed and [[set-point]] {setPoint} programmed; ventilation and humidity settings per booking. A wrong set point is a classic cause of cargo claims. [TO VERIFY:v56] [TO VERIFY:v57]" },
+        "tank": { "1": "Tanks carry liquids, often dangerous. The tank must be clean and suitable for {cargo}.", "2": "Tank containers are usually supplied by tank operators; the last cargo and cleaning certificate must be compatible with the new product. DG approval is required at booking. [TO VERIFY:v59]" },
+        "oog": { "1": "{box} boxes are rarer than standard ones, so they must be ordered early.", "2": "OOG bookings need the exact dimensions and weight, and approval by the special-cargo desk and vessel planners before confirmation. [TO VERIFY:v58]" } } },
+    { "id": "eir", "beat": "gateout", "x": 586, "y": 160, "label": "EIR", "kind": "Document",
+      "body": { "1": "Equipment Interchange Receipt: a short report on my condition each time I change hands — dents, holes, cleanliness.", "2": "Signed or digitally confirmed by driver and depot, often with photos. Damage found later without an EIR record can be charged to the merchant." } },
+    { "id": "clock", "beat": "gateout", "x": 782, "y": 128, "label": "Detention clock", "kind": "Charge", "essential": [2, 3],
+      "body": {
+        "1": "The container belongs to the carrier. After the free days, every extra day outside costs money: that's [[detention]].",
+        "2": "Export detention typically runs from empty gate-out to full gate-in (merchant haulage). Illustrative free time: {freeDays} days, then {cur}80 per day. [TO VERIFY:v21] [TO VERIFY:v12]",
+        "3": "Collect the empty too early and free time burns before the cut-off. Some carriers combine demurrage and detention into one free-time pool. [TO VERIFY:v21]" } }
+  ],
+
+  "docs": {
+    "bc": {
+      "title": "Booking confirmation", "heading": "BOOKING CONFIRMATION", "sub": "Fictional example", "stamp": "CONFIRMED",
+      "rows": [
+        { "label": "Booking no.", "value": "{bookingNo}" },
+        { "label": "Routing", "value": "{pol} → {pod}" },
+        { "label": "Vessel / voyage", "value": "{vessel} / {voyage}" },
+        { "label": "Equipment", "value": "1 × {box} ({boxCode}) · {cargo}", "zone": 1 },
+        { "label": "Special", "value": { "_by": "family", "reefer": "Set point {setPoint} · vents per booking", "tank": "DG approved · {cargo}", "oog": "OOG approved · dimensions on file", "*": "—" } },
+        { "label": "Empty pick-up", "value": "Depot near {pol} · release R-58214" },
+        { "label": "Full return to", "value": "{polTerminal}" },
+        { "label": "Cut-offs", "value": "SI {siCutoff} · VGM {vgmCutoff} · Port {cyCutoff}", "zone": 2 },
+        { "label": "Free time", "value": "{freeDays} days detention (illustrative)", "zone": 3 },
+        { "label": "Freight terms", "value": "Freight {freightTerms}" }
+      ],
+      "points": {
+        "1": { "2": "Size-type code per ISO 6346 ({boxCode}). Substituting equipment needs the customer's agreement. [TO VERIFY:v32]", "3": "Equipment and commodity drive approvals: a change of commodity after confirmation (e.g. to DG) requires a new approval." },
+        "2": { "2": "Documentation (SI), VGM and port (CY) cut-offs. Order and timing vary by carrier and port. [TO VERIFY:v20]" },
+        "3": { "2": "From the tariff or the customer's contract. Illustrative value from CONFIG. [TO VERIFY:v12]" }
+      },
+      "check": {
+        "2": { "prompt": "Which deadline comes first in this booking?",
+          "options": [
+            { "id": "a", "correct": true, "text": "The SI (documentation) cut-off — {siCutoff}" },
+            { "id": "b", "text": "The port (CY) cut-off — {cyCutoff}", "fb": "The full box can arrive last; paperwork closes earlier." },
+            { "id": "c", "text": "The VGM cut-off — {vgmCutoff}", "fb": "Here the VGM closes after the SI." },
+            { "id": "d", "text": "The vessel departure — {etd}", "fb": "ETD comes after every cut-off." } ],
+          "explain": "Here the SI closes first, then the VGM, then the port cut-off. Sequences vary by carrier and port — always read the confirmation. [TO VERIFY:v20]" },
+        "3": { "prompt": "Empty picked up Day 1, full gate-in at {polTerminal} Day 5, free time {freeDays} days (export detention). What is billed?",
+          "options": [
+            { "id": "a", "correct": true, "text": "Nothing — the clock stopped within the free time" },
+            { "id": "b", "text": "4 days of detention", "fb": "Days are charged only beyond the free time." },
+            { "id": "c", "text": "5 days of demurrage", "fb": "Demurrage covers time inside the terminal, not this period." },
+            { "id": "d", "text": "It depends on the Incoterm", "fb": "Billing follows the tariff or contract; the Incoterm only shapes who should bear it between seller and buyer." } ],
+          "explain": "Detention runs gate-out to gate-in per tariff; 4 days < {freeDays} free days. Who ultimately bears D&D between seller and buyer is a sales-contract question. [TO VERIFY:v21]" }
+      }
+    }
+  },
+
+  "dossier": {
+    "documents": [ "**Booking request / confirmation** — portal or EDI (IFTMBF/IFTMBC). [TO VERIFY:v30]", "**Release reference / PIN** — sometimes time-limited.", "**EIR** at gate-out — the box's condition on record.", "**Rate agreement** — service contract or quote reference." ],
+    "costs": [ "**Ocean freight + surcharges** (BAF, THC…), fixed by contract or quote. [TO VERIFY:v35]", "**Cancellation / no-show fees** at some carriers. [TO VERIFY:v31]", "**Export detention** from empty gate-out. [TO VERIFY:v21]", "**Damage / cleaning recharges** if the return EIR shows new damage." ],
+    "risks": [ "**Rolled** after overbooking or a [[blank-sailing]]: inform the customer early. [TO VERIFY:v31]", "**Wrong equipment grade** → rejected at stuffing, extra trucking.", "**Empty collected too early** → free time burnt before the cut-off.", { "text": "**No special approval** for reefer/DG/OOG → booking cannot be confirmed. [TO VERIFY:v58]", "levels": [3] } ],
+    "jobs": [ "**Sales & pricing** — contracts, quotes, surcharges.", "**Capacity / allocation management** — who gets space on which vessel.", "**Customer service** — validation, confirmation, changes.", "**Equipment control** — release, repositioning, depot vendors; **DG / special cargo desk** — approvals." ]
+  },
+  "incoNote": { "_by": "group", "E": "The buyer (or its forwarder near {pol}) books and collects the empty.", "F": "The buyer books the freight, so it must pass the booking details to the seller in time.", "C": "The seller books and pays the freight to {pod}.", "D": "The seller books the whole carriage to the buyer's door." },
+
+  "keyPoints": {
+    "1": [ "Every journey starts with a booking; the booking confirmation sets ship, places and deadlines.", "The party paying the ocean freight under the Incoterm makes the booking.", "Empty containers come from depots; their condition is recorded on an EIR and the detention clock starts at gate-out." ],
+    "2": [ "Booking → validation (allocation, equipment, approvals) → confirmation with cut-offs.", "Who books follows the Incoterm and the contract of carriage; NVOCCs book in their own name.", "Equipment control releases the right type and grade; reefers need PTI and the right set point.", "Export detention starts at gate-out, per tariff." ],
+    "3": [ "Read the confirmation like a contract: cut-off sequence, free time, pick-up/return locations, approvals.", "Rollings must be communicated at once — never 'fix' a deadline by misdating a B/L.", "Special cargo (reefer, DG, OOG) is approved before confirmation, not after." ]
+  },
+
+  "question": {
+    "1": { "prompt": "I'm an empty container on a truck, just out of the depot. What happens next?", "hint": "I'm empty. Where are the goods waiting?",
+      "options": [
+        { "id": "a", "correct": true, "text": "The truck takes me to the shipper's warehouse, where the goods are loaded into me.", "confirm": "Exactly. The goods are waiting at the shipper's premises, so I go there to be filled ('stuffed'). Under {incoterm}, this trip is arranged by {preBy}." },
+        { "id": "b", "text": "The truck takes me straight to the port to be loaded on the ship.", "why": "I'm still empty! The goods are at the shipper's warehouse.", "realLife": "An empty box at the export terminal would be refused, and the shipper would pay for an extra trip.", "whenRight": "Carriers do move empties to ports to reposition them — but that's their own move, not a customer's booking." },
+        { "id": "c", "text": "The carrier fills me with the goods at the depot.", "why": "Depots only handle empty containers. For a full container load ([[fcl]]), the shipper loads its own goods.", "realLife": "The depot has no goods and no staff to load them: the truck would wait for nothing.", "whenRight": "Small shipments ([[lcl]]) are consolidated at a [[cfs]] — a different service and place." } ] },
+    "2": { "prompt": "Booking confirmed, empty {box} gated out with a clean EIR. What happens next?",
+      "options": [
+        { "id": "a", "correct": true, "text": "The haulier positions the empty at the shipper's premises for stuffing, within free time and ahead of the cut-offs.", "confirm": "Correct. FCL cargo is stuffed at origin by the shipper. Too early burns detention free time; too late puts the VGM and port cut-offs at risk. Under {incoterm}, this leg is for {preBy}." },
+        { "id": "b", "text": "Deliver the empty to the export terminal; the cargo will be stuffed there before loading.", "why": "Export terminals receive full containers for loading, not empties for stuffing.", "realLife": "Refused or charged for handling and storage; a second truck move puts the cut-offs at risk.", "whenRight": "For [[lcl]] or port-side services, cargo is stuffed at a [[cfs]] near the port — another booking and service." },
+        { "id": "c", "text": "Submit the SI and ask for the original B/L to be issued against the booking.", "why": "A B/L needs actual cargo details (seal, packages, weights) and the carrier must have taken charge of the goods — the box is still empty.", "realLife": "A B/L issued before receiving the goods certifies something untrue: fraud exposure and L/C problems.", "whenRight": "Early SI submission is fine once data is final; the B/L comes after receipt or loading." },
+        { "id": "d", "text": "Ask the depot to weigh the empty so the VGM can be declared.", "why": "The [[tare]] is marked on the door and the [[csc-plate]]. The VGM is the packed container's weight — after stuffing.", "realLife": "A 'VGM' declared before stuffing is not verified: misdeclaration and unsafe stowage. [TO VERIFY:v02]", "whenRight": "Method 2 uses the marked tare plus weighed contents — no depot weighing needed." } ] },
+    "3": { "prompt": "Case: allocation is cut and the booking is on the roll list. The customer's L/C requires shipment this week. What should you do first?",
+      "options": [
+        { "id": "a", "correct": true, "text": "Tell the customer now, with options: priority on another service or sailing this week, or time to ask the bank for an L/C amendment.", "confirm": "Right. Early, documented communication with alternatives is the professional standard; the shipper can then act with its bank. Never adjust a B/L date to fit the L/C. [TO VERIFY:v31]" },
+        { "id": "b", "text": "Keep the booking and plan to issue the B/L showing this week's vessel anyway.", "why": "A B/L must reflect the vessel and date the goods were actually shipped on.", "realLife": "Misdated or false B/Ls are fraud: the carrier loses its defences and may face L/C fraud claims.", "whenRight": "Never." },
+        { "id": "c", "text": "Wait for the final load list before saying anything, to avoid worrying the customer.", "why": "Waiting removes the customer's options (other service, L/C amendment).", "realLife": "The customer discovers the rolling at the last minute: missed L/C, penalties, lost account.", "whenRight": "Only if the roll list is still provisional — and even then, a heads-up is better." },
+        { "id": "d", "text": "Cancel the booking and refund the customer.", "why": "Cancelling doesn't ship the goods; the customer needs a solution, not a refund.", "realLife": "The customer must rebook at a possibly higher spot rate and still misses the L/C date.", "whenRight": "If the customer chooses to cancel after being offered alternatives." } ] }
+  }
+}

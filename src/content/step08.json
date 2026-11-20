@@ -1,0 +1,421 @@
+{
+ "id": 8,
+ "short": "Discharge",
+ "title": "Discharge at the port of destination",
+ "scene": "discharge",
+ "sceneDesc": "The ship arrives at the destination quay. A quay crane lifts the container off the ship onto a terminal truck, which takes it to the import yard.",
+ "beats": [
+  {
+   "id": "arrive",
+   "ms": 3300,
+   "narration": {
+    "1": "Welcome to {pod}! My ship berths at {podTerminal}.",
+    "2": "{vessel} berths at {podTerminal}. The discharge list tells the terminal which boxes come off here. [TO VERIFY:v61]",
+    "3": "Discharge planning from the BAPLIE and import manifest; customs has risk-assessed the cargo data, and some boxes may already be flagged for inspection. [TO VERIFY:v67]"
+   }
+  },
+  {
+   "id": "discharge",
+   "ms": 2600,
+   "narration": {
+    "1": "A crane lifts me off the ship and puts me down on a terminal truck.",
+    "2": "Discharge by quay crane; lashings removed first. Damage found at discharge is recorded — key for claims. [TO VERIFY:v62]",
+    "3": "Discharge and damage survey; seal checked against the manifest. A seal discrepancy here triggers investigation and possibly a customs hold."
+   }
+  },
+  {
+   "id": "yard",
+   "ms": 2400,
+   "narration": {
+    "1": {
+     "_by": "family",
+     "reefer": "I'm taken to the import yard and plugged in again. The customer has been told I've arrived.",
+     "*": "I'm taken to the import [[yard]] to wait for my paperwork. The customer has been told I've arrived."
+    },
+    "2": "Import yard. The [[arrival-notice]] went to the consignee and notify party: charges due, free time and release conditions. The [[demurrage]] free time starts at discharge. [TO VERIFY:v66]",
+    "3": "Import dwell: demurrage/storage free time running; customs selection (scan, physical) adds moves and days. Combined D&D tariffs may apply. [TO VERIFY:v21] [TO VERIFY:v66]"
+   }
+  },
+  {
+   "id": "incident",
+   "levels": [
+    3
+   ],
+   "kind": "incident",
+   "narration": {
+    "3": "Customs selects the box for a scan and physical inspection: 3 extra days. Demurrage free time ends tomorrow. The consignee asks the carrier to waive all demurrage 'because it's customs' fault'."
+   }
+  }
+ ],
+ "fact": {
+  "beat": "yard",
+  "text": {
+   "_by": "route",
+   "GYE-ANR": {
+    "1": "Antwerp-Bruges is one of Europe's largest container ports, and a major hub for fruit. [TO VERIFY:v74]",
+    "2": "Antwerp-Bruges handles around 13 million TEU a year. [TO VERIFY:v74]"
+   },
+   "*": {
+    "1": "Le Havre is France's largest container port. [TO VERIFY:v74]",
+    "2": "HAROPA (Le Havre, Rouen, Paris) handles around 3 million TEU a year, most of it at Le Havre. [TO VERIFY:v74]"
+   }
+  }
+ },
+ "hotspots": [
+  {
+   "id": "crane",
+   "beat": "discharge",
+   "essential": [
+    1
+   ],
+   "x": 125,
+   "y": 26,
+   "label": "Discharge",
+   "kind": "Operations",
+   "body": {
+    "1": "The crane lifts me off the ship. Workers check that I'm not damaged and that my seal is intact.",
+    "2": "Discharge sequence follows the bay plan; damage and seal checks are recorded. [TO VERIFY:v62]"
+   }
+  },
+  {
+   "id": "anl1",
+   "beat": "yard",
+   "levels": [
+    1
+   ],
+   "essential": [
+    1
+   ],
+   "x": 640,
+   "y": 120,
+   "label": "Arrival notice",
+   "kind": "Document",
+   "body": {
+    "1": "A message from the carrier to the customer: 'Your container has arrived. Here is what you need to pay and do to collect it.'"
+   }
+  },
+  {
+   "id": "an",
+   "beat": "yard",
+   "levels": [
+    2,
+    3
+   ],
+   "essential": [
+    2,
+    3
+   ],
+   "doc": {
+    "2": "an",
+    "3": "an"
+   },
+   "x": 640,
+   "y": 120,
+   "label": "Arrival notice",
+   "kind": "Document"
+  },
+  {
+   "id": "dem",
+   "beat": "yard",
+   "levels": [
+    2,
+    3
+   ],
+   "x": 820,
+   "y": 330,
+   "label": "Demurrage clock",
+   "kind": "Charge",
+   "body": {
+    "2": "Import [[demurrage]] runs from discharge (or day after) until full gate-out, after the free time. Illustrative: {freeDays} days free, then {cur}40/day storage-type charges. [TO VERIFY:v21] [TO VERIFY:v12]",
+    "3": "Customs inspections, missing originals or unpaid freight don't stop the clock unless the tariff or contract says so. [TO VERIFY:v72]"
+   }
+  },
+  {
+   "id": "customs",
+   "beat": "yard",
+   "x": 560,
+   "y": 200,
+   "label": "Customs risk check",
+   "kind": "Stakeholder",
+   "body": {
+    "1": "{importCustoms} check the data about me. Most containers are not opened.",
+    "2": "Risk analysis on ENS and declarations; selected boxes are scanned or inspected, with moves and costs for the cargo side. [TO VERIFY:v67]"
+   }
+  },
+  {
+   "id": "plug",
+   "beat": "yard",
+   "when": {
+    "family": [
+     "reefer"
+    ]
+   },
+   "x": 420,
+   "y": 120,
+   "label": "Plugged again",
+   "kind": "Equipment",
+   "body": {
+    "1": "Back on electricity so {cargo} stays at {setPoint}.",
+    "2": "Reefer plugged in the import rack; plug-in and monitoring charges may apply after free time. [TO VERIFY:v57]"
+   }
+  }
+ ],
+ "docs": {
+  "an": {
+   "title": "Arrival notice",
+   "heading": "ARRIVAL NOTICE",
+   "sub": "{pod} · fictional example",
+   "stamp": "NOTICE",
+   "rows": [
+    {
+     "label": "To",
+     "value": "Consignee / notify party (fictional)"
+    },
+    {
+     "label": "B/L no.",
+     "value": "{bookingNo}-01"
+    },
+    {
+     "label": "Vessel / ETA",
+     "value": "{vessel} {voyage} · {eta}"
+    },
+    {
+     "label": "Container",
+     "value": "{containerNo} · {boxCode} · {cargo}"
+    },
+    {
+     "label": "Charges due",
+     "value": {
+      "_by": "freight",
+      "Buyer": "Ocean freight (collect) · destination THC · documentation fee",
+      "*": "Destination THC · documentation fee (freight prepaid)"
+     },
+     "zone": 1
+    },
+    {
+     "label": "Free time",
+     "value": "Demurrage {freeDays} days from discharge (illustrative)",
+     "zone": 2
+    },
+    {
+     "label": "Release requires",
+     "value": "1 original B/L (or waybill / express release) · charges paid · customs release",
+     "zone": 3
+    }
+   ],
+   "points": {
+    "1": {
+     "2": "Collect freight and destination charges must be paid (or covered by credit) before release. Charge names and amounts vary by carrier and port. [TO VERIFY:v35] [TO VERIFY:v66]"
+    },
+    "2": {
+     "2": "Free time per tariff or contract; after it, daily charges apply. [TO VERIFY:v21]"
+    },
+    "3": {
+     "2": "Carrier release (commercial) and customs release (legal) are two different things — both are needed. [TO VERIFY:v68]"
+    }
+   },
+   "check": {
+    "2": {
+     "prompt": "What does the consignee need to obtain release from the carrier?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "An original B/L (or waybill / express release) and the charges paid"
+      },
+      {
+       "id": "b",
+       "text": "The VGM declaration",
+       "fb": "The VGM matters for loading at origin, not for release."
+      },
+      {
+       "id": "c",
+       "text": "The booking confirmation",
+       "fb": "The booking is the shipper's contract document at origin."
+      },
+      {
+       "id": "d",
+       "text": "The export declaration",
+       "fb": "Export clearance happened at origin."
+      }
+     ],
+     "explain": "Carrier release depends on the transport document and payment; customs release is needed in addition. [TO VERIFY:v68]"
+    },
+    "3": {
+     "prompt": "Freight is collect. The consignee pays destination THC but disputes the ocean freight amount. Can the carrier release?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "Not until the collect freight is paid or covered by an agreed credit/guarantee — the dispute is handled separately"
+      },
+      {
+       "id": "b",
+       "text": "Yes, THC is the only charge needed for release",
+       "fb": "Collect freight is part of what must be settled."
+      },
+      {
+       "id": "c",
+       "text": "Yes, if the original B/L is presented",
+       "fb": "The B/L is necessary but not sufficient when freight is collect."
+      },
+      {
+       "id": "d",
+       "text": "Only customs can decide",
+       "fb": "Payment conditions are a carrier matter."
+      }
+     ],
+     "explain": "Carriers usually hold cargo until collect freight is paid (lien rights depend on the B/L terms and law); disputes go to sales/credit. [TO VERIFY:v33]"
+    }
+   }
+  }
+ },
+ "dossier": {
+  "documents": [
+   "**Arrival notice** — charges, free time, release conditions. [TO VERIFY:v66]",
+   "**Import manifest** — filed with {importCustoms}.",
+   "**Discharge report** — damage and seal remarks.",
+   {
+    "text": "**Reefer download** on request. [TO VERIFY:v57]",
+    "when": {
+     "family": [
+      "reefer"
+     ]
+    }
+   }
+  ],
+  "costs": [
+   "**Destination THC** and documentation fee. [TO VERIFY:v35]",
+   "**Collect freight** when freight terms are collect.",
+   "**Demurrage / storage** after free time. [TO VERIFY:v21]",
+   "**Inspection costs** if customs selects the box. [TO VERIFY:v67]"
+  ],
+  "risks": [
+   "**Damage found at discharge** → survey and claims.",
+   "**Customs selection** → extra days and moves.",
+   "**Consignee not reachable** → box sits, demurrage builds.",
+   "**Unpaid collect freight** → cargo held. [TO VERIFY:v33]"
+  ],
+  "jobs": [
+   "**Import customer service** — arrival notices, release questions.",
+   "**Port / terminal operations** — discharge, yard, inspections.",
+   "**Finance** — collect freight, destination charges.",
+   "**D&D team** — demurrage invoicing and disputes. [TO VERIFY:v72]"
+  ]
+ },
+ "incoNote": {
+  "_by": "group",
+  "C": "Under C-rules, the seller's costs end here at the destination port; destination charges depend on the contract of carriage.",
+  "D": "Under D-rules, the seller still carries the risk and organises the next steps; import clearance is the buyer's (DAP/DPU) or the seller's (DDP).",
+  "*": "Under {incoterm}, the buyer has carried the risk since step {riskStep}."
+ },
+ "keyPoints": {
+  "1": [
+   "At {pod}, a crane unloads me and I wait in the import yard.",
+   "The carrier sends an arrival notice to the customer.",
+   "A free-time clock starts: waiting too long costs money."
+  ],
+  "2": [
+   "Discharge checks (damage, seal) are evidence for claims.",
+   "The arrival notice sets charges, free time and release conditions.",
+   "Import demurrage runs from discharge until gate-out, after free time."
+  ],
+  "3": [
+   "Customs inspections don't stop demurrage by default — check the tariff and contract.",
+   "Collect freight must be settled before release.",
+   "Waivers are commercial decisions, documented and approved."
+  ]
+ },
+ "question": {
+  "1": {
+   "prompt": "I'm in the import yard. What happens next?",
+   "hint": "Two organisations must say 'yes' before I can leave the port.",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "Customs clears me, and the carrier releases me to the customer.",
+     "confirm": "Exactly. Customs gives the legal green light; the carrier gives the commercial one (paperwork and payment). Under {incoterm}, import customs is the {importBy}'s job."
+    },
+    {
+     "id": "b",
+     "text": "A truck takes me straight to the customer.",
+     "why": "I can't leave the terminal without customs and carrier release.",
+     "realLife": "The gate would refuse the truck.",
+     "whenRight": "After release — that's step 10."
+    },
+    {
+     "id": "c",
+     "text": "I go back to sea to the next port.",
+     "why": "{pod} is my destination.",
+     "realLife": "Taking me back would cost a lot and delay the customer.",
+     "whenRight": "Only if I was discharged by mistake."
+    }
+   ]
+  },
+  "2": {
+   "prompt": "Box discharged at {pod}, arrival notice sent. What happens next?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "Import clearance by the consignee's broker; B/L surrender and charges paid to the carrier; carrier and customs releases sent to the terminal.",
+     "confirm": "Correct. Two releases are needed: customs (legal) and carrier (commercial). Under {incoterm}, import clearance: {importBy}. [TO VERIFY:v67] [TO VERIFY:v68]"
+    },
+    {
+     "id": "b",
+     "text": "The terminal releases the box on presentation of the arrival notice.",
+     "why": "The arrival notice is information, not a release.",
+     "realLife": "Terminals only release against carrier and customs releases.",
+     "whenRight": "Never."
+    },
+    {
+     "id": "c",
+     "text": "With freight prepaid, the box is released without any document.",
+     "why": "Prepaid freight doesn't replace the B/L, waybill or express release.",
+     "realLife": "Releasing without the right document risks misdelivery.",
+     "whenRight": "With a sea waybill or express release, no original is needed — but release is still controlled. [TO VERIFY:v68]"
+    },
+    {
+     "id": "d",
+     "text": "The shipper presents the export declaration at {pod}.",
+     "why": "Export clearance was done at origin.",
+     "realLife": "Destination customs need the import declaration.",
+     "whenRight": "Never."
+    }
+   ]
+  },
+  "3": {
+   "prompt": "Case: customs inspection adds 3 days; free time ends tomorrow; the consignee asks for a full demurrage waiver. What is the correct response?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "Explain that demurrage runs per tariff/contract, inspections included unless agreed otherwise; give the daily rate; help speed up clearance; refer any goodwill waiver to the commercial owner.",
+     "confirm": "Right. Customs delays are normally for cargo account; consistent application of the tariff and documented exceptions avoid disputes. Some regulators set billing rules. [TO VERIFY:v72]"
+    },
+    {
+     "id": "b",
+     "text": "Waive everything: customs delays are never the customer's fault.",
+     "why": "Waivers outside the tariff create inconsistency and revenue leakage.",
+     "realLife": "Other customers will ask for the same.",
+     "whenRight": "If the contract has a customs-inspection clause."
+    },
+    {
+     "id": "c",
+     "text": "Stop the clock until customs finishes.",
+     "why": "Clock events are defined by the tariff, not by the situation.",
+     "realLife": "An unauthorised stop is a billing error.",
+     "whenRight": "If the tariff explicitly suspends free time for inspections."
+    },
+    {
+     "id": "d",
+     "text": "Tell the consignee to ask customs to pay.",
+     "why": "Customs doesn't pay carrier charges.",
+     "realLife": "Unhelpful and damaging to the relationship.",
+     "whenRight": "Never."
+    }
+   ]
+  }
+ }
+}

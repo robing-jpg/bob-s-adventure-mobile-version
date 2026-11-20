@@ -1,0 +1,539 @@
+{
+ "id": 9,
+ "short": "Import & release",
+ "title": "Import formalities, customs clearance & release",
+ "scene": "flow",
+ "sceneDesc": "Four illustrated stations show what must happen before the container can leave the port: arrival notice, import declaration, Bill of Lading and payment, and release with a pick-up code.",
+ "flow": {
+  "strip": "Import demurrage free time: {freeDays} days from discharge (illustrative)",
+  "stations": [
+   {
+    "beat": "notice",
+    "icon": "mail",
+    "title": "Arrival notice",
+    "sub": "Carrier → Consignee"
+   },
+   {
+    "beat": "declare",
+    "icon": "customs",
+    "title": "Import declaration",
+    "sub": "Broker → {importCustoms}"
+   },
+   {
+    "beat": "bl",
+    "icon": "pay",
+    "title": "B/L + payment",
+    "sub": "Bank → Consignee → Carrier"
+   },
+   {
+    "beat": "release",
+    "icon": "stamp",
+    "title": "Release & pick-up code",
+    "sub": "Carrier + customs → Terminal"
+   }
+  ],
+  "incident": {
+   "station": 2,
+   "text": "ORIGINALS MISSING"
+  }
+ },
+ "beats": [
+  {
+   "id": "notice",
+   "ms": 1600,
+   "narration": {
+    "1": "The customer received my arrival notice. Now two 'yes' are needed: one from customs, one from the carrier.",
+    "2": "Import starts with the arrival notice: charges, free time and release conditions. Two releases are needed — customs (legal) and carrier (commercial). [TO VERIFY:v66]",
+    "3": "Release = customs release + carrier release (transport document, payment, holds) + terminal release (PIN or digital pick-up right). Any one missing blocks the gate-out. [TO VERIFY:v68]"
+   }
+  },
+  {
+   "id": "declare",
+   "ms": 2400,
+   "narration": {
+    "1": "A customs broker declares me to {importCustoms}: what's inside, its value and its origin. The importer pays duties and taxes.",
+    "2": "The [[import-declaration]] (HS code, customs value, origin, preferential proofs) is lodged by the importer's broker; duties and import VAT are paid or deferred; [[eori]] required in the EU. [TO VERIFY:v67]",
+    "3": "Customs value, classification and origin drive duties; risk-based selection may add a scan or physical exam. Under DDP the seller is the importer — check EU representation. [TO VERIFY:v26] [TO VERIFY:v67]"
+   },
+   "caption": {
+    "2": "Under {incoterm}, import clearance is done by the {importBy}."
+   }
+  },
+  {
+   "id": "bl",
+   "ms": 2400,
+   "narration": {
+    "1": "The customer gives the carrier an original Bill of Lading and pays what's due. It's like showing my ticket to pick up my luggage.",
+    "2": "For a 'to order' B/L, the bank [[endorsement|endorses]] an original to the consignee, who surrenders it to the carrier with payment of collect freight and charges. Sea waybill or express release: no original needed. [TO VERIFY:v68]",
+    "3": "The carrier checks the endorsement chain and that the presenter is the lawful holder; one original surrendered accomplishes the set. Delivery without original = misdelivery exposure. [TO VERIFY:v75]"
+   }
+  },
+  {
+   "id": "release",
+   "ms": 1800,
+   "narration": {
+    "1": "Customs says yes, the carrier says yes: I'm released! The terminal gets the message and a secret pick-up code is given to the truck company.",
+    "2": "Customs release and carrier release reach the terminal (often via a port community system); the haulier gets a [[pin]] or digital pick-up right and books a slot. [TO VERIFY:v68]",
+    "3": "Release data must match the collecting haulier; PIN security matters — cargo theft by fraudulent pick-up is a known risk, hence secure digital pick-up schemes. [TO VERIFY:v68]"
+   }
+  },
+  {
+   "id": "incident",
+   "levels": [
+    3
+   ],
+   "kind": "incident",
+   "narration": {
+    "3": "The originals are stuck at the buyer's bank because of an L/C discrepancy. Demurrage is running. The consignee asks you to release the box against a letter of indemnity ([[loi]])."
+   }
+  }
+ ],
+ "fact": {
+  "beat": "bl",
+  "text": {
+   "1": "Three original Bills of Lading are usually issued, but presenting just one is enough to collect the goods — the others then become void.",
+   "2": "Delivering cargo without the original B/L is one of the most common causes of large claims against carriers. [TO VERIFY:v75]"
+  }
+ },
+ "hotspots": [
+  {
+   "id": "customs",
+   "beat": "declare",
+   "levels": [
+    1
+   ],
+   "essential": [
+    1
+   ],
+   "x": 364,
+   "y": 236,
+   "label": "Import customs",
+   "kind": "Rule",
+   "body": {
+    "1": "Customs checks what I carry, collects duties and taxes, and makes sure nothing forbidden enters. Under {incoterm}, the {importBy} handles import customs."
+   }
+  },
+  {
+   "id": "idec",
+   "beat": "declare",
+   "levels": [
+    2,
+    3
+   ],
+   "essential": [
+    2,
+    3
+   ],
+   "x": 364,
+   "y": 236,
+   "label": "Import declaration",
+   "kind": "Document",
+   "body": {
+    "2": "Lodged by the importer or its broker with HS code, customs value, origin and supporting documents (invoice, packing list, certificate of origin). Duties and import VAT paid or deferred. [TO VERIFY:v67]",
+    "3": "Wrong classification or value → penalties and post-clearance audits; preferential origin needs valid proofs. Under DDP, the seller is the importer of record. [TO VERIFY:v26]"
+   }
+  },
+  {
+   "id": "carrier1",
+   "beat": "release",
+   "levels": [
+    1
+   ],
+   "essential": [
+    1
+   ],
+   "x": 828,
+   "y": 236,
+   "label": "Carrier release",
+   "kind": "Rule",
+   "body": {
+    "1": "The carrier lets me go only when it has the right paper (or electronic release) and the charges are paid."
+   }
+  },
+  {
+   "id": "obe",
+   "beat": "bl",
+   "levels": [
+    2,
+    3
+   ],
+   "essential": [
+    2,
+    3
+   ],
+   "doc": {
+    "2": "obe",
+    "3": "obe"
+   },
+   "x": 596,
+   "y": 236,
+   "label": "Original B/L (endorsed)",
+   "kind": "Document"
+  },
+  {
+   "id": "do",
+   "beat": "release",
+   "levels": [
+    2,
+    3
+   ],
+   "essential": [
+    2,
+    3
+   ],
+   "doc": {
+    "2": "do",
+    "3": "do"
+   },
+   "x": 828,
+   "y": 236,
+   "label": "Release order",
+   "kind": "Document"
+  },
+  {
+   "id": "waybill",
+   "beat": "bl",
+   "levels": [
+    2,
+    3
+   ],
+   "x": 596,
+   "y": 66,
+   "label": "No original?",
+   "kind": "Document",
+   "body": {
+    "2": "With a [[sea-waybill]], the named consignee gets the cargo without an original. With [[telex-release|express release]], originals were surrendered at origin. eB/Ls transfer electronically. [TO VERIFY:v49]"
+   }
+  }
+ ],
+ "docs": {
+  "obe": {
+   "title": "Original B/L — back (endorsements)",
+   "heading": "BILL OF LADING — REVERSE",
+   "sub": "Original 1 of 3 · fictional example",
+   "stamp": "SURRENDERED",
+   "rows": [
+    {
+     "label": "Front: consignee",
+     "value": "To order of Demo Trade Bank"
+    },
+    {
+     "label": "Endorsement",
+     "value": "Deliver to the order of Demo Import SAS — signed for Demo Trade Bank",
+     "zone": 1,
+     "levels": [
+      2
+     ]
+    },
+    {
+     "label": "Endorsement",
+     "value": "Deliver to the order of Demo Import SAS — signed for Demo Import SAS",
+     "zone": 1,
+     "error": true,
+     "levels": [
+      3
+     ]
+    },
+    {
+     "label": "Presented by",
+     "value": "Demo Import SAS",
+     "zone": 2
+    },
+    {
+     "label": "Set",
+     "value": "1 of 3 surrendered · others void",
+     "zone": 3
+    },
+    {
+     "label": "Freight",
+     "value": "{freightTerms}"
+    }
+   ],
+   "points": {
+    "1": {
+     "2": "The bank named as consignee transfers its right to the importer by endorsing the back.",
+     "3": "The endorsement must come from the current holder named on the B/L — here the bank."
+    },
+    "2": {
+     "2": "The presenter must be the lawful holder after the endorsement chain."
+    },
+    "3": {
+     "2": "One original accomplishes the set; the carrier marks the others void in its system. [TO VERIFY:v68]"
+    }
+   },
+   "check": {
+    "2": {
+     "prompt": "Who must endorse this 'to order of Demo Trade Bank' B/L before the importer can surrender it?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "The bank (Demo Trade Bank)"
+      },
+      {
+       "id": "b",
+       "text": "The shipper",
+       "fb": "The shipper isn't the named party here — the bank is."
+      },
+      {
+       "id": "c",
+       "text": "The carrier",
+       "fb": "The carrier receives the B/L; it doesn't endorse it."
+      },
+      {
+       "id": "d",
+       "text": "The notify party",
+       "fb": "Being notify party gives no right to the goods."
+      }
+     ],
+     "explain": "A 'to order of [bank]' B/L is transferred by the bank's endorsement, typically once the importer has paid or accepted under the L/C."
+    },
+    "3": {
+     "type": "spot",
+     "prompt": "One line makes this original unacceptable for release. Tap it.",
+     "explain": "The importer endorsed the B/L to itself: only the bank, named on the front, can endorse it. Releasing on this original would expose the carrier to the bank's claim. [TO VERIFY:v75]"
+    }
+   }
+  },
+  "do": {
+   "title": "Release order",
+   "heading": "RELEASE ORDER / DELIVERY ORDER",
+   "sub": "{podTerminal} · fictional example",
+   "stamp": "RELEASED",
+   "rows": [
+    {
+     "label": "Container",
+     "value": "{containerNo} · {boxCode}"
+    },
+    {
+     "label": "Released to",
+     "value": "Haulier appointed by the consignee (fictional)"
+    },
+    {
+     "label": "Pick-up right",
+     "value": "PIN ●●●●-7Q2 / digital pick-up token",
+     "zone": 1
+    },
+    {
+     "label": "Customs",
+     "value": "Released · import declaration accepted",
+     "zone": 2
+    },
+    {
+     "label": "Free time",
+     "value": "Demurrage ends Day +{freeDays} after discharge (illustrative)",
+     "zone": 3
+    },
+    {
+     "label": "Empty return",
+     "value": "Depot designated by the carrier"
+    }
+   ],
+   "points": {
+    "1": {
+     "2": "The terminal checks the pick-up right before releasing the box; in some ports secure digital systems replace PIN codes. [TO VERIFY:v68]"
+    },
+    "2": {
+     "2": "Without customs release, the box stays — even if the carrier has released it. [TO VERIFY:v67]"
+    },
+    "3": {
+     "2": "After demurrage free time, daily charges apply until gate-out; then import detention runs until the empty is returned. [TO VERIFY:v21]"
+    }
+   },
+   "check": {
+    "2": {
+     "prompt": "What does the haulier need at the terminal gate to collect the box?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "The valid pick-up right (PIN or digital token), with customs release on the box and a slot if required"
+      },
+      {
+       "id": "b",
+       "text": "The arrival notice",
+       "fb": "That's information for the consignee, not a pick-up right."
+      },
+      {
+       "id": "c",
+       "text": "The original B/L",
+       "fb": "The B/L goes to the carrier, not to the gate."
+      },
+      {
+       "id": "d",
+       "text": "The VGM",
+       "fb": "Not needed for import collection."
+      }
+     ],
+     "explain": "The gate releases against the pick-up right and status flags (customs, carrier). [TO VERIFY:v68]"
+    },
+    "3": {
+     "prompt": "The PIN was e-mailed to three haulage companies 'to be safe'. A truck nobody ordered collects the box. What went wrong?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "PIN security: pick-up rights must go only to the appointed haulier, ideally via secure digital release"
+      },
+      {
+       "id": "b",
+       "text": "Nothing — any truck with the PIN is legitimate",
+       "fb": "The PIN proves knowledge of a code, not authority."
+      },
+      {
+       "id": "c",
+       "text": "Customs released too early",
+       "fb": "Customs release isn't the issue here."
+      },
+      {
+       "id": "d",
+       "text": "The B/L wasn't endorsed",
+       "fb": "The documents were fine; the pick-up right leaked."
+      }
+     ],
+     "explain": "Fraudulent pick-ups exploit shared codes; ports have introduced secure digital pick-up for this reason. [TO VERIFY:v68]"
+    }
+   }
+  }
+ },
+ "dossier": {
+  "documents": [
+   "**Import declaration** + supporting documents. [TO VERIFY:v67]",
+   "**Original B/L** (endorsed), or sea waybill / express release / eB/L. [TO VERIFY:v68]",
+   "**Release / delivery order** with PIN or digital pick-up right.",
+   "**Customs release** message to the terminal."
+  ],
+  "costs": [
+   "**Duties and import VAT** — for the importer (the seller under DDP). [TO VERIFY:v26]",
+   "**Collect freight, destination THC, documentation fee**. [TO VERIFY:v35]",
+   "**Brokerage** and any **inspection** costs.",
+   "**Demurrage** if release takes too long. [TO VERIFY:v21]"
+  ],
+  "risks": [
+   "**Originals late** (banks, courier) → demurrage.",
+   "**Release without original** → misdelivery claim. [TO VERIFY:v75]",
+   "**Fraudulent pick-up** with leaked PIN. [TO VERIFY:v68]",
+   "**Wrong customs data** → penalties, post-clearance audit."
+  ],
+  "jobs": [
+   "**Import documentation / release desk** — B/L checks, releases.",
+   "**Finance / credit control** — collect freight and charges.",
+   "**Customs & compliance** — import filings, holds.",
+   "**Legal / claims** — LOI policy, misdelivery claims. [TO VERIFY:v75]"
+  ]
+ },
+ "incoNote": {
+  "_by": "incoterm",
+  "DDP": "Under DDP, the seller clears import and pays duties and VAT — it must be able to act as importer. [TO VERIFY:v26]",
+  "*": "Under {incoterm}, import clearance, duties and taxes are for the buyer."
+ },
+ "keyPoints": {
+  "1": [
+   "Customs must clear me and the importer pays duties and taxes.",
+   "The carrier releases me against an original Bill of Lading (or an electronic release) and payment.",
+   "Then the truck company gets a pick-up code."
+  ],
+  "2": [
+   "Two releases: customs (legal) and carrier (commercial); both reach the terminal.",
+   "A 'to order' B/L needs the right endorsement; waybills and express releases avoid paper originals.",
+   "Pick-up rights (PIN, digital) must be protected."
+  ],
+  "3": [
+   "Never release without the lawful original unless the LOI policy is applied and approved.",
+   "Check endorsement chains — the named party endorses.",
+   "Release fraud is real: use secure pick-up processes."
+  ]
+ },
+ "question": {
+  "1": {
+   "prompt": "I'm released! What happens next?",
+   "hint": "I'm still in the port. The customer's warehouse is inland.",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "A truck (or a train or a barge) takes me from the port to the customer.",
+     "confirm": "Yes! That's the on-carriage. Under {incoterm}, it's organised by {onBy}."
+    },
+    {
+     "id": "b",
+     "text": "The customer unloads me inside the port.",
+     "why": "Full containers usually travel to the customer's premises to be unloaded.",
+     "realLife": "Terminals don't let customers unload boxes on the quay.",
+     "whenRight": "LCL or port-side warehouses (CFS) — a different service."
+    },
+    {
+     "id": "c",
+     "text": "I go back to {pol} first.",
+     "why": "My cargo is for this customer — I don't need to go back.",
+     "realLife": "That would cost a fortune and take weeks.",
+     "whenRight": "Never in a normal shipment."
+    }
+   ]
+  },
+  "2": {
+   "prompt": "Customs and carrier releases have reached the terminal. What happens next?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "On-carriage: the appointed haulier collects the box with the pick-up right; a gate-out EIR is issued; import detention starts.",
+     "confirm": "Correct. Gate-out ends demurrage; import detention runs until the empty is returned. Under {incoterm}, on-carriage is organised by {onBy}. [TO VERIFY:v21]"
+    },
+    {
+     "id": "b",
+     "text": "The consignee unstuffs the box at the terminal.",
+     "why": "FCL boxes are unstuffed at the consignee's premises.",
+     "realLife": "Terminals don't offer that for FCL, except via a CFS service.",
+     "whenRight": "CFS devanning for LCL."
+    },
+    {
+     "id": "c",
+     "text": "The box must first return to the origin depot.",
+     "why": "The box delivers its cargo first; the empty is returned at destination.",
+     "realLife": "Nonsense in practice.",
+     "whenRight": "Never."
+    },
+    {
+     "id": "d",
+     "text": "Customs escorts the box to the consignee.",
+     "why": "Released goods move freely; escorts are exceptional.",
+     "realLife": "Only for specific procedures (e.g. some transit or high-risk goods).",
+     "whenRight": "Special customs procedures."
+    }
+   ]
+  },
+  "3": {
+   "prompt": "Case: originals stuck at the bank; demurrage running; the consignee asks for release against an LOI. What do you do?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "Apply the company's LOI policy: usually decline, or accept only with a bank-countersigned LOI approved by legal; meanwhile inform the consignee that demurrage continues.",
+     "confirm": "Right. Releasing without the original exposes the carrier to the lawful holder (here possibly the bank). A countersigned LOI reduces but doesn't remove the risk. [TO VERIFY:v75]"
+    },
+    {
+     "id": "b",
+     "text": "Release immediately: the consignee is a good customer.",
+     "why": "The original holder may still claim the goods.",
+     "realLife": "Misdelivery claims can equal the full cargo value.",
+     "whenRight": "Never without policy approval."
+    },
+    {
+     "id": "c",
+     "text": "Release against a copy of the B/L.",
+     "why": "A copy doesn't transfer title.",
+     "realLife": "Same exposure as releasing without anything.",
+     "whenRight": "Never for a negotiable B/L."
+    },
+    {
+     "id": "d",
+     "text": "Stop the demurrage clock until the bank releases the originals.",
+     "why": "Bank delays are a cargo-side matter under most tariffs.",
+     "realLife": "Unauthorised waivers create billing disputes.",
+     "whenRight": "Only if agreed commercially and documented."
+    }
+   ]
+  }
+ }
+}

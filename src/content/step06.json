@@ -1,0 +1,456 @@
+{
+ "id": 6,
+ "short": "Loading",
+ "title": "Loading & vessel departure",
+ "scene": "loading",
+ "sceneDesc": "A container ship arrives at the quay. A terminal truck brings the container under a giant quay crane, which lifts it on board. Lashers secure the stack and the ship sails.",
+ "beats": [
+  {
+   "id": "berth",
+   "ms": 2800,
+   "narration": {
+    "1": "My ship {vessel} arrives at the quay. A terminal truck brings me under a giant [[quay-crane|quay crane]].",
+    "2": "{vessel} berths in its window; terminal tractors bring boxes from the yard in the crane sequence built from the stowage plan. [TO VERIFY:v61]",
+    "3": "Berth window and crane intensity are agreed between carrier and terminal; a late vessel compresses the window and can leave boxes behind ('cut and run'). [TO VERIFY:v61]"
+   }
+  },
+  {
+   "id": "load",
+   "ms": 2700,
+   "narration": {
+    "1": "Up I go! The crane lifts me high and places me exactly where the plan says.",
+    "2": "Loading: the crane driver places the box in its planned slot; the terminal tallies every move and updates the bay plan. [TO VERIFY:v62]",
+    "3": "Discrepancies (box loaded in wrong slot, overstow) are fixed or recorded; the final BAPLIE goes to the carrier and the next ports. [TO VERIFY:v61]"
+   }
+  },
+  {
+   "id": "lash",
+   "ms": 1800,
+   "narration": {
+    "1": {
+     "_by": "family",
+     "reefer": "Workers fix me with steel bars and plug me into the ship's electricity, so I stay cold.",
+     "*": "Workers secure me with steel bars and locks, so I don't move when the sea gets rough."
+    },
+    "2": {
+     "_by": "family",
+     "reefer": "[[lashing|Lashing]] by terminal lashers; the reefer is plugged into a ship's socket and checked. [TO VERIFY:v57]",
+     "tank": "Lashing, and DG stowage checked against the IMDG segregation and the DG manifest. [TO VERIFY:v59]",
+     "oog": "Special lashing for OOG cargo, often on top of the stack or in dedicated slots. [TO VERIFY:v58]",
+     "*": "[[lashing|Lashing]] with twistlocks, bars and turnbuckles by terminal lashers, per the ship's lashing plan. [TO VERIFY:v62]"
+    },
+    "3": "Lashing forces depend on stack weight distribution — another reason VGMs and correct stowage matter. Inadequate lashing is a known factor in container losses. [TO VERIFY:v77]"
+   }
+  },
+  {
+   "id": "docs",
+   "ms": 1600,
+   "narration": {
+    "1": "The ship sails! Now that I'm on board, the carrier can issue the [[bl|Bill of Lading]] saying I'm 'shipped on board'.",
+    "2": "After loading, documentation issues the shipped-on-board B/L (or annotates a received B/L) and finalises the [[manifest]]. [TO VERIFY:v50]",
+    "3": "On-board date and vessel must be true: they're checked against L/C terms. Freight prepaid originals are often released only after payment. [TO VERIFY:v33] [TO VERIFY:v50]"
+   }
+  },
+  {
+   "id": "incident",
+   "levels": [
+    3
+   ],
+   "kind": "incident",
+   "narration": {
+    "3": "The day after sailing, the shipper asks to correct the consignee's name, misspelled on the B/L. The three originals were already issued and couriered to the shipper's bank."
+   }
+  }
+ ],
+ "fact": {
+  "beat": "load",
+  "text": {
+   "1": "A quay crane can move a container every one to two minutes. [TO VERIFY:v62]",
+   "2": "Each quay crane typically makes about 25–35 moves per hour; big ships work several cranes at once. [TO VERIFY:v62]"
+  }
+ },
+ "hotspots": [
+  {
+   "id": "crane",
+   "beat": "berth",
+   "essential": [
+    1
+   ],
+   "x": 125,
+   "y": 26,
+   "label": "Quay crane",
+   "kind": "Equipment",
+   "body": {
+    "1": "The giant crane that lifts containers between the quay and the ship.",
+    "2": "Ship-to-shore (STS) cranes reach across 20+ container rows on the largest ships; productivity drives berth time and cost. [TO VERIFY:v62]"
+   }
+  },
+  {
+   "id": "vessel",
+   "beat": "berth",
+   "x": 880,
+   "y": 390,
+   "label": "Vessel",
+   "kind": "Stakeholder",
+   "body": {
+    "1": "{vessel} — a container ship sailing from {pol} to {pod}.",
+    "2": "Ship sizes depend on the lane: ultra-large ships on Asia–North Europe, smaller ones on lanes with shallower ports or canals. [TO VERIFY:v11] [TO VERIFY:v64]"
+   }
+  },
+  {
+   "id": "lashing",
+   "beat": "lash",
+   "essential": [
+    2,
+    3
+   ],
+   "x": 556,
+   "y": 250,
+   "label": {
+    "1": "Lashing",
+    "2": "Lashing"
+   },
+   "kind": "Safety",
+   "body": {
+    "1": "Steel bars and locks keep stacked containers in place during the voyage.",
+    "2": "Twistlocks between tiers, lashing bars and turnbuckles; responsibility for lashing lies with the ship/terminal, but cargo inside the box is the shipper's (SLAC). [TO VERIFY:v62]",
+    "3": "Losses at sea are rare relative to volumes but occur in heavy weather, often with misdeclared weights or lashing failures. [TO VERIFY:v77]"
+   }
+  },
+  {
+   "id": "reeferplug",
+   "beat": "lash",
+   "when": {
+    "family": [
+     "reefer"
+    ]
+   },
+   "x": 420,
+   "y": 120,
+   "label": "Reefer plugged",
+   "kind": "Equipment",
+   "body": {
+    "1": "On board, I'm plugged into the ship's electricity.",
+    "2": "Ships have a limited number of reefer plugs — one reason reefer bookings need approval. Crew check reefers daily or monitor remotely. [TO VERIFY:v57]"
+   }
+  },
+  {
+   "id": "blinfo",
+   "beat": "docs",
+   "levels": [
+    1
+   ],
+   "essential": [
+    1
+   ],
+   "x": 640,
+   "y": 120,
+   "label": "Bill of Lading issued",
+   "kind": "Document",
+   "body": {
+    "1": "Now that I'm loaded, the carrier issues the Bill of Lading: proof that it received me on board, and — for a 'to order' B/L — the 'key' to collect me at destination."
+   }
+  },
+  {
+   "id": "obl",
+   "beat": "docs",
+   "levels": [
+    2,
+    3
+   ],
+   "essential": [
+    2,
+    3
+   ],
+   "doc": {
+    "2": "obl",
+    "3": "obl"
+   },
+   "x": 640,
+   "y": 120,
+   "label": "Shipped-on-board B/L",
+   "kind": "Document"
+  }
+ ],
+ "docs": {
+  "obl": {
+   "title": "Original Bill of Lading",
+   "heading": "BILL OF LADING — ORIGINAL",
+   "sub": "Fictional example",
+   "stamp": "ORIGINAL",
+   "rows": [
+    {
+     "label": "B/L no.",
+     "value": "{bookingNo}-01"
+    },
+    {
+     "label": "Consignee",
+     "value": "To order of Demo Trade Bank (fictional)"
+    },
+    {
+     "label": "Vessel / ports",
+     "value": "{vessel} {voyage} · {pol} → {pod}"
+    },
+    {
+     "label": "Container / seal",
+     "value": "{containerNo} / {sealNo}"
+    },
+    {
+     "label": "Description",
+     "value": "1 × {boxCode} STC {cargo} · SLAC"
+    },
+    {
+     "label": "Shipped on board",
+     "value": "{etd} · {vessel} · {pol}",
+     "zone": 1
+    },
+    {
+     "label": "Freight",
+     "value": "Freight {freightTerms}"
+    },
+    {
+     "label": "Originals",
+     "value": "THREE (3/3)",
+     "zone": 2
+    },
+    {
+     "label": "Issued",
+     "value": "{pol}, {etd} · signed for the carrier",
+     "zone": 3
+    }
+   ],
+   "points": {
+    "1": {
+     "2": "The on-board notation (date, vessel, port) makes it a 'shipped on board' B/L — what most L/Cs require. [TO VERIFY:v50]"
+    },
+    "2": {
+     "2": "A full set of originals; at destination, one original (endorsed if 'to order') is surrendered to obtain release, and the others become void. [TO VERIFY:v68]"
+    },
+    "3": {
+     "2": "Signed by or for the carrier (or the master/agent). Place and date of issue are checked by banks."
+    }
+   },
+   "check": {
+    "2": {
+     "prompt": "What makes this a 'shipped on board' B/L?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "The on-board notation with the date and vessel"
+      },
+      {
+       "id": "b",
+       "text": "Freight prepaid",
+       "fb": "Freight terms don't say whether the goods are on board."
+      },
+      {
+       "id": "c",
+       "text": "Three originals",
+       "fb": "The number of originals is unrelated."
+      },
+      {
+       "id": "d",
+       "text": "The 'to order' consignee",
+       "fb": "That makes it negotiable, not 'on board'."
+      }
+     ],
+     "explain": "A 'shipped on board' B/L (or a 'received' B/L annotated on board) proves loading on a named vessel at a date — key for letters of credit. [TO VERIFY:v50]"
+    },
+    "3": {
+     "prompt": "The L/C requires shipment no later than Day 6. The on-board date is {etd}. What now?",
+     "options": [
+      {
+       "id": "a",
+       "correct": true,
+       "text": "The documents are discrepant: the shipper must seek an L/C amendment or the buyer's waiver — the B/L date stays true"
+      },
+      {
+       "id": "b",
+       "text": "Re-date the B/L to Day 6 as a courtesy",
+       "fb": "Antedating a B/L is fraud."
+      },
+      {
+       "id": "c",
+       "text": "Issue a second B/L dated Day 6",
+       "fb": "Two B/Ls for one shipment is fraud too."
+      },
+      {
+       "id": "d",
+       "text": "Nothing: banks don't check dates",
+       "fb": "Banks check dates strictly under UCP 600."
+      }
+     ],
+     "explain": "UCP 600 banks examine dates strictly; the commercial fix is an L/C amendment or waiver, never a false B/L. [TO VERIFY:v50]"
+    }
+   }
+  }
+ },
+ "dossier": {
+  "documents": [
+   "**Shipped-on-board B/L** — or received B/L annotated on board. [TO VERIFY:v50]",
+   "**Final bay plan (BAPLIE)** and load report. [TO VERIFY:v61]",
+   "**Manifest** — cargo list for customs at the next ports.",
+   {
+    "text": "**DG manifest** for the master. [TO VERIFY:v59]",
+    "when": {
+     "family": [
+      "tank"
+     ]
+    }
+   }
+  ],
+  "costs": [
+   "**Origin THC** (if not already invoiced). [TO VERIFY:v35]",
+   "**Ocean freight** — prepaid now, or collect at destination ({freightTerms}).",
+   "**B/L amendment fee** after issuance. [TO VERIFY:v12]",
+   "**Courier** for originals."
+  ],
+  "risks": [
+   "**Cut and run** — a late vessel sails without some boxes.",
+   "**B/L errors** after issuance → recall originals, amendment fee, L/C problems.",
+   "**Lashing failure** in heavy weather → cargo loss. [TO VERIFY:v77]",
+   "**Antedated B/L** → fraud exposure, loss of carrier defences."
+  ],
+  "jobs": [
+   "**Vessel operations** — berth windows, port calls, ETA updates.",
+   "**Documentation** — B/L issuance, amendments, manifest.",
+   "**Finance / credit control** — prepaid freight before release of originals. [TO VERIFY:v33]",
+   "**Customer service** — departure confirmation to customers."
+  ]
+ },
+ "incoNote": {
+  "_by": "group",
+  "C": "Under C-rules the risk passes here, on board — but the seller keeps paying costs to destination.",
+  "*": ""
+ },
+ "keyPoints": {
+  "1": [
+   "A quay crane loads me onto the ship following the plan.",
+   "Lashing keeps the stacks in place during the voyage.",
+   "Once I'm on board, the carrier issues the Bill of Lading."
+  ],
+  "2": [
+   "Only boxes on the load list are loaded, in the planned crane sequence.",
+   "Lashing and stowage are the ship's job; cargo securing inside the box is the shipper's.",
+   "The shipped-on-board B/L proves loading on a named vessel and date."
+  ],
+  "3": [
+   "B/L dates and vessels must be true — L/C problems are solved commercially, never by antedating.",
+   "Amending an issued negotiable B/L requires the full set of originals back.",
+   "Under FOB/CFR/CIF, risk passes on board here."
+  ]
+ },
+ "question": {
+  "1": {
+   "prompt": "I'm on board and the ship has sailed. What happens next?",
+   "hint": {
+    "_by": "transship",
+    "yes": "My first ship is a small one — I'll change ship on the way.",
+    "*": "There's a whole ocean between me and {pod}."
+   },
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": {
+      "_by": "transship",
+      "yes": "I sail to the hub in {hub}, change ship, then cross to {pod}.",
+      "*": "I cross the ocean to {pod}: {transit}."
+     },
+     "confirm": {
+      "_by": "transship",
+      "yes": "Exactly. A feeder takes me to {hub}, where I'm transshipped onto a big mainline ship to {pod}.",
+      "*": "Exactly. The voyage takes {transit}; the carrier tracks the ship and updates the arrival date."
+     }
+    },
+    {
+     "id": "b",
+     "text": "I'm delivered to the customer the next day.",
+     "why": "The ship has an ocean to cross first.",
+     "realLife": "Even the fastest services take weeks between continents.",
+     "whenRight": "Short-sea or domestic services can take a day or two — not this route."
+    },
+    {
+     "id": "c",
+     "text": "I'm unloaded at the next port and checked by customs there.",
+     "why": "Ships call at several ports, but I stay on board until my port of discharge (unless transshipped).",
+     "realLife": "Boxes not due at a port stay on board; unloading the wrong box costs a lot.",
+     "whenRight": "Only for boxes destined for that port."
+    }
+   ]
+  },
+  "2": {
+   "prompt": "{vessel} has sailed with the box on board; B/L issued. What happens next?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": {
+      "_by": "transship",
+      "yes": "Feeder voyage to {hub}, discharge and transshipment onto the mainline vessel, then the long-haul leg to {pod}.",
+      "*": "Ocean voyage to {pod} ({transit}); the carrier monitors the voyage and sends the arrival notice before arrival."
+     },
+     "confirm": {
+      "_by": "transship",
+      "yes": "Correct. At the hub the box is discharged, stacked and reloaded onto {vessel}; missed connections are the main risk. [TO VERIFY:v73]",
+      "*": "Correct. Transit depends on routing (Suez, Cape, Panama) and port rotation. [TO VERIFY:v10] [TO VERIFY:v63]"
+     }
+    },
+    {
+     "id": "b",
+     "text": "The consignee lodges the import declaration on board.",
+     "why": "Import declarations are lodged with destination customs, typically when the goods arrive or shortly before.",
+     "realLife": "Early lodging is possible in some regimes, but nothing is done 'on board'.",
+     "whenRight": "Pre-arrival lodging exists in some regimes. [TO VERIFY:v67]"
+    },
+    {
+     "id": "c",
+     "text": "The original B/L is surrendered to the carrier at departure.",
+     "why": "Originals go to the shipper (and banks) and are surrendered at destination to get release.",
+     "realLife": "Surrendering at origin = express (telex) release, a deliberate choice.",
+     "whenRight": "When the shipper chooses express release, originals are surrendered at origin."
+    },
+    {
+     "id": "d",
+     "text": "The ENS is filed now that the vessel has sailed.",
+     "why": "For deep-sea containers, the ENS is due before loading at origin.",
+     "realLife": "Filing after loading would already have triggered problems. [TO VERIFY:v23]",
+     "whenRight": "Other transport modes have different deadlines."
+    }
+   ]
+  },
+  "3": {
+   "prompt": "Case: the consignee's name is misspelled on an issued B/L; the 3/3 originals are already at the bank. What is the correct procedure?",
+   "options": [
+    {
+     "id": "a",
+     "correct": true,
+     "text": "Retrieve the full set of 3/3 originals, cancel them and reissue a corrected set (amendment fee); update the manifest and advance filings.",
+     "confirm": "Right. A negotiable B/L can only be amended against surrender of the full set, otherwise two valid documents would circulate. Manifest/ICS2 data must be corrected too. [TO VERIFY:v12] [TO VERIFY:v68]"
+    },
+    {
+     "id": "b",
+     "text": "Issue a corrected B/L now; the old one will be ignored.",
+     "why": "Two valid negotiable sets would circulate.",
+     "realLife": "Risk of double claims and misdelivery.",
+     "whenRight": "Never while the original set is outstanding."
+    },
+    {
+     "id": "c",
+     "text": "Correct only the manifest; leave the B/L as it is.",
+     "why": "B/L and manifest must match, and the bank will see the error.",
+     "realLife": "Release problems at destination and L/C discrepancies.",
+     "whenRight": "Only for data that isn't on the B/L."
+    },
+    {
+     "id": "d",
+     "text": "Send the bank a letter saying the name is wrong.",
+     "why": "A letter doesn't change a document of title.",
+     "realLife": "The bank will still treat the B/L as presented.",
+     "whenRight": "Never as a substitute for reissuing."
+    }
+   ]
+  }
+ }
+}

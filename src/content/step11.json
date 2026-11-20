@@ -1,0 +1,106 @@
+{
+  "id": 11, "short": "Empty return", "title": "Unstuffing & empty return", "scene": "unstuff",
+  "sceneDesc": "At the consignee's warehouse, the cargo is unloaded from the container. The empty container is then trucked to an empty depot, inspected at the gate and prepared for its next trip.",
+  "beats": [
+    { "id": "unstuff", "ms": 2800,
+      "narration": {
+        "1": { "_by": "family", "tank": "A hose empties my tank into the customer's storage. Then I need a special cleaning.", "oog": "A crane lifts {cargo} off me. Job done!", "*": "The customer's team unloads {cargo} — that's [[unstuffing]]. I'm empty again!" },
+        "2": { "_by": "family", "reefer": "Unstuffing straight into the cold store: the cold chain must hold until the doors close behind the cargo. [TO VERIFY:v56]", "tank": "Discharge into the consignee's tanks; residues must be handled per DG rules before the tank is cleaned. [TO VERIFY:v59]", "*": "[[unstuffing|Unstuffing]] within the consignee's free time; any damage or shortage is documented with photos before the box leaves. [TO VERIFY:v70]" },
+        "3": "Post-delivery: shortages and damage claims need notice within the applicable time limits; the box must be returned clean, emptied of dunnage and labels removed (DG placards too). [TO VERIFY:v71]" } },
+    { "id": "return", "ms": 2600,
+      "narration": {
+        "1": "A truck takes me, empty, to the depot chosen by the carrier.",
+        "2": "Empty return to the depot designated in the release; returning elsewhere can be refused or charged. [TO VERIFY:v71]",
+        "3": "Equipment control designates return depots by type and demand; empty repositioning is a major cost driven by trade imbalance. [TO VERIFY:v38]" } },
+    { "id": "gatein", "ms": 2600,
+      "narration": {
+        "1": "At the depot gate, someone checks me all around again and writes down my condition. My [[detention]] clock stops!",
+        "2": "Empty gate-in [[eir]]: condition and cleanliness recorded; import detention stops. Damage beyond normal wear is recharged per tariff. [TO VERIFY:v71] [TO VERIFY:v21]",
+        "3": { "_by": "family", "reefer": "Return EIR, wash and PTI before the next release; unit faults found at PTI may lead to recharges if caused by misuse. [TO VERIFY:v57] [TO VERIFY:v71]", "tank": "Tank cleaning at an approved station with a cleaning certificate before the next load. [TO VERIFY:v71]", "*": "Return EIR vs gate-out EIR decides damage recharges; M&R estimates follow repair standards. [TO VERIFY:v71]" } } },
+    { "id": "incident", "levels": [3], "kind": "incident",
+      "narration": { "3": "The consignee disputes a {cur}650 damage recharge for a dent recorded on the return EIR. The gate-out EIR at the import terminal says 'no damage', but its photos are blurry." } }
+  ],
+
+  "fact": { "beat": "gatein", "text": {
+    "1": "After this trip, I may carry an export from Europe — or travel back to Asia empty, because more goods go east to west than west to east. [TO VERIFY:v38]",
+    "2": "Empty repositioning costs the industry billions each year; equipment control tries to reuse import boxes for exports ('street turns') wherever possible. [TO VERIFY:v38]" } },
+
+  "hotspots": [
+    { "id": "unstuff", "beat": "unstuff", "levels": [1], "essential": [1], "x": 560, "y": 250, "label": "Unloading", "kind": "Operations",
+      "body": { "1": "The customer unloads me at its own warehouse. If anything is damaged or missing, it takes photos and tells the carrier quickly." } },
+    { "id": "claims", "beat": "unstuff", "levels": [2, 3], "x": 560, "y": 250, "label": "Damage & claims", "kind": "Rule",
+      "body": { "2": "Damage or shortage must be noted on delivery documents and notified within the time limits of the applicable rules; photos and survey reports are key. [TO VERIFY:v70]", "3": "Carrier liability depends on the B/L terms and the applicable regime (e.g. Hague-Visby); the SLAC clause shifts packing issues to the shipper. [TO VERIFY:v50]" } },
+    { "id": "depot", "beat": "return", "x": 138, "y": 64, "label": "Return depot", "kind": "Stakeholder",
+      "body": { "1": "The carrier chooses where I'm returned, so I can be cleaned, repaired and used again.", "2": "Designated by the carrier per type and location; returning to another depot may be refused or charged. [TO VERIFY:v71]" } },
+    { "id": "clean", "beat": "return", "when": { "family": ["reefer", "tank"] }, "x": 150, "y": 260,
+      "label": { "_by": "family", "reefer": "Wash & PTI", "tank": "Tank cleaning" }, "kind": "Equipment",
+      "body": { "_by": "family",
+        "reefer": { "1": "Reefers are washed and their cooling machine tested before the next trip.", "2": "Washing and PTI before the next release; damage to the unit is checked. [TO VERIFY:v57]" },
+        "tank": { "1": "My tank is cleaned and a certificate proves it's ready for the next product.", "2": "Cleaning at an approved station with a cleaning certificate; residues of dangerous goods are handled under DG rules. [TO VERIFY:v59] [TO VERIFY:v71]" } } },
+    { "id": "eir1", "beat": "gatein", "levels": [1], "essential": [1], "x": 586, "y": 80, "label": "Return EIR", "kind": "Document",
+      "body": { "1": "My condition report at return. If I'm damaged and the earlier report said I was fine, the customer may have to pay for the repair." } },
+    { "id": "reir", "beat": "gatein", "levels": [2, 3], "essential": [2, 3], "doc": { "2": "reir", "3": "reir" }, "x": 586, "y": 80, "label": "Return EIR", "kind": "Document" },
+    { "id": "stop", "beat": "gatein", "x": 782, "y": 196, "label": "Detention stops", "kind": "Charge",
+      "body": { "1": "The clock stops when I'm back at the depot. If I came back late, the customer pays detention for the extra days.", "2": "Import detention ends at empty gate-in at the designated depot. Illustrative: {freeDays} free days, then {cur}80/day. [TO VERIFY:v21] [TO VERIFY:v12]" } }
+  ],
+
+  "docs": {
+    "reir": {
+      "title": "Return EIR", "heading": "EIR — EMPTY RETURN", "sub": "Empty depot, {pod} · fictional example", "stamp": "GATE IN",
+      "rows": [
+        { "label": "Container", "value": "{containerNo} · {boxCode} · EMPTY" },
+        { "label": "Condition", "value": "Dent 30 cm, left side panel · photos 4", "zone": 1 },
+        { "label": "Cleanliness", "value": { "_by": "family", "reefer": "Washed · PTI scheduled", "tank": "Cleaning certificate required", "*": "Swept clean · labels removed" }, "zone": 2 },
+        { "label": "Returned", "value": "Day +6, 15:20", "zone": 3 },
+        { "label": "Detention", "value": "{freeDays} days free · 6 used · no charge (illustrative)" }
+      ],
+      "points": {
+        "1": { "2": "Compared with the full gate-out EIR at the import terminal: damage that appeared in between is recharged per tariff. [TO VERIFY:v71]" },
+        "2": { "2": "Dirty boxes, leftover dunnage or old DG labels trigger cleaning fees. [TO VERIFY:v71]" },
+        "3": { "2": "Empty gate-in time stops import detention. [TO VERIFY:v21]" }
+      },
+      "check": {
+        "2": { "prompt": "What decides whether the consignee pays for the dent?",
+          "options": [ { "id": "a", "correct": true, "text": "Comparing this return EIR with the gate-out EIR at the import terminal" }, { "id": "b", "text": "The Incoterm", "fb": "Equipment damage follows the interchange terms, not the Incoterm." }, { "id": "c", "text": "The booking confirmation", "fb": "The booking doesn't record condition." }, { "id": "d", "text": "The arrival notice", "fb": "It lists charges, not condition." } ],
+          "explain": "Two EIRs bracket the custody period; damage recorded between them is recharged per the carrier's equipment terms. [TO VERIFY:v71]" },
+        "3": { "prompt": "The box was returned to a different depot, 30 km closer to the consignee. Likely outcome?",
+          "options": [ { "id": "a", "correct": true, "text": "Refused, or accepted with a wrong-depot / repositioning charge; detention may run until it reaches an accepted depot" }, { "id": "b", "text": "Accepted with no consequence: all depots are the same", "fb": "Depots are contracted and stocked per carrier needs." }, { "id": "c", "text": "The carrier pays the extra trip", "fb": "The return location was part of the release terms." }, { "id": "d", "text": "Customs fines the consignee", "fb": "It's an equipment issue, not a customs one." } ],
+          "explain": "Return locations reflect equipment control's plan; deviations cost money. [TO VERIFY:v71]" }
+      }
+    }
+  },
+
+  "dossier": {
+    "documents": [ "**Return EIR** — condition and time at empty gate-in. [TO VERIFY:v71]", "**Damage report / M&R estimate** if repairs are needed.", { "text": "**Cleaning certificate** — tanks. [TO VERIFY:v71]", "when": { "family": ["tank"] } }, { "text": "**PTI report** — reefers. [TO VERIFY:v57]", "when": { "family": ["reefer"] } }, "**Detention invoice** — if free time was exceeded. [TO VERIFY:v21]" ],
+    "costs": [ "**Import detention** after free time. [TO VERIFY:v21]", "**Damage recharge** per tariff and repair standards. [TO VERIFY:v71]", "**Cleaning fee** for dirty boxes. [TO VERIFY:v71]", "**Wrong-depot charge** if returned elsewhere. [TO VERIFY:v71]" ],
+    "risks": [ "**Late return** → detention.", "**Undocumented damage** → disputes. [TO VERIFY:v72]", "**Leftover DG labels or residues** → refusal or fees. [TO VERIFY:v59]", "**Box left idle** → equipment shortage elsewhere. [TO VERIFY:v38]" ],
+    "jobs": [ "**Equipment control** — return depots, repositioning, street turns. [TO VERIFY:v38]", "**Depot / M&R management** — inspections, repairs, cleaning.", "**D&D team** — detention and damage invoicing, disputes. [TO VERIFY:v72]", "**Customer service** — return instructions." ]
+  },
+  "incoNote": { "_by": "incoterm", "DPU": "Under DPU, the seller unloads the goods: risk and cost pass to the buyer once they are unloaded here.", "*": "Empty return and detention follow the contract of carriage and the sales contract, not the Incoterm." },
+
+  "keyPoints": {
+    "1": [ "The customer unloads me and reports any damage quickly.", "I go back empty to a depot chosen by the carrier, where my condition is checked.", "My detention clock stops when I'm back — then I'm ready for a new journey." ],
+    "2": [ "Unstuffing within free time; claims need documented evidence.", "Return to the designated depot; EIRs decide damage recharges.", "Equipment control reuses or repositions the empty — trade imbalance makes this costly." ],
+    "3": [ "D&D and damage disputes are won or lost on evidence (EIRs, photos, timestamps).", "Bill per tariff consistently; waivers are documented commercial decisions.", "Street turns and smart return depots cut empty repositioning." ]
+  },
+
+  "question": {
+    "1": { "prompt": "I'm empty and clean at the depot. What happens next?", "hint": "Containers are made to travel again and again.",
+      "options": [
+        { "id": "a", "correct": true, "text": "I'm used for a new booking — maybe an export from Europe — or sent back empty where boxes are needed.", "confirm": "Yes! Equipment control gives me a new job. My journey starts again with a booking. Congratulations — you've followed me all the way!" },
+        { "id": "b", "text": "I'm scrapped: containers are used only once.", "why": "Containers are built to last many years and many trips.", "realLife": "A box typically serves for well over a decade.", "whenRight": "Only when it's too damaged or old to repair." },
+        { "id": "c", "text": "I stay at the depot until my first shipper books again.", "why": "Any customer can use me; equipment control decides.", "realLife": "Idle boxes cost money and create shortages elsewhere.", "whenRight": "Never as a rule." } ] },
+    "2": { "prompt": "Empty returned and inspected at the depot. What happens next?",
+      "options": [
+        { "id": "a", "correct": true, "text": "Equipment control allocates the box: a new export booking from the region, or empty repositioning to a deficit area.", "confirm": "Correct. Reusing import boxes for exports avoids empty moves; the rest are repositioned where demand is. The journey loops back to step 1. [TO VERIFY:v38]" },
+        { "id": "b", "text": "The consignee now owns the box.", "why": "The carrier (or lessor) owns it.", "realLife": "Keeping it would mean detention, then a lost-box claim.", "whenRight": "Only if sold." },
+        { "id": "c", "text": "The importer must return it to the origin terminal in Asia.", "why": "The consignee's obligation ends at the designated return depot.", "realLife": "Repositioning is the carrier's business.", "whenRight": "Never." },
+        { "id": "d", "text": "It waits for the original shipper to book again.", "why": "Containers are pooled and reused by any customer.", "realLife": "Idle equipment is waste.", "whenRight": "Never." } ] },
+    "3": { "prompt": "Case: {cur}650 damage recharge disputed; gate-out EIR says 'no damage' but its photos are blurry. What is the right approach?",
+      "options": [
+        { "id": "a", "correct": true, "text": "Review both EIRs, photos and the M&R estimate; if the evidence that the damage occurred in the consignee's custody is weak, adjust or waive — and fix the photo process at the terminal.", "confirm": "Right. Recharges need evidence: two EIRs with usable photos and an approved repair estimate. Weak evidence loses disputes and customers; process fixes prevent repeats. [TO VERIFY:v71] [TO VERIFY:v72]" },
+        { "id": "b", "text": "Insist on payment: the return EIR shows the dent.", "why": "The return EIR alone doesn't prove when the damage happened.", "realLife": "Disputes escalate; regulators or courts may side with the customer.", "whenRight": "When both EIRs clearly support it." },
+        { "id": "c", "text": "Waive automatically to keep the customer happy.", "why": "Automatic waivers ignore valid recharges and set precedents.", "realLife": "Revenue leakage and inconsistent billing.", "whenRight": "When the evidence is genuinely insufficient — after review." },
+        { "id": "d", "text": "Charge the haulier instead.", "why": "The contractual counterparty for the recharge is the merchant who held the box.", "realLife": "The merchant may recover from its haulier, but that's their relationship.", "whenRight": "Under carrier haulage, the carrier may recover from its own subcontractor." } ] }
+  }
+}

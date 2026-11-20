@@ -1,0 +1,123 @@
+{
+  "id": 3, "short": "Pre-carriage", "title": "Pre-carriage to the terminal", "scene": "precarriage",
+  "sceneDesc": "A landscape between the shipper and the export terminal: a road, possibly a bridge, a river with barges and a railway. The chosen transport carries the container to the terminal.",
+  "beats": [
+    { "id": "haulage", "levels": [2, 3], "ms": 1400,
+      "narration": {
+        "2": "[[pre-carriage|Pre-carriage]] to {polTerminal}. Who moves me was fixed at booking: [[merchant-haulage]] or [[carrier-haulage]]. Open the choice to compare.",
+        "3": "Haulage mode drives liability, invoicing and who manages appointments and waiting time. Under carrier haulage the B/L can show an inland place of receipt. [TO VERIFY:v43]" },
+      "caption": { "2": "Under {incoterm}, pre-carriage is for the account of {preBy}, whatever the haulage mode." } },
+    { "id": "mode", "ms": 1400,
+      "narration": {
+        "1": { "_by": "modes", "many": "Full, sealed and weighed, I'm leaving. How do I get to the port? Pick a transport mode.", "*": "Full, sealed and weighed, I'm leaving for the port — by truck, the usual way to reach {polTerminal}." },
+        "2": { "_by": "modes", "many": "Mode choice depends on distance, volumes, infrastructure and cut-offs. Compare the options available to reach {polTerminal}. [TO VERIFY:v39]", "*": "{polTerminal} is reached by road: trucking is the standard pre-carriage here. [TO VERIFY:v39]" },
+        "3": "Intermodal legs close earlier than the CY cut-off and add handlings; trucking is exposed to congestion and road weight limits. [TO VERIFY:v40]" },
+      "caption": { "2": { "_by": "family", "reefer": "Reefers travel with a [[genset]] on the road. [TO VERIFY:v57]", "tank": "DG on the road follows national rules (e.g. ADR in Europe). [TO VERIFY:v59]", "oog": "Oversize loads may need a road permit or escort. [TO VERIFY:v58]", "*": "Intermodal legs usually close earlier than the port cut-off. [TO VERIFY:v40]" } } },
+    { "id": "travel", "ms": 3200,
+      "narration": {
+        "1": { "_by": "mode", "barge": "All aboard! A barge carries dozens of containers to {polTerminal}. Slower than a truck, but cheaper per box.", "rail": "I ride a train towards the port, then a short truck trip reaches the terminal.", "*": "On the road! The driver carries my booking number so the terminal knows who I am." },
+        "2": { "_by": "mode", "barge": "Barge from an inland barge terminal to {polTerminal}: economies of scale, an extra handling and an earlier cut-off. [TO VERIFY:v40]", "rail": "Rail to a rail terminal, then a last-mile leg: two extra handlings, each with cost and time.", "*": "Road haulage. Road weight limits apply to the whole truck, so a box within its own rating can still be overweight on the road. [TO VERIFY:v13]" },
+        "3": "In transit: the haulier carries booking and container references; ETA to the terminal is monitored against the CY cut-off ({cyCutoff})." },
+      "caption": { "2": "Port (CY) cut-off: {cyCutoff} (illustrative). Missed = not on the load list." } },
+    { "id": "approach", "ms": 1200,
+      "narration": {
+        "1": "Here's the terminal. The gate is expecting me: my arrival was announced in advance. But is my paperwork ready?",
+        "2": "At the terminal approach: [[pre-advice]] sent and, where required, a truck appointment booked. Open the transport order to see what the gate checks. [TO VERIFY:v44]",
+        "3": "Pre-advice (EDI COPARN or portal) and appointment slot must match the truck, the box and the booking — otherwise the gate rejects or holds it. [TO VERIFY:v44]" } },
+    { "id": "incident", "levels": [3], "kind": "incident",
+      "narration": { "3": { "_by": "route", "SHA-LEH": "Fog closes the Donghai Bridge for hours. The driver now expects to reach Yangshan four hours after the CY cut-off.", "HCM-SIN-LEH": "Severe congestion around Cat Lai: the driver now expects to reach the gate four hours after the CY cut-off.", "*": "A road blockade on the way to Posorja: the driver now expects to reach the gate four hours after the CY cut-off." } } }
+  ],
+
+  "fact": { "beat": "travel", "text": { "_by": "route",
+    "SHA-LEH": { "1": "Shanghai is the world's busiest container port: around 50 million TEU a year. [TO VERIFY:v42]", "2": "The Donghai Bridge linking Yangshan to the mainland is about 32.5 km long — every truck delivering to Yangshan crosses it. [TO VERIFY:v41]" },
+    "HCM-SIN-LEH": { "1": "Around Ho Chi Minh City, many containers travel by river barge on the Mekong delta waterways. [TO VERIFY:v54]", "2": "Cat Lai is a river terminal: big ships can't reach it, which is why boxes go by feeder to a hub like Singapore — or to deep-water Cai Mep. [TO VERIFY:v54]" },
+    "*": { "1": "Ecuador is the world's largest banana exporter. [TO VERIFY:v55]", "2": "Posorja is a deep-water port built on the coast, so large ships no longer need to sail up the Guayas river to Guayaquil. [TO VERIFY:v55]" } } },
+
+  "hotspots": [
+    { "id": "haulage", "beat": "haulage", "levels": [2, 3], "essential": [2, 3], "choice": "haulage", "x": 220, "y": 112, "label": "Haulage mode", "kind": "Choice" },
+    { "id": "mode", "beat": "mode", "essential": [1, 2, 3], "choice": "mode", "when": { "modes": "many" }, "x": 220, "y": 168, "label": "Transport mode", "kind": "Choice" },
+    { "id": "cutoff", "beat": "mode", "essential": [1], "x": 560, "y": 150, "label": "Port deadline", "kind": "Rule",
+      "body": { "1": "Whoever moves me, I must reach the terminal before the port deadline ({cyCutoff}, illustrative) — the [[cut-off]]. Late = I miss my ship.", "2": "CY cut-off {cyCutoff} (illustrative). Barge and rail legs have earlier cut-offs. [TO VERIFY:v40]" } },
+    { "id": "terminal", "beat": "mode", "x": 880, "y": 200, "label": "Export terminal", "kind": "Stakeholder",
+      "body": { "1": "{polTerminal}: the port facility where I'll wait for my ship.", "2": "Receives full boxes up to the CY cut-off, stacks them for loading and reports arrivals to customs. [TO VERIFY:v45]" } },
+    { "id": "bridge", "beat": "travel", "when": { "route": ["SHA-LEH"] }, "x": 520, "y": 258, "label": "Sea bridge", "kind": "Infrastructure",
+      "body": { "1": "The island terminal is linked to the mainland by a sea bridge more than 30 km long. [TO VERIFY:v41]", "2": "Donghai Bridge (about 32.5 km). Congestion or bad weather on the bridge directly threatens cut-offs. [TO VERIFY:v41]" } },
+    { "id": "road", "beat": "travel", "x": 330, "y": 236, "label": "Road limits", "kind": "Rule",
+      "body": { "1": "Roads have weight limits for the whole truck. A heavy container can be legal for the ship but too heavy for the road.", "2": "Gross vehicle weight limits are national (China: GB 1589; France: 44 t for 5+ axles). Overweight → fines, truck stopped. [TO VERIFY:v13]" } },
+    { "id": "genset", "beat": "travel", "when": { "family": ["reefer"] }, "x": 150, "y": 250, "label": "Genset", "kind": "Equipment",
+      "body": { "1": "On the road, a diesel generator keeps my cooling unit running.", "2": "Clip-on or underslung [[genset]] keeps the reefer powered between plug points; fuel and function checked before departure. [TO VERIFY:v57]" } },
+    { "id": "to", "beat": "approach", "levels": [2, 3], "essential": [2, 3], "doc": { "2": "to", "3": "to" }, "x": 711, "y": 262, "label": "Transport order / pre-advice", "kind": "Document" },
+    { "id": "gatecheck", "beat": "approach", "levels": [1], "x": 711, "y": 262, "label": "Pre-advice", "kind": "Document",
+      "body": { "1": "A message telling the terminal I'm coming: booking number, container number, ship. Without it, the gate may turn me away." } }
+  ],
+
+  "docs": {
+    "to": {
+      "title": "Transport order & pre-advice", "heading": "TRANSPORT ORDER · PRE-ADVICE", "sub": "Fictional example", "stamp": "SENT",
+      "rows": [
+        { "label": "Haulier", "value": "Demo Transport Co. (fictional)" },
+        { "label": "Booking no.", "value": "{bookingNo}" },
+        { "label": "Container / seal", "value": "{containerNo} ({boxCode}) / {sealNo}", "zone": 1 },
+        { "label": "Collect at", "value": "{origin}" },
+        { "label": "Deliver to", "value": "{polTerminal} · before {cyCutoff}", "zone": 2 },
+        { "label": "VGM", "value": "{vgm} kg" },
+        { "label": "Special", "value": { "_by": "family", "reefer": "Genset · keep {setPoint}", "tank": "DG {cargo} · ADR/national DG rules", "oog": "Oversize · permit if required", "*": "—" }, "zone": 3 }
+      ],
+      "points": {
+        "1": "Container, seal and booking must match the terminal's pre-advice exactly; a single digit wrong = gate rejection or hold. [TO VERIFY:v44]",
+        "2": "The CY cut-off is the latest arrival time. Some terminals also require a truck appointment slot. [TO VERIFY:v44]",
+        "3": "Special cargo has extra road rules: genset for reefers, DG documents and placards, permits for oversize loads. [TO VERIFY:v57] [TO VERIFY:v58] [TO VERIFY:v59]"
+      },
+      "check": {
+        "2": { "prompt": "What does the terminal gate match the truck against?",
+          "options": [
+            { "id": "a", "correct": true, "text": "The pre-advice / booking data: booking number, container number, seal (and appointment where required)" },
+            { "id": "b", "text": "The commercial invoice", "fb": "Invoices are for customs and the buyer, not the gate." },
+            { "id": "c", "text": "The original Bill of Lading", "fb": "The B/L doesn't exist yet for this box, and never travels with the truck." },
+            { "id": "d", "text": "The driver's ID only", "fb": "The driver is checked, but the box must match an expected delivery." } ],
+          "explain": "Terminals accept full export boxes only when they match a pre-advised booking; mismatches mean refusal or hold. [TO VERIFY:v44]" },
+        "3": { "prompt": "The pre-advice shows a container number with a wrong check digit. The truck is at the gate. Most likely outcome?",
+          "options": [
+            { "id": "a", "correct": true, "text": "Gate rejection or hold until the forwarder corrects the pre-advice; the truck waits or is turned away" },
+            { "id": "b", "text": "The gate clerk corrects the digit on the spot and lets the box in", "fb": "Some terminals allow manual correction, but data ownership stays with the sender; the default is hold." },
+            { "id": "c", "text": "The box enters; the B/L will be corrected later", "fb": "Entering under wrong data breaks traceability to the booking and load list." },
+            { "id": "d", "text": "Customs seizes the container", "fb": "A data mismatch is an operational issue, not a customs offence." } ],
+          "explain": "Check digits exist to catch typos (ISO 6346). Clean data avoids waiting time and cut-off risk. [TO VERIFY:v32] [TO VERIFY:v44]" }
+      }
+    }
+  },
+
+  "dossier": {
+    "documents": [ "**Transport / haulage order** — merchant → haulier, or carrier → subcontractor.", "**Pre-advice** (e.g. EDI COPARN) and truck appointment. [TO VERIFY:v44]", "**VGM** already transmitted — some terminals check it at gate-in. [TO VERIFY:v01]", "**Barge or rail consignment note** for intermodal legs." ],
+    "costs": [ "**Pre-carriage** — carrier haulage tariff or the merchant's own contract.", "**Waiting time** beyond free loading time. [TO VERIFY:v12]", "**Intermodal handling** at barge or rail terminals. [TO VERIFY:v40]", "**Export detention** until full gate-in. [TO VERIFY:v21]" ],
+    "risks": [ "**Arrival after the CY cut-off** → shut out, rolled (+7 days on a weekly service).", "**Pre-advice mismatch** → refused at the gate, waiting time.", "**Road overweight** → fines, truck stopped. [TO VERIFY:v13]", { "text": "**Genset failure** on a reefer → temperature excursion before the terminal. [TO VERIFY:v57]", "when": { "family": ["reefer"] } } ],
+    "jobs": [ "**Inland / intermodal operations** — haulier, barge and rail planning.", "**Procurement** — subcontractor contracts and rates.", "**Customer service** — cut-off monitoring and rollover communication.", "**D&D / finance** — waiting time and detention invoicing." ]
+  },
+  "incoNote": { "_by": "incoterm", "EXW": "Under EXW, the buyer organises and pays this trip — risk passed at the seller's door.", "FCA": "Under FCA (terminal), risk and cost pass when this truck arrives at the terminal, ready for unloading.", "FAS": "Under FAS, risk passes when the goods are 'alongside' — for containers, effectively at the terminal.", "CPT": "Under CPT, risk passes when the box is handed to the carrier at the terminal; the seller still pays carriage to destination.", "CIP": "Under CIP, risk passes when the box is handed to the carrier at the terminal; the seller still pays carriage and insurance.", "*": "The seller pays this trip and still carries the risk." },
+
+  "keyPoints": {
+    "1": [ "Pre-carriage brings the full container from the shipper to the export terminal, usually by truck.", "It must arrive before the port deadline (cut-off).", "The terminal must be expecting it: that's the pre-advice." ],
+    "2": [ "Merchant vs carrier haulage changes who contracts, who invoices and where the carrier's responsibility starts.", "Mode choice (truck, barge, rail) drives cost, emissions and cut-off timing.", "Pre-advice and appointments are hard constraints; late = shut-out." ],
+    "3": [ "Ask for a cut-off extension before the cut-off, not after — and document the answer.", "Data quality (check digits, seal numbers) prevents gate holds.", "Special cargo adds road rules: genset, DG regulations, oversize permits." ]
+  },
+
+  "question": {
+    "1": { "prompt": "I'm almost at the terminal. Is my paperwork ready? What happens next?", "hint": "Before a container can leave a country, two organisations need information about it: the carrier and customs.",
+      "options": [
+        { "id": "a", "correct": true, "text": "In parallel, the paperwork is finished: shipping instructions to the carrier and an export customs declaration.", "confirm": "Yes! A container travels twice: physically, and as data. The carrier needs the shipping instructions for the Bill of Lading, and customs must approve the export. Under {incoterm}, export customs is handled by the {exportBy}." },
+        { "id": "b", "text": "The terminal loads me straight onto the ship as soon as I arrive.", "why": "The ship may not even be in port yet; the terminal first checks me in, stores me and plans where I go on board.", "realLife": "Containers usually wait a few days in the terminal yard. Without customs approval, the terminal won't load me.", "whenRight": "Some special cargo goes directly to the ship's side, by prior agreement." },
+        { "id": "c", "text": "Customs opens and checks every container before it enters the port.", "why": "Customs check data first and select only a small share for physical inspection, based on risk.", "realLife": "If I'm selected, I'm moved to an inspection area: extra cost and delay — but it's the exception.", "whenRight": "When customs selects a container after its risk check." } ] },
+    "2": { "prompt": "Your {mode} delivery is approaching {polTerminal} before the port cut-off; VGM already transmitted. What happens next?",
+      "options": [
+        { "id": "a", "correct": true, "text": "The data flow closes in parallel: SI before the SI cut-off, export declaration by the exporter's broker, and the carrier's advance cargo declarations.", "confirm": "Correct. Physical and documentary flows run in parallel, each with its own cut-off. Under {incoterm}, export clearance is the {exportBy}'s job. [TO VERIFY:v45]" },
+        { "id": "b", "text": "The carrier lodges the export declaration as part of the ocean freight, using the booking data.", "why": "The exporter (or its broker) is the declarant; booking data lacks HS codes, values and invoice details.", "realLife": "No declaration = no customs release = not loaded.", "whenRight": "Some carriers sell brokerage as a separate service, under the exporter's mandate." },
+        { "id": "c", "text": "No more data is needed: the draft B/L is generated from the booking confirmation.", "why": "The booking has no consignee, final cargo description, package count or seal. The B/L is built from the SI.", "realLife": "Late or missing SI → late-SI fee, B/L on hold, shut-out risk. [TO VERIFY:v12]", "whenRight": "Portals can pre-fill the SI with booking data — the shipper still completes it." },
+        { "id": "d", "text": "Customs physically inspects the box at the gate; the terminal only receives inspected containers.", "why": "Customs controls are risk-based: most boxes are released electronically.", "realLife": "If selected, the box moves to an inspection area: costs and delay for the cargo side.", "whenRight": "When targeted after risk analysis, or for controlled goods. [TO VERIFY:v19]" } ] },
+    "3": { "prompt": "Case: the truck will reach the gate four hours after the CY cut-off. What is the best course of action?",
+      "options": [
+        { "id": "a", "correct": true, "text": "Before the cut-off, ask the carrier's export desk for a late-gate approval with the new ETA; if refused, rebook on the next sailing and inform the customer at once.", "confirm": "Right. Late-gate acceptance depends on the terminal's load planning and is easier before the plan is closed; it may carry a fee. Either way, the customer hears it from you first. [TO VERIFY:v12] [TO VERIFY:v31]" },
+        { "id": "b", "text": "Let the truck arrive and hope the gate accepts it.", "why": "After the cut-off the box isn't on the load list; the gate may refuse or accept it only for the next vessel.", "realLife": "Storage starts, the box waits a week, and the customer finds out last.", "whenRight": "Never as a plan." },
+        { "id": "c", "text": "Ask the terminal to delay the vessel's departure.", "why": "Vessels run on fixed berth windows serving many customers.", "realLife": "Not possible for one box; ships only wait for major operational reasons.", "whenRight": "Never for a single late container." },
+        { "id": "d", "text": "Send the box to a different terminal with a later cut-off.", "why": "The box is booked on a specific vessel at a specific terminal.", "realLife": "A box at the wrong terminal must be shifted: cost and almost certain shut-out.", "whenRight": "Only if the carrier rebooks it on a service calling that terminal." } ] }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "id": 10, "short": "Delivery", "title": "On-carriage & delivery to the consignee", "scene": "oncarriage",
+  "sceneDesc": "A landscape from the destination terminal to the consignee's warehouse: road, river and railway. The chosen transport carries the container to the customer.",
+  "beats": [
+    { "id": "pickup", "ms": 1600,
+      "narration": {
+        "1": "A haulier collects me at {podTerminal} with the pick-up code. At the gate my condition is checked again. How will I travel?",
+        "2": "Gate-out with the pick-up right; an [[eir]] records my condition. [[on-carriage|On-carriage]] can be [[merchant-haulage]] or [[carrier-haulage]]. Choose the mode. [TO VERIFY:v69]",
+        "3": "Gate-out ends demurrage and starts import detention; under carrier haulage, the carrier books the slot and the delivery appointment. [TO VERIFY:v21] [TO VERIFY:v70]" },
+      "caption": { "2": "Under {incoterm}, on-carriage is organised by {onBy}." } },
+    { "id": "travel", "ms": 3200,
+      "narration": {
+        "1": { "_by": "onMode", "barge": "A barge carries me up the river, then a short truck trip reaches the customer.", "rail": "A train carries me inland, then a truck does the last kilometres.", "*": "On the road to {dest}!" },
+        "2": { "_by": "onMode", "barge": "Barge to an inland terminal, then last-mile trucking: cheaper per box over distance, more handlings. [TO VERIFY:v69]", "rail": "Rail shuttle to an inland terminal, then last-mile truck; the detention clock keeps running. [TO VERIFY:v69]", "*": "Road delivery under a [[cmr]] consignment note; road limits apply (e.g. 44 t gross in France). [TO VERIFY:v13]" },
+        "3": "Inland legs share risks with pre-carriage: congestion, weight limits, missed slots. Under carrier haulage, the carrier answers for the inland leg under its B/L terms. [TO VERIFY:v43]" },
+      "caption": { "2": { "_by": "family", "reefer": "Genset on the road keeps {setPoint}. [TO VERIFY:v57]", "tank": "DG road rules apply (ADR in Europe). [TO VERIFY:v59]", "oog": "Oversize transport may need a permit or escort. [TO VERIFY:v58]", "*": "Import detention runs until the empty is returned. [TO VERIFY:v21]" } } },
+    { "id": "deliver", "ms": 1600,
+      "narration": {
+        "1": "Delivered! The customer checks my seal and signs a delivery receipt.",
+        "2": "Delivery at {dest} on appointment; the consignee checks the seal and condition and signs the [[pod-proof|proof of delivery]], noting any reservations. [TO VERIFY:v70]",
+        "3": "Reservations on the POD/CMR preserve claims; a 'clean' signature with visible damage or a wrong seal weakens the consignee's position. [TO VERIFY:v70]" } },
+    { "id": "incident", "levels": [3], "kind": "incident",
+      "narration": { "3": "The consignee has no unloading slot for five days. Import detention free time ends in two days. The haulier asks what to do with the loaded container." } }
+  ],
+
+  "fact": { "beat": "travel", "text": {
+    "1": "One river barge can carry dozens of containers — taking many trucks off the road. [TO VERIFY:v69]",
+    "2": "Port authorities push barge and rail to reduce road congestion and emissions; modal share targets are set by ports such as HAROPA and Antwerp-Bruges. [TO VERIFY:v69]" } },
+
+  "hotspots": [
+    { "id": "onmode", "beat": "pickup", "essential": [1, 2, 3], "choice": "onMode", "x": 320, "y": 140, "label": "Transport mode", "kind": "Choice" },
+    { "id": "gateout", "beat": "pickup", "levels": [2, 3], "x": 120, "y": 150, "label": "Gate-out", "kind": "Operations",
+      "body": { "2": "Gate-out EIR records condition; demurrage stops, import detention starts (or combined free time continues). [TO VERIFY:v21]" } },
+    { "id": "detention", "beat": "travel", "levels": [2, 3], "x": 600, "y": 150, "label": "Detention clock", "kind": "Charge",
+      "body": { "2": "Import detention runs from full gate-out to empty return at the designated depot. Illustrative: {freeDays} days free. [TO VERIFY:v21] [TO VERIFY:v12]" } },
+    { "id": "pod1", "beat": "deliver", "levels": [1], "essential": [1], "x": 830, "y": 190, "label": "Delivery receipt", "kind": "Document",
+      "body": { "1": "The customer checks that my seal is intact and that I'm not damaged, then signs the delivery receipt. Any problem must be written on it." } },
+    { "id": "pod", "beat": "deliver", "levels": [2, 3], "essential": [2, 3], "doc": { "2": "pod", "3": "pod" }, "x": 830, "y": 190, "label": "Proof of delivery", "kind": "Document" }
+  ],
+
+  "docs": {
+    "pod": {
+      "title": "Proof of delivery (CMR)", "heading": "CMR CONSIGNMENT NOTE · POD", "sub": "Fictional example", "stamp": "DELIVERED",
+      "rows": [
+        { "label": "Sender", "value": "Haulier for the consignee, from {podTerminal}" },
+        { "label": "Consignee", "value": "Demo Import (fictional) · {dest}" },
+        { "label": "Container / seal", "value": "{containerNo} / {sealNo}", "zone": 1 },
+        { "label": "Goods", "value": "{cargo}" },
+        { "label": "Delivered", "value": "Day +3, 10:40 · appointment kept" },
+        { "label": "Reservations", "value": "Seal intact · no visible damage", "zone": 2 },
+        { "label": "Signature", "value": "<span class=\"sig\">M. Durand</span> · consignee", "zone": 3, "html": true }
+      ],
+      "points": {
+        "1": { "2": "The consignee compares the seal number with the B/L before opening the doors." },
+        "2": { "2": "Reservations (damage, seal mismatch, shortage) written here preserve the right to claim. [TO VERIFY:v70]" },
+        "3": { "2": "Signature, date and time close the transport contract for the road leg; the CMR governs international road carriage in Europe. [TO VERIFY:v70]" }
+      },
+      "check": {
+        "2": { "prompt": "Why must the consignee check the seal before signing?",
+          "options": [ { "id": "a", "correct": true, "text": "A seal problem noted on the POD preserves the right to claim; a clean signature weakens it" }, { "id": "b", "text": "To calculate the VGM", "fb": "The VGM was for loading at origin." }, { "id": "c", "text": "Because customs requires it for VAT", "fb": "This is about evidence, not VAT." }, { "id": "d", "text": "To start the demurrage clock", "fb": "Demurrage already ended at gate-out." } ],
+          "explain": "Reservations on delivery documents are the first evidence in any cargo claim. [TO VERIFY:v70]" },
+        "3": { "prompt": "The seal on arrival is different from the B/L, and the consignee signs a clean POD. What's the consequence?",
+          "options": [ { "id": "a", "correct": true, "text": "The consignee's claim position is weakened; it should have noted a reservation and called a surveyor before unloading" }, { "id": "b", "text": "No consequence — the B/L proves the seal", "fb": "The B/L shows what was shipped; the POD shows what was accepted." }, { "id": "c", "text": "The carrier automatically pays any shortage", "fb": "Liability depends on evidence and the applicable rules." }, { "id": "d", "text": "Customs must reopen the clearance", "fb": "Not by default; it's a cargo-evidence issue." } ],
+          "explain": "A seal change may be legitimate (customs inspection) — but only documented reservations allow it to be investigated. [TO VERIFY:v70]" }
+      }
+    }
+  },
+
+  "dossier": {
+    "documents": [ "**Release order / pick-up right** — PIN or digital. [TO VERIFY:v68]", "**Gate-out EIR** — condition at handover.", "**CMR / POD** — signed delivery with reservations. [TO VERIFY:v70]", "**Barge or rail consignment note** for intermodal legs." ],
+    "costs": [ "**On-carriage** — carrier haulage tariff or merchant contract.", "**Import detention** after free time. [TO VERIFY:v21]", "**Waiting time** at the consignee beyond free unloading time. [TO VERIFY:v12]", "**Inland terminal handling** for barge/rail. [TO VERIFY:v40]" ],
+    "risks": [ "**No delivery slot** → detention and waiting time.", "**Clean POD despite damage** → weak claim.", "**Overweight on the road** → fines, re-handling. [TO VERIFY:v13]", { "text": "**Genset failure** on the last mile → temperature excursion. [TO VERIFY:v57]", "when": { "family": ["reefer"] } } ],
+    "jobs": [ "**Inland / intermodal operations** — carrier haulage at destination.", "**Import customer service** — delivery appointments.", "**D&D team** — detention invoicing.", "**Claims** — damage and shortage at delivery." ]
+  },
+  "incoNote": { "_by": "group", "D": "Under D-rules, the seller organises this leg; risk passes at the buyer's place (DAP/DDP: ready for unloading; DPU: once unloaded).", "*": "Under {incoterm}, the buyer organises and pays this leg." },
+
+  "keyPoints": {
+    "1": [ "A truck, train or barge takes me from the port to the customer.", "My condition is checked when I leave the port and when I arrive.", "The customer signs a delivery receipt and notes any problem." ],
+    "2": [ "Gate-out ends demurrage; import detention runs until the empty is returned.", "Mode choice affects cost, time and handlings.", "Reservations on the POD/CMR preserve claims." ],
+    "3": [ "Plan unloading slots before collecting the box — detention keeps running.", "Under carrier haulage, the carrier answers for the inland leg.", "Seal mismatches must be documented before unloading." ]
+  },
+
+  "question": {
+    "1": { "prompt": "I'm at the customer's warehouse. What happens next?", "hint": "My job isn't over when I'm empty.",
+      "options": [
+        { "id": "a", "correct": true, "text": "The customer unloads me, then a truck takes me back — empty — to a depot.", "confirm": "Yes! Once unloaded, I go back to a depot chosen by the carrier, ready for my next trip." },
+        { "id": "b", "text": "The customer keeps me as storage.", "why": "I belong to the carrier (or a leasing company).", "realLife": "Every extra day costs detention.", "whenRight": "If the customer buys or leases the container separately." },
+        { "id": "c", "text": "I sail straight back to {pol} full.", "why": "I must be unloaded first.", "realLife": "Sending cargo back would be a new shipment.", "whenRight": "Only for a return shipment, with a new booking." } ] },
+    "2": { "prompt": "Delivered, POD signed. What happens next?",
+      "options": [
+        { "id": "a", "correct": true, "text": "Unstuffing at the consignee within free time, then the empty is returned to the depot designated by the carrier; import detention stops at empty gate-in.", "confirm": "Correct. The designated return depot matters: returning elsewhere can mean extra charges. [TO VERIFY:v71]" },
+        { "id": "b", "text": "The empty stays with the consignee to reuse at will.", "why": "Equipment belongs to the carrier and is managed by equipment control.", "realLife": "Detention builds daily.", "whenRight": "With a separate agreement (e.g. street turn or 'triangulation' approved by the carrier)." },
+        { "id": "c", "text": "Return the empty to the import terminal by default.", "why": "The return location is set by the carrier — often a depot, not the terminal.", "realLife": "Wrong location = refused or charged.", "whenRight": "When the carrier designates the terminal as return point." },
+        { "id": "d", "text": "Ship the empty back to the origin depot in Asia at the consignee's cost.", "why": "Repositioning is the carrier's business.", "realLife": "The consignee's obligation ends at the designated return depot.", "whenRight": "Never for the consignee." } ] },
+    "3": { "prompt": "Case: no unloading slot for five days; detention free time ends in two days. What do you advise?",
+      "options": [
+        { "id": "a", "correct": true, "text": "Inform the consignee of the detention exposure; offer options (drop the loaded box at the haulier's yard or the consignee's site if possible, or accept detention); document the decision.", "confirm": "Right. Detention follows the tariff; transparent options let the cargo side choose the cheapest path. Storage at the haulier's yard has its own costs and security implications. [TO VERIFY:v21] [TO VERIFY:v70]" },
+        { "id": "b", "text": "Return the loaded box to the terminal to stop detention.", "why": "Re-entering the terminal triggers handling and storage, and detention rules may still apply.", "realLife": "Extra moves and fees, plus a second delivery trip.", "whenRight": "Rarely, if the terminal and carrier agree and it's cheaper." },
+        { "id": "c", "text": "Stop the detention clock until the consignee is ready.", "why": "Clock events are defined by the tariff.", "realLife": "An unauthorised stop is a billing error.", "whenRight": "Only with a documented commercial agreement." },
+        { "id": "d", "text": "Unload the cargo at the haulier's depot without asking the consignee.", "why": "The consignee decides where its goods are unloaded.", "realLife": "Liability and insurance issues for the haulier.", "whenRight": "Only on the consignee's instruction." } ] }
+  }
+}
