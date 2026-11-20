@@ -692,7 +692,7 @@ const CONFIG = {
   tariff: { currency: "€", freeDays: 7, detentionPerDay: 80, storagePerDay: 40, blAmendmentFee: 60 },
   /* v0.5 — results tracking. Paste the Google Apps Script web-app URL (ends with /exec) to send every finished journey
      to the team's Google Sheet (see docs/RESULTS_SETUP.md). Empty = results stay on this device (+ CSV download). */
-  resultsEndpoint: "",
+  resultsEndpoint: "https://script.google.com/macros/s/AKfycbwUqQ-FjL1PRoQ0ytlaZW6nftz_G1AM5Wvy1ANZD5DfGiY1dtpYMc_LphF8iwYjdale/exec",   // same Google Sheet as desktop (desktop commit ed8fa73)
   resultsToken: "",                       // optional shared secret, must match the TOKEN script property
   level1Incoterm: "FOB"                   // Level 1 does not choose: this rule is set for the learner (see HANDOFF)
 };

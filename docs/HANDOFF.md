@@ -1,6 +1,6 @@
 # Bob's Adventure — Mobile · handoff v0.1-mobile
 
-Read this file first. Origin: [robing-jpg/bob-s-adventure](https://github.com/robing-jpg/bob-s-adventure) (desktop), copied from `main` @ `fe184b2` (**v0.5**, 20 Nov 2026) without git history. The origin repo is never modified from this project. For everything not listed here (product decisions, v0.5 features, results set-up), the desktop HANDOFF of v0.5 applies; `docs/RESULTS_SETUP.md` and `docs/apps-script.gs` are unchanged copies.
+Read this file first. Origin: [robing-jpg/bob-s-adventure](https://github.com/robing-jpg/bob-s-adventure) (desktop), copied from `main` @ `fe184b2` (**v0.5**, 20 Nov 2026) + the results endpoint of `ed8fa73` without git history. The origin repo is never modified from this project. For everything not listed here (product decisions, v0.5 features, results set-up), the desktop HANDOFF of v0.5 applies; `docs/RESULTS_SETUP.md` and `docs/apps-script.gs` are unchanged copies.
 
 ## State (20 Nov 2026, v0.1-mobile)
 - Live: https://bob-s-adventure-mobile-version.vercel.app (Vercel, preset "Other", no build command; every push to `main` redeploys).
@@ -42,7 +42,7 @@ Read this file first. Origin: [robing-jpg/bob-s-adventure](https://github.com/ro
 
 ## Open items
 1. Expert validation of all TO VERIFY items (v01–v93), especially cost / CO₂ (v78–v93).
-2. `CONFIG.resultsEndpoint` is empty in both repos: paste the same Apps Script `/exec` URL as desktop. Mobile rows have `app_version = mobile`; if you want a separate `version` column in the Sheet, add it to `docs/apps-script.gs` in the desktop repo.
+2. `CONFIG.resultsEndpoint` = the same Apps Script web app as desktop (copied from desktop commit `ed8fa73`). Mobile rows have `app_version = mobile`; for a separate `version` column, add it to `docs/apps-script.gs` in the desktop repo. Agree the GDPR retention rule.
 3. Real-device check (iOS Safari, Android Chrome): keyboard over the nickname field, safe areas, font boosting. Tests here are headless Chrome with mobile emulation.
 4. Accessibility audit with a screen reader.
 
