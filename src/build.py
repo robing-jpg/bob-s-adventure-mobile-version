@@ -26,6 +26,7 @@ def main():
     # Quality checks
     vids = {v["id"] for v in content["verification"]}
     flags = set(re.findall(r"\[TO VERIFY:(v\d+)\]", raw))
+    flags |= set(re.findall(r'"(v\d{2,3})"', raw))   # data fields such as "v": "v78" (cost / CO2 values)
     missing_v = sorted(flags - vids)
     terms = set(re.findall(r"\[\[([a-z0-9-]+)(?:\|[^\]]+)?\]\]", raw))
     missing_t = sorted(terms - set(content["glossary"]))

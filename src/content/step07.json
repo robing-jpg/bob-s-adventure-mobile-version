@@ -4,12 +4,12 @@
   "beats": [
     { "id": "depart", "ms": 1200,
       "narration": {
-        "1": { "_by": "transship", "yes": "We're off! A small [[feeder]] ship takes me from {pol} towards the [[hub]] in {hub}.", "*": "We're off! {vessel} leaves {pol} for {pod}: {transit}." },
+        "1": { "_by": "transship", "yes": "We're off: a small [[feeder]] ship takes me from {pol} to the [[hub]] in {hub}.", "*": "We're off: {vessel} sails from {pol} to {pod} — {transit}." },
         "2": { "_by": "transship", "yes": "Feeder {feeder} sails to {hub}; the mainline connection on {vessel} is planned in the booking. [TO VERIFY:v54]", "*": "{vessel} {voyage} departs {pol}; port rotation and routing per the service schedule: {transit}. [TO VERIFY:v10]" },
         "3": "Schedule reliability matters: delays cascade into missed connections, berth windows and customer deadlines. ETAs are updated to customers through the voyage." } },
     { "id": "hub", "when": { "transship": true }, "ms": 2700,
       "narration": {
-        "1": "In {hub}, I'm lifted off the feeder, wait a little in the yard, then I'm loaded onto the big ship {vessel} to Europe. That's [[transshipment]].",
+        "1": "In {hub}, I move from the feeder to the big ship {vessel}: that's [[transshipment]].",
         "2": "[[transshipment|Transshipment]] at {hub}: discharge from the feeder, short dwell in the hub yard, reload onto {vessel}. Hub dwell is typically 1–3 days. [TO VERIFY:v73]",
         "3": "Connection risk: feeder delays, hub congestion or mainline omissions roll boxes to the next mainline sailing. Transshipment boxes are re-planned at the hub. [TO VERIFY:v73]" } },
     { "id": "canal", "ms": 2700,
@@ -19,21 +19,21 @@
         "3": { "_by": "route", "GYE-ANR": "Canal restrictions translate into fewer slots or weight limits; carriers may levy surcharges. [TO VERIFY:v55]", "*": "Routing changes add transit time, fuel cost (BAF / contingency surcharges) and ripple effects on equipment and schedules. [TO VERIFY:v63] [TO VERIFY:v35]" } } },
     { "id": "ocean", "ms": 2400,
       "narration": {
-        "1": { "_by": "family", "reefer": "Out at sea, my cooling unit keeps {cargo} at {setPoint}. The carrier watches my temperature from far away.", "*": "Out at sea, the crew check the lashings and the ship's route avoids the worst weather." },
+        "1": { "_by": "family", "reefer": "At sea, my cooling unit keeps {cargo} at {setPoint}, watched from afar by the carrier.", "*": "Out at sea, the crew check the lashings and the ship's route avoids the worst weather." },
         "2": { "_by": "family", "reefer": "Reefer monitored by the crew and, often, remotely by the carrier's reefer team: set point, supply/return air, alarms. [TO VERIFY:v57]", "tank": "DG on board: the master holds the DG manifest and emergency information for each class and UN number. [TO VERIFY:v59]", "*": "The carrier tracks position and ETA; customer service updates customers if the ETA changes." },
         "3": "Weather routing, lashing checks, reefer and DG monitoring. Incidents at sea (fire, stack collapse) can trigger [[general-average]]. [TO VERIFY:v76]" } },
     { "id": "arrive", "ms": 2400,
       "narration": {
-        "1": "Land ahoy! We're approaching {pod}. The carrier has already told the customer I'm coming.",
+        "1": "Land ahoy: we're nearing {pod}, and the customer knows I'm coming.",
         "2": "Approaching {pod}. The carrier has sent the [[arrival-notice]] and filed arrival data with {importCustoms}. [TO VERIFY:v66]",
         "3": "Arrival: berth window confirmed, discharge list and import manifest transmitted; customs risk analysis already ran on the ENS. [TO VERIFY:v23] [TO VERIFY:v67]" } },
     { "id": "incident", "levels": [3], "kind": "incident",
-      "narration": { "3": { "_by": "transship", "yes": "The feeder arrives late in {hub}: your box missed {vessel}. The next mainline sailing is in 7 days. The consignee has a DAP delivery deadline.", "*": "A fire breaks out in a cargo hold. It is extinguished, and the owners declare general average. Your customer's cargo was not damaged." } } }
+      "narration": { "3": { "_by": "transship", "yes": "The late feeder in {hub} made your box miss {vessel}; the next mainline sails in 7 days. The consignee has a DAP delivery deadline.", "*": "A hold fire is put out and the owners declare general average. Your customer's cargo was not damaged." } } }
   ],
 
   "fact": { "beat": "ocean", "text": { "_by": "transship",
-    "yes": { "1": "Singapore is the world's largest transshipment hub: tens of millions of containers change ships there every year. [TO VERIFY:v73]", "2": "Singapore handles about 39–41 million TEU a year, most of it transshipment. [TO VERIFY:v73]" },
-    "*": { "1": "Out of hundreds of millions of container moves each year, only a few hundred to a few thousand boxes are lost at sea. [TO VERIFY:v77]", "2": "The World Shipping Council reported 221 containers lost at sea in 2023 — a tiny fraction of the boxes shipped. [TO VERIFY:v77]" } } },
+    "yes": { "1": "Singapore is the world's largest transshipment hub. [TO VERIFY:v73]", "2": "Singapore handles about 39–41 million TEU a year, mostly transshipment. [TO VERIFY:v73]" },
+    "*": { "1": "Only a few hundred to a few thousand boxes a year are lost at sea. [TO VERIFY:v77]", "2": "The World Shipping Council counted 221 boxes lost at sea in 2023. [TO VERIFY:v77]" } } },
 
   "hotspots": [
     { "id": "hub", "beat": "hub", "when": { "transship": true }, "essential": [1, 2, 3], "x": 760, "y": 345, "label": "Transshipment hub", "kind": "Operations",
@@ -70,27 +70,27 @@
   "question": {
     "1": { "prompt": "The ship is approaching {pod}. What happens next?", "hint": "I'm still on the ship. How do I get onto the quay?",
       "options": [
-        { "id": "a", "correct": true, "text": "The ship berths and a crane unloads me onto the quay.", "confirm": "Yes! At {pod}, a quay crane discharges me and I go to the import yard." },
-        { "id": "b", "text": "A truck drives onto the ship to pick me up.", "why": "Container ships are worked by cranes, not trucks driving on board.", "realLife": "Only roll-on/roll-off ships carry trucks on board.", "whenRight": "On ro-ro ships (cars, trailers) — a different kind of shipping." },
-        { "id": "c", "text": "I'm delivered straight to the customer's door.", "why": "I have to be unloaded and cleared by customs first.", "realLife": "No box leaves the terminal without customs and carrier release.", "whenRight": "That's step 10." } ] },
+        { "id": "a", "correct": true, "text": "The ship berths, and a big crane lifts me down onto the quay.", "confirm": "Yes! At {pod}, a quay crane discharges me and I go to the import yard." },
+        { "id": "b", "text": "A truck drives up a ramp onto the ship to pick me up there.", "why": "Container ships are worked by cranes, not trucks driving on board.", "realLife": "Only roll-on/roll-off ships carry trucks on board.", "whenRight": "On ro-ro ships (cars, trailers) — a different kind of shipping." },
+        { "id": "c", "text": "The ship sails up the river and drops me at the customer's door.", "why": "I have to be unloaded and cleared by customs first.", "realLife": "No box leaves the terminal without customs and carrier release.", "whenRight": "That's step 10." } ] },
     "2": { "prompt": "{vessel} is approaching {pod}. What happens next?",
       "options": [
-        { "id": "a", "correct": true, "text": "Berthing and discharge; the box goes to the import yard while customs assesses the manifest data and the consignee prepares clearance.", "confirm": "Correct. Discharge follows the discharge list; customs has already risk-assessed the ENS and manifest. [TO VERIFY:v67]" },
-        { "id": "b", "text": "The box is delivered directly from the ship's side to the consignee's truck.", "why": "Import boxes go to the yard; customs and carrier releases come first.", "realLife": "Direct delivery is exceptional and needs prior clearance.", "whenRight": "Special cargo with pre-arranged clearance." },
-        { "id": "c", "text": "Customs clears the goods automatically on discharge, without a declaration.", "why": "Goods need an import declaration (or another customs procedure) to enter free circulation.", "realLife": "Undeclared goods stay in temporary storage, then face penalties.", "whenRight": "Transit or transshipment procedures follow different rules." },
-        { "id": "d", "text": "The box is transshipped again at {pod} onto a feeder.", "why": "{pod} is the final port of discharge in this booking.", "realLife": "Extra transshipment would add time and cost not booked.", "whenRight": "When the booking's final port is a feeder port beyond the hub." } ] },
+        { "id": "a", "correct": true, "text": "Berthing and discharge; import yard while customs risk-assesses and the consignee prepares clearance.", "confirm": "Correct. Discharge follows the discharge list; customs has already risk-assessed the ENS and manifest. [TO VERIFY:v67]" },
+        { "id": "b", "text": "The box goes straight from the ship's side onto the consignee's truck, with no yard stay at all.", "why": "Import boxes go to the yard; customs and carrier releases come first.", "realLife": "Direct delivery is exceptional and needs prior clearance.", "whenRight": "Special cargo with pre-arranged clearance." },
+        { "id": "c", "text": "Customs clears the goods automatically at discharge, without any import declaration being lodged.", "why": "Goods need an import declaration (or another customs procedure) to enter free circulation.", "realLife": "Undeclared goods stay in temporary storage, then face penalties.", "whenRight": "Transit or transshipment procedures follow different rules." },
+        { "id": "d", "text": "The box is transshipped again at {pod} onto a feeder before it may be handed over to the consignee.", "why": "{pod} is the final port of discharge in this booking.", "realLife": "Extra transshipment would add time and cost not booked.", "whenRight": "When the booking's final port is a feeder port beyond the hub." } ] },
     "3": { "_by": "transship",
       "yes": { "prompt": "Case: the box missed its mainline connection at {hub}; next sailing in 7 days; DAP delivery deadline at risk. What do you do?",
         "options": [
-          { "id": "a", "correct": true, "text": "Tell the customer the new ETA now and look for faster re-protection (another service or partner slot); document the cause.", "confirm": "Right. Re-protection options depend on network and slot agreements; transparent, early ETA updates let the seller (DAP) manage its buyer and costs. [TO VERIFY:v73]" },
-          { "id": "b", "text": "Wait for the next mainline without informing anyone.", "why": "The customer loses the chance to adapt.", "realLife": "Contract penalties and a damaged relationship.", "whenRight": "Never." },
-          { "id": "c", "text": "Ask the customer to pay a new freight for the next sailing.", "why": "The booked freight covers carriage to {pod}, including the connection.", "realLife": "Charging again would breach the contract of carriage.", "whenRight": "Only if the customer asks for a premium service." },
-          { "id": "d", "text": "Truck the box from {hub} to Europe.", "why": "There's no practical road link; it's not an option.", "realLife": "Not feasible.", "whenRight": "Never on this lane." } ] },
+          { "id": "a", "correct": true, "text": "Tell the customer the new ETA now, seek faster re-protection (other service or slot), log the cause.", "confirm": "Right. Re-protection options depend on network and slot agreements; transparent, early ETA updates let the seller (DAP) manage its buyer and costs. [TO VERIFY:v73]" },
+          { "id": "b", "text": "Wait quietly for the next mainline sailing; the ETA will update itself in the tracking system anyway.", "why": "The customer loses the chance to adapt.", "realLife": "Contract penalties and a damaged relationship.", "whenRight": "Never." },
+          { "id": "c", "text": "Ask the customer to pay a new ocean freight for the next sailing, since the connection was missed.", "why": "The booked freight covers carriage to {pod}, including the connection.", "realLife": "Charging again would breach the contract of carriage.", "whenRight": "Only if the customer asks for a premium service." },
+          { "id": "d", "text": "Truck the box from {hub} to Europe on a land bridge, to save the seven days lost at the hub.", "why": "There's no practical road link; it's not an option.", "realLife": "Not feasible.", "whenRight": "Never on this lane." } ] },
       "*": { "prompt": "Case: fire in a hold, general average declared; your customer's cargo is undamaged. What must the consignee do to obtain delivery?",
         "options": [
-          { "id": "a", "correct": true, "text": "Provide general average security — usually a GA bond plus an insurer's guarantee — before the cargo is released.", "confirm": "Right. All cargo interests contribute to GA, even undamaged ones. Insured cargo: the insurer provides the guarantee; uninsured cargo may need a cash deposit. [TO VERIFY:v76]" },
-          { "id": "b", "text": "Nothing — undamaged cargo is not affected.", "why": "GA is shared by all interests in proportion to value, damaged or not.", "realLife": "Release is withheld until security is provided.", "whenRight": "Never under a GA declaration." },
-          { "id": "c", "text": "Pay the full cost of the fire.", "why": "GA is shared proportionally among ship and all cargo.", "realLife": "Each interest pays its share after adjustment, which can take years.", "whenRight": "Never." },
-          { "id": "d", "text": "Present a new B/L.", "why": "The B/L doesn't change; security is what's required.", "realLife": "Release depends on GA security plus the usual release conditions.", "whenRight": "Never." } ] } }
+          { "id": "a", "correct": true, "text": "Provide general average security — usually a GA bond plus an insurer's guarantee — before release.", "confirm": "Right. All cargo interests contribute to GA, even undamaged ones. Insured cargo: the insurer provides the guarantee; uninsured cargo may need a cash deposit. [TO VERIFY:v76]" },
+          { "id": "b", "text": "Nothing: undamaged cargo is not affected by general average and is released as soon as it lands.", "why": "GA is shared by all interests in proportion to value, damaged or not.", "realLife": "Release is withheld until security is provided.", "whenRight": "Never under a GA declaration." },
+          { "id": "c", "text": "Pay the full cost of the fire and the repairs to the vessel, then claim them back from the shipper.", "why": "GA is shared proportionally among ship and all cargo.", "realLife": "Each interest pays its share after adjustment, which can take years.", "whenRight": "Never." },
+          { "id": "d", "text": "Present a new set of original B/Ls issued after the fire, since the old set is void under GA rules.", "why": "The B/L doesn't change; security is what's required.", "realLife": "Release depends on GA security plus the usual release conditions.", "whenRight": "Never." } ] } }
   }
 }

@@ -1,12 +1,12 @@
 {
  "meta": {
-  "version": "0.3",
-  "date": "2026-11-18",
+  "version": "0.5",
+  "date": "2026-11-20",
   "note": "Content for A Container Journey. Every uncertain or time-sensitive point carries [TO VERIFY:vNN]; see 'verification'."
  },
  "ui": {
   "welcome": "Ride along with Bob, a shipping container, from an exporter's warehouse to an importer's door — and back to the depot. Bob tells his own story: who handles him, which documents travel with him, what it costs and what can go wrong. At each step, you decide what happens next.",
-  "howto": "Choose your level, a container type, a route and an Incoterm. **★ Essential** items must be opened before you can move on. Underlined words open the glossary.",
+  "howto": "Pick a nickname, your level, a container type and a route — and, from Level 2, an Incoterm. **★ Essential** items must be opened before you can move on. Underlined words open the glossary.",
   "menuNote": "All companies, vessels, references and figures are fictional or illustrative. Items marked TO VERIFY must be validated by a qualified colleague before this module is used in production.",
   "speaker": "Bob",
   "next": "Next",
@@ -90,9 +90,54 @@
    },
    {
     "mood": "proud",
-    "text": "First, a few choices: your level, my outfit (the container type), our route, and the deal between seller and buyer — the [[incoterms|Incoterm]]. Ready to ship out?"
+    "text": "First, a few choices: a nickname, your level, my outfit (the container type), our route, and the deal between seller and buyer — the [[incoterms|Incoterm]] (at Level 1, I pick it for you). Ready to ship out?"
    }
-  ]
+  ],
+  "incoDef": "Incoterms are international rules (ICC, 2020 edition) that say who, seller or buyer, pays for each part of the transport and when the risk passes from one to the other. They do not transfer ownership.",
+  "l1Inco": "At Level 1 the rule is set for you. **FOB** is the rule you will hear most often in sea freight: the seller pays and carries the risk until the box is **on board the ship**, then the buyer takes over. Watch for that moment in step 6. From Level 2 you choose among all 11 rules — and learn why ICC prefers FCA for containers.",
+  "nickTitle": "0. Your nickname",
+  "nickLabel": "Nickname",
+  "nickPlaceholder": "e.g. BlueCrane42",
+  "nickHelp": "2–20 characters · no full name · no e-mail",
+  "privacy": "**What we record and why (GDPR):** your nickname, the date, your choices (level, container, route, Incoterm) and whether each answer was right at the first try — so that you and your trainers can see which points to work on. No name or e-mail is needed. Results stay on this device and, if your company has connected one, are sent to the team's training sheet. Ask your trainer to correct or delete them.",
+  "reviewTitle": "Points to work on",
+  "reviewHelp": "Everything missed at the first try: step questions, document checks (full point only at the first try) and the final quiz.",
+  "resultsSent": "✓ Results sent to the team's training sheet and saved on this device.",
+  "resultsSending": "Sending your results to the team's training sheet…",
+  "resultsLocal": "Results saved on this device. Download them (CSV) and send the file to your trainer.",
+  "csvButton": "Download my results (CSV)",
+  "xfer": {
+   "skip": "Skip",
+   "go": "Continue",
+   "kicker": {
+    "risk": "Risk transfer ▲",
+    "cost": "Cost transfer ●",
+    "both": "Risk ▲ and cost ● transfer"
+   },
+   "alt": {
+    "risk": "The RISK shield leaves the seller and flies to the buyer.",
+    "cost": "The cost coin leaves the seller and flies to the buyer.",
+    "both": "The RISK shield and the cost coin leave the seller and fly to the buyer."
+   },
+   "text": {
+    "risk": {
+     "1": "Right now — {point} — the **risk** passes to the **buyer**. If the goods are lost or damaged from here on, it is the buyer's problem (and the buyer's insurance).",
+     "2": "Risk passes to the buyer here: {point}. Loss or damage from now on is for the buyer's account — check who insures this leg."
+    },
+    "cost": {
+     "1": "Right now — {point} — the **costs** pass to the **buyer**. Until here the seller paid the transport; the rest of the trip is on the buyer's bill.",
+     "2": "Cost transfer point: {point}. Charges from here on are for the buyer's account, as the sale contract says."
+    },
+    "both": {
+     "1": "Right now — {point} — the **risk** and the **costs** both pass from the seller to the **buyer**. From here on, the rest of the trip is the buyer's business.",
+     "2": "Risk and costs pass together here: {point}. Loss, damage and the remaining charges are now for the buyer's account."
+    }
+   },
+   "cNote": {
+    "1": "Careful: the seller still pays the freight to {pod}. With the C rules, the risk passes first and the costs later.",
+    "2": "C-rule trap: the risk has passed at origin, but the seller still pays the main carriage to {pod} — two different points, two different moments."
+   }
+  }
  },
  "levels": [
   {
@@ -1081,6 +1126,9 @@
    "summary": {
     "1": "The seller only makes the goods available at its premises. The buyer handles loading, export customs, freight and everything after.",
     "2": "Minimum seller obligation; the buyer must clear export in a country where it may not be established. ICC suggests FCA (seller's premises) instead. [TO VERIFY:v14]"
+   },
+   "point": {
+    "risk": "the goods are ready for collection at the seller's premises, not even loaded"
    }
   },
   "FCA": {
@@ -1102,6 +1150,9 @@
    "summary": {
     "1": "The seller delivers the goods, cleared for export, to the carrier chosen by the buyer at the export terminal.",
     "2": "The container-friendly F-rule recommended by ICC. The parties can agree that the buyer's carrier issues an on-board B/L to the seller (useful for letters of credit). [TO VERIFY:v14]"
+   },
+   "point": {
+    "risk": "the loaded box is handed over to the carrier at {polTerminal}"
    }
   },
   "FAS": {
@@ -1123,6 +1174,9 @@
    "summary": {
     "1": "The seller places the goods next to the ship. It suits bulk cargo, not containers.",
     "2": "For containers, 'alongside' is effectively the terminal — FCA is the appropriate rule. [TO VERIFY:v15]"
+   },
+   "point": {
+    "risk": "the box is placed alongside the ship at {pol}"
    }
   },
   "FOB": {
@@ -1144,6 +1198,9 @@
    "summary": {
     "1": "The seller pays and carries the risk until the container is loaded on the ship. The buyer books and pays the ocean freight.",
     "2": "Sea-only rule. With containers, the seller loses physical control at the terminal gate but keeps the risk until loading — the reason ICC recommends FCA. [TO VERIFY:v15]"
+   },
+   "point": {
+    "risk": "the box is loaded on board {vessel} at {pol}"
    }
   },
   "CFR": {
@@ -1165,6 +1222,10 @@
    "summary": {
     "1": "The seller pays the ocean freight to the destination port, but the risk passes to the buyer when the box is loaded at origin.",
     "2": "Two critical points: risk on board at origin, costs to the destination port. ICC recommends CPT for containers. [TO VERIFY:v15]"
+   },
+   "point": {
+    "risk": "the box is loaded on board {vessel} at {pol}",
+    "cost": "the box is discharged at {pod}"
    }
   },
   "CIF": {
@@ -1186,6 +1247,10 @@
    "summary": {
     "1": "The seller pays the ocean freight and a basic insurance to the destination port, but the risk passes to the buyer when the box is loaded at origin.",
     "2": "Risk on board at origin, costs to destination port, minimum insurance (ICC C). ICC recommends CIP for containers. [TO VERIFY:v15] [TO VERIFY:v18]"
+   },
+   "point": {
+    "risk": "the box is loaded on board {vessel} at {pol}",
+    "cost": "the box is discharged at {pod}"
    }
   },
   "CPT": {
@@ -1207,6 +1272,10 @@
    "summary": {
     "1": "The seller pays transport to the named destination, but the risk passes when the goods are handed to the first carrier.",
     "2": "The container version of CFR: risk passes at handover to the carrier (here, the origin terminal), costs to the named place. [TO VERIFY:v14]"
+   },
+   "point": {
+    "risk": "the box is handed over to the first carrier at {polTerminal}",
+    "cost": "the box reaches {podTerminal}"
    }
   },
   "CIP": {
@@ -1228,6 +1297,10 @@
    "summary": {
     "1": "Like CPT, with the seller also buying insurance for the buyer.",
     "2": "The container version of CIF. Since 2020, CIP requires higher cover (ICC A) than CIF (ICC C). [TO VERIFY:v18]"
+   },
+   "point": {
+    "risk": "the box is handed over to the first carrier at {polTerminal}",
+    "cost": "the box reaches {podTerminal}"
    }
   },
   "DAP": {
@@ -1249,6 +1322,9 @@
    "summary": {
     "1": "The seller organises and pays transport to the buyer's door. The buyer handles import customs, duties and unloading.",
     "2": "If import clearance is delayed by the buyer, demurrage and detention can build up while the seller still holds the risk — allocate them in the contract."
+   },
+   "point": {
+    "risk": "the truck arrives at {dest}, ready for unloading"
    }
   },
   "DPU": {
@@ -1270,6 +1346,9 @@
    "summary": {
     "1": "Like DAP, but the seller also unloads the goods at the buyer's place.",
     "2": "The only rule where the seller unloads at destination (formerly DAT). Risk passes once the goods are unloaded. [TO VERIFY:v14]"
+   },
+   "point": {
+    "risk": "the box is unloaded at {dest}"
    }
   },
   "DDP": {
@@ -1291,6 +1370,9 @@
    "summary": {
     "1": "The seller does everything, including import customs, duties and taxes at destination.",
     "2": "Maximum seller obligation. Check that a foreign seller can legally act as importer (representation, VAT). [TO VERIFY:v26]"
+   },
+   "point": {
+    "risk": "the truck arrives at {dest}, cleared for import, ready for unloading"
    }
   }
  },
@@ -1397,7 +1479,7 @@
  "glossary": {
   "shipper": {
    "term": "Shipper",
-   "def": "The party sending the goods and named as shipper on the bill of lading. Not always the factory: it can be a forwarder or, under EXW, the buyer's agent."
+   "def": "The party sending the goods and named as shipper on the bill of lading — not always the factory: it can be a forwarder or, under EXW, the buyer's agent."
   },
   "consignee": {
    "term": "Consignee",
@@ -1405,7 +1487,7 @@
   },
   "notify-party": {
    "term": "Notify party",
-   "def": "The company the carrier informs when the cargo arrives. Being notify party gives no right to the goods by itself."
+   "def": "The company the carrier informs when the cargo arrives; being notify party gives no right to the goods by itself."
   },
   "carrier": {
    "term": "Carrier",
@@ -1433,7 +1515,7 @@
   },
   "pin": {
    "term": "PIN code",
-   "def": "A secret code the import terminal checks before releasing a full container to a truck. Some ports replace PINs with secure digital pick-up systems."
+   "def": "A secret code the import terminal checks before releasing a full container to a truck (some ports now use secure digital pick-up systems instead)."
   },
   "equipment-control": {
    "term": "Equipment control",
@@ -1461,7 +1543,7 @@
   },
   "teu": {
    "term": "TEU",
-   "def": "Twenty-foot Equivalent Unit, the industry's standard measure. A 40' container = 2 TEU."
+   "def": "Twenty-foot Equivalent Unit, the industry's standard measure: a 40' container counts as 2 TEU."
   },
   "high-cube": {
    "term": "High cube",
@@ -1485,7 +1567,7 @@
   },
   "oog": {
    "term": "OOG (Out of Gauge)",
-   "def": "Cargo that sticks out beyond the normal container dimensions (height, width or length). Needs special approval, stowage and lashing."
+   "def": "Cargo that sticks out beyond the normal container dimensions (height, width or length) and needs special approval, stowage and lashing."
   },
   "dg": {
    "term": "Dangerous goods (DG)",
@@ -1505,11 +1587,11 @@
   },
   "stuffing": {
    "term": "Stuffing",
-   "def": "Loading goods into a container. The reverse is unstuffing (or stripping)."
+   "def": "Loading goods into a container; the reverse is unstuffing (or stripping)."
   },
   "live-load": {
    "term": "Live load",
-   "def": "The truck waits while the container is stuffed. Alternative: drop and pick."
+   "def": "The truck waits while the container is stuffed (the alternative is drop and pick)."
   },
   "ctu-code": {
    "term": "CTU Code",
@@ -1525,7 +1607,7 @@
   },
   "seal": {
    "term": "Seal",
-   "def": "A numbered, single-use lock on the container door. A broken or different seal shows the box may have been opened."
+   "def": "A numbered, single-use lock on the container door: a broken or different seal shows the box may have been opened."
   },
   "iso-17712": {
    "term": "ISO 17712",
@@ -1533,11 +1615,11 @@
   },
   "vgm": {
    "term": "VGM (Verified Gross Mass)",
-   "def": "Total weight of a packed container: cargo, packaging, pallets, dunnage and the container's tare. Mandatory under SOLAS before loading."
+   "def": "Total weight of a packed container (cargo, packaging, pallets, dunnage and the container's tare), mandatory under SOLAS before loading."
   },
   "solas": {
    "term": "SOLAS",
-   "def": "International Convention for the Safety of Life at Sea (IMO). Chapter VI covers cargo, including the VGM rule."
+   "def": "The IMO International Convention for the Safety of Life at Sea, whose Chapter VI covers cargo, including the VGM rule."
   },
   "tare": {
    "term": "Tare",
@@ -1609,7 +1691,7 @@
   },
   "loi": {
    "term": "LOI (Letter of Indemnity)",
-   "def": "A guarantee asked by a carrier to release cargo without the original B/L. Risky: P&I clubs warn against it."
+   "def": "A guarantee asked by a carrier to release cargo without the original B/L — risky, and P&I clubs warn against it."
   },
   "hs-code": {
    "term": "HS code",
@@ -1665,7 +1747,7 @@
   },
   "stowage-plan": {
    "term": "Stowage plan / bay plan",
-   "def": "The plan showing where every container goes on board, built from weights, destinations, DG and reefer constraints. Exchanged as EDI BAPLIE."
+   "def": "The plan showing where every container goes on board, built from weights, destinations, DG and reefer constraints and exchanged as EDI BAPLIE."
   },
   "lashing": {
    "term": "Lashing",
@@ -1729,7 +1811,7 @@
   },
   "edi": {
    "term": "EDI",
-   "def": "Electronic Data Interchange between computer systems (e.g. UN/EDIFACT). VGM = VERMAS, bay plan = BAPLIE."
+   "def": "Electronic Data Interchange between computer systems (e.g. UN/EDIFACT messages: VERMAS for the VGM, BAPLIE for the bay plan)."
   },
   "pod-proof": {
    "term": "Proof of delivery (POD)",
@@ -1749,7 +1831,7 @@
   },
   "incoterms": {
    "term": "Incoterms",
-   "def": "ICC rules defining seller's and buyer's obligations for delivery, costs and risk. Current version: Incoterms 2020. They do not transfer ownership."
+   "def": "International rules (ICC, 2020 edition) that say who, seller or buyer, pays for each part of the transport and where the risk passes — they do not transfer ownership."
   },
   "ispm15": {
    "term": "ISPM 15",
@@ -2130,6 +2212,86 @@
    "id": "v77",
    "claim": "Containers lost at sea: a few hundred to a few thousand per year depending on the year (e.g. 221 in 2023 per WSC).",
    "source": "World Shipping Council 'Containers Lost at Sea' report"
+  },
+  {
+   "id": "v78",
+   "claim": "Ocean freight Shanghai → Le Havre ≈ €3,000 per 40' and ≈ €1,900 per 20' (Drewry WCI Shanghai–Rotterdam US$3,504/40ft on 12 Nov 2026; Xeneta Far East–North Europe US$3,588/FEU on 13 Nov 2026; a 40' usually costs 1.5–1.7× a 20'). Spot rates move every week.",
+   "source": "Drewry World Container Index; Xeneta weekly market update; carrier quotation"
+  },
+  {
+   "id": "v79",
+   "claim": "Ocean freight Ho Chi Minh City → Le Havre via Singapore ≈ €3,100 per 40' and ≈ €1,950 per 20': no weekly public index found for this lane, Far East–North Europe used as a proxy. Mid-2026 quotes for Ho Chi Minh City–North Europe were much higher (≈ US$5,700).",
+   "source": "Xeneta / Drewry; carrier quotation for Cat Lai–Le Havre"
+  },
+  {
+   "id": "v80",
+   "claim": "Posorja → Antwerp-Bruges: 40' reefer ≈ €4,300 (no public index; reference ranges for 40' reefers to North Europe ≈ US$4,300–5,600 in 2026); dry ≈ €1,350 (20') / €2,100 (40') from indicative online quotes Guayaquil–Rotterdam (20' US$1,260–1,930, Oct 2026).",
+   "source": "Carrier reefer tariff or quotation, Ecuador–North Europe"
+  },
+  {
+   "id": "v81",
+   "claim": "40' reefer freight Asia → North Europe ≈ €3,800 (forwarder reference: China–North Europe 40' reefer ≈ US$4,300, June 2026).",
+   "source": "Carrier reefer tariff or quotation"
+  },
+  {
+   "id": "v82",
+   "claim": "Out-of-gauge surcharge ≈ €1,500 per open top / flat rack (lost slots, special stowage); in reality quoted case by case.",
+   "source": "Carrier OOG / special equipment tariff"
+  },
+  {
+   "id": "v83",
+   "claim": "Dangerous-goods surcharge ≈ €350 per tank container, IMDG class 3.",
+   "source": "Carrier DG surcharge tariff"
+  },
+  {
+   "id": "v84",
+   "claim": "Origin THC ≈ US$150 per TEU at Chinese export ports (≈ €130 per 20' / €195 per 40'), same order assumed for Cat Lai; Posorja ≈ €200 / €300 is an estimate (no public tariff found); reefer THC ≈ ×1.5 (estimate).",
+   "source": "Carrier local-charge tariffs (China, Vietnam, Ecuador)"
+  },
+  {
+   "id": "v85",
+   "claim": "Destination THC: Le Havre ≈ €295 per container (forwarder general tariff France, Q3 2026); Antwerp-Bruges ≈ €200 per 20' / €300 per 40' (2026 overview).",
+   "source": "Carrier THC tariffs for North Europe (published per port)"
+  },
+  {
+   "id": "v86",
+   "claim": "Documentation fee ≈ €95 per B/L and import customs clearance ≈ €105 per declaration (forwarder tariff France 2025–2026); export declaration ≈ €100 is an estimate. Duties and VAT are not included.",
+   "source": "Forwarder / customs broker tariffs"
+  },
+  {
+   "id": "v87",
+   "claim": "Inland transport costs are estimates (no public tariff): pre-carriage ≈ €300 Shanghai (≈ 120 km), ≈ €150 Ho Chi Minh City (≈ 40 km), ≈ €350 Ecuador (≈ 150 km); on-carriage incl. empty return ≈ €850 Le Havre → Paris region (≈ 200 km), ≈ €450 Antwerp → Belgian ripening centre (≈ 60 km). The same price is used for barge and rail (simplification).",
+   "source": "Haulier, barge and rail operator quotations"
+  },
+  {
+   "id": "v88",
+   "claim": "Sea distances: Shanghai–Le Havre via Suez ≈ 19,500 km (≈ 10,500 nm; via the Cape ≈ 13,800 nm); Ho Chi Minh City–Singapore ≈ 1,200 km (estimate); Singapore–Le Havre via Suez ≈ 15,600 km (Singapore–Rotterdam ≈ 8,440 nm); Posorja–Antwerp via Panama ≈ 10,500 km (routing tools give 9,500–13,200 km with port calls).",
+   "source": "Sea-distance tables (e.g. NGA Pub. 151) and the actual service rotation"
+  },
+  {
+   "id": "v89",
+   "claim": "Container ship default intensity ≈ 66 g CO₂e per TEU-km (dry) and ≈ 134 g per TEU-km (reefer, including on-board reefer energy); a 40' = 2 TEU. Clean Cargo lane factors for Asia–Europe are lower.",
+   "source": "GLEC Framework default intensity values; Clean Cargo trade-lane factors"
+  },
+  {
+   "id": "v90",
+   "claim": "Feeder ship ≈ 128 g CO₂e per TEU-km (GLEC 'other trade lanes', well-to-wheel); reefer on a feeder counted ×2 (estimate).",
+   "source": "GLEC Framework default intensity values"
+  },
+  {
+   "id": "v91",
+   "claim": "Land intensity (GLEC v3, Europe): articulated truck 34–40 t, container transport ≈ 73 g CO₂e per tonne-km (tank-to-wheel); inland container barge ≈ 16 g; electric rail ≈ 11 g (upstream electricity). Mass = cargo + tare (simplification).",
+   "source": "GLEC Framework v3.x, road / rail / inland waterway tables"
+  },
+  {
+   "id": "v92",
+   "claim": "Reefer on land ≈ 100 kWh per day plugged in (reported 96–139 kWh per day) × ≈ 0.4 kg CO₂e per kWh (assumed grid / genset mix) ≈ 40 kg CO₂e per day; 3 days at each terminal (assumption).",
+   "source": "Reefer unit manufacturer data; national grid emission factors"
+  },
+  {
+   "id": "v93",
+   "claim": "Exchange rate used for freight indices: ≈ 0.86 € per US$ (November 2026).",
+   "source": "ECB euro reference rates"
   }
  ],
  "quiz": {
@@ -2139,15 +2301,15 @@
     "q": "Where are the goods loaded into a full container (FCL)?",
     "options": [
      {
-      "text": "At the shipper's premises",
+      "text": "At the shipper's own premises",
       "correct": true
      },
      {
-      "text": "On the ship",
+      "text": "On board the ship, at the port",
       "text2": ""
      },
      {
-      "text": "At the empty depot"
+      "text": "At the empty container depot"
      }
     ],
     "explain": "For FCL, the shipper stuffs its own goods at its premises; the depot only handles empty boxes."
@@ -2161,10 +2323,10 @@
       "correct": true
      },
      {
-      "text": "Only the weight of the goods"
+      "text": "Only the weight of the goods, without the container"
      },
      {
-      "text": "The weight of the truck and the container"
+      "text": "The weight of the truck plus the loaded container"
      }
     ],
     "explain": "VGM = tare + cargo + packaging + pallets + dunnage. It must reach the carrier before the VGM cut-off."
@@ -2178,10 +2340,10 @@
       "correct": true
      },
      {
-      "text": "To show which ship it travels on"
+      "text": "To show which ship and voyage it travels on"
      },
      {
-      "text": "To pay the customs duties"
+      "text": "To show that the customs duties are paid"
      }
     ],
     "explain": "The seal number is written in the documents; a broken or different seal shows the box was opened."
@@ -2195,10 +2357,10 @@
       "correct": true
      },
      {
-      "text": "The ship waits for it"
+      "text": "The ship waits for it before leaving the port"
      },
      {
-      "text": "It is sent back to the shipper for free"
+      "text": "It goes back to the shipper free of charge"
      }
     ],
     "explain": "Ships keep their schedule; a late box is 'rolled' to the next sailing, often a week later."
@@ -2212,10 +2374,10 @@
       "correct": true
      },
      {
-      "text": "The truck driver"
+      "text": "The truck driver who brings it to the port"
      },
      {
-      "text": "The consignee"
+      "text": "The consignee who will receive it later"
      }
     ],
     "explain": "Planners build the stowage plan from weights, destinations and special cargo."
@@ -2229,10 +2391,10 @@
       "correct": true
      },
      {
-      "text": "Moving a container from a truck to a train"
+      "text": "Moving a container from a truck onto a train for the next leg"
      },
      {
-      "text": "Returning an empty container to the depot"
+      "text": "Returning an empty container to the depot after delivery"
      }
     ],
     "explain": "On the Ho Chi Minh City route, a feeder brings the box to Singapore, where it is moved to the mainline ship."
@@ -2246,10 +2408,10 @@
       "correct": true
      },
      {
-      "text": "A new VGM"
+      "text": "A new weighing of the full container, with a new VGM"
      },
      {
-      "text": "Nothing — the truck just picks it up"
+      "text": "Nothing: the customer's truck just picks it up"
      }
     ],
     "explain": "Customs must clear the goods and the carrier must release the box (B/L, freight and charges settled)."
@@ -2259,14 +2421,14 @@
     "q": "What is detention?",
     "options": [
      {
-      "text": "A daily charge when the carrier's container stays outside too long",
+      "text": "A daily charge when the carrier's box stays out too long",
       "correct": true
      },
      {
-      "text": "A customs penalty for wrong documents"
+      "text": "A customs penalty paid for any wrong or missing documents"
      },
      {
-      "text": "The fee for loading the ship"
+      "text": "The fee paid to the terminal for loading the ship"
      }
     ],
     "explain": "After the free days, every extra day the box stays with the customer costs money."
@@ -2280,10 +2442,10 @@
       "correct": true
      },
      {
-      "text": "Yes, ownership changes at the risk point"
+      "text": "Yes — ownership changes at the risk transfer point, always"
      },
      {
-      "text": "Only under DDP"
+      "text": "Only under DDP, where the seller does everything for the buyer"
      }
     ],
     "explain": "Ownership is set by the sales contract. Incoterms cover delivery, costs, risk and formalities."
@@ -2295,20 +2457,20 @@
      {
       "text": {
        "_by": "freight",
-       "Seller": "The seller",
-       "Buyer": "The buyer"
+       "Seller": "The seller (exporter)",
+       "Buyer": "The buyer (importer)"
       },
       "correct": true
      },
      {
       "text": {
        "_by": "freight",
-       "Seller": "The buyer",
-       "Buyer": "The seller"
+       "Seller": "The buyer (importer)",
+       "Buyer": "The seller (exporter)"
       }
      },
      {
-      "text": "The terminal"
+      "text": "The port's terminal"
      }
     ],
     "explain": "E- and F-rules: the buyer contracts the main carriage. C- and D-rules: the seller does."
@@ -2324,13 +2486,13 @@
       "correct": true
      },
      {
-      "text": "The booking confirmation"
+      "text": "The booking confirmation (BC)"
      },
      {
-      "text": "The VGM declaration"
+      "text": "The VGM declaration (SOLAS)"
      },
      {
-      "text": "The export declaration"
+      "text": "The export customs declaration"
      }
     ],
     "explain": "The SI gives parties, cargo description, packages, weights and seal; the booking lacks these details."
@@ -2340,17 +2502,17 @@
     "q": "Under SOLAS, a packed container without a VGM…",
     "options": [
      {
-      "text": "must not be loaded",
+      "text": "must not be loaded until a VGM is received",
       "correct": true
      },
      {
-      "text": "can be loaded if the manifest has a weight"
+      "text": "can be loaded if the manifest shows a weight"
      },
      {
-      "text": "can be loaded with a fine"
+      "text": "can be loaded once the shipper pays a fine"
      },
      {
-      "text": "is weighed on board"
+      "text": "is weighed on board by the crew after loading"
      }
     ],
     "explain": "No VGM, no loading: the terminal keeps it off the load list. [TO VERIFY:v01]"
@@ -2364,13 +2526,13 @@
       "correct": true
      },
      {
-      "text": "from booking to vessel departure"
+      "text": "from the booking date to the vessel's departure"
      },
      {
-      "text": "from full gate-in to loading"
+      "text": "from full gate-in at the terminal to vessel loading"
      },
      {
-      "text": "from discharge to delivery"
+      "text": "from discharge at destination to final delivery"
      }
     ],
     "explain": "Demurrage covers time in the terminal; detention covers time outside. Tariffs vary. [TO VERIFY:v21]"
@@ -2380,17 +2542,17 @@
     "q": "A sea waybill differs from a negotiable B/L because…",
     "options": [
      {
-      "text": "it is not a document of title: cargo is released to the named consignee without an original",
+      "text": "it is not a document of title: no original is needed for release",
       "correct": true
      },
      {
-      "text": "it is only used for reefers"
+      "text": "it is only used for reefers and other perishable, urgent cargo"
      },
      {
-      "text": "it must be endorsed to the bank"
+      "text": "it must be endorsed to the bank before the carrier gives any release"
      },
      {
-      "text": "it is issued before loading"
+      "text": "it is issued before loading, so that it can travel with the box"
      }
     ],
     "explain": "Sea waybills speed up release when no bank or onward sale needs a document of title."
@@ -2400,17 +2562,17 @@
     "q": "Which party lodges the EU entry summary declaration (ENS) for an FCL shipment to Le Havre?",
     "options": [
      {
-      "text": "The ocean carrier (house data possibly by an NVOCC), before loading at origin",
+      "text": "The ocean carrier (house data possibly by an NVOCC), before loading",
       "correct": true
      },
      {
-      "text": "The consignee, on arrival"
+      "text": "The consignee, on arrival at Le Havre, together with the import entry"
      },
      {
-      "text": "The exporter's broker, with the export declaration"
+      "text": "The exporter's broker, together with the export declaration at origin"
      },
      {
-      "text": "The terminal at Le Havre"
+      "text": "The terminal at Le Havre, when the vessel's arrival is announced"
      }
     ],
     "explain": "Under ICS2 the carrier files the ENS at least 24 h before loading for deep-sea containers. [TO VERIFY:v23]"
@@ -2424,13 +2586,13 @@
       "correct": true
      },
      {
-      "text": "A new VGM is required"
+      "text": "A new VGM must be declared for the second ship"
      },
      {
-      "text": "The B/L is reissued"
+      "text": "The B/L must be reissued for the new vessel"
      },
      {
-      "text": "Import duties are paid there"
+      "text": "Import duties must be paid in the hub country"
      }
     ],
     "explain": "Feeder delays or congestion can roll the box to a later mainline sailing. [TO VERIFY:v73]"
@@ -2444,13 +2606,13 @@
       "correct": true
      },
      {
-      "text": "The carrier"
+      "text": "The carrier, as part of the freight"
      },
      {
-      "text": "The terminal"
+      "text": "The terminal, after the discharge"
      },
      {
-      "text": "Customs"
+      "text": "Customs, once the release is given"
      }
     ],
     "explain": "Merchant haulage = the cargo side organises inland transport; the carrier only releases the box."
@@ -2464,13 +2626,13 @@
       "correct": true
      },
      {
-      "text": "the place where the reefer is plugged in"
+      "text": "the place in the yard where the reefer is plugged in"
      },
      {
-      "text": "the reefer's maximum weight"
+      "text": "the reefer's maximum gross weight, shown on its door"
      },
      {
-      "text": "the time limit for PTI"
+      "text": "the deadline for the reefer's pre-trip inspection (PTI) check"
      }
     ],
     "explain": "The set point is booked by the shipper and checked at PTI and throughout the voyage. [TO VERIFY:v56]"
@@ -2484,13 +2646,13 @@
       "correct": true
      },
      {
-      "text": "At the destination port"
+      "text": "At discharge in the port of destination"
      },
      {
-      "text": "At the buyer's warehouse"
+      "text": "At the buyer's warehouse, on final delivery"
      },
      {
-      "text": "At the export terminal gate"
+      "text": "At the export terminal gate, on gate-in"
      }
     ],
     "explain": "Costs run to destination, but risk passes on board at origin — two critical points."
@@ -2522,17 +2684,17 @@
     "q": "A customer's box is rolled because of overbooking, and the L/C requires shipment by a date that the next sailing misses. Best first action?",
     "options": [
      {
-      "text": "Inform the customer immediately with options (other service, split, amendment of L/C)",
+      "text": "Inform the customer immediately with options (other service, split, L/C amendment)",
       "correct": true
      },
      {
-      "text": "Issue the B/L with the original vessel and date"
+      "text": "Issue the B/L with the original vessel and date, exactly as the letter of credit requires"
      },
      {
-      "text": "Wait until the next sailing is confirmed"
+      "text": "Wait until the next sailing is confirmed, then inform the customer in writing"
      },
      {
-      "text": "Change the B/L date after loading"
+      "text": "Change the B/L date after loading so that it matches the latest shipment date"
      }
     ],
     "explain": "Never misdate a B/L (fraud). Early transparency lets the shipper seek an L/C amendment. [TO VERIFY:v31]"
@@ -2546,13 +2708,13 @@
       "correct": true
      },
      {
-      "text": "The booking weight until the B/L is issued"
+      "text": "The booking weight, until the B/L has been issued"
      },
      {
-      "text": "The average of both"
+      "text": "The average of both weights, as a safety margin"
      },
      {
-      "text": "The weight on the commercial invoice"
+      "text": "The gross weight shown on the commercial invoice"
      }
     ],
     "explain": "Stowage uses the VGM; large gaps should still be queried for misdeclaration. [TO VERIFY:v01]"
@@ -2562,17 +2724,17 @@
     "q": "Seal number on the door ≠ seal number on the B/L after a customs inspection at origin. Correct handling?",
     "options": [
      {
-      "text": "Record the customs seal number and amend the documents/manifest as required",
+      "text": "Record the customs seal and amend the documents and manifest as required",
       "correct": true
      },
      {
-      "text": "Ignore it — customs seals are always accepted"
+      "text": "Ignore it: customs seals are always accepted without any document change"
      },
      {
-      "text": "Replace the customs seal with the original number"
+      "text": "Replace the customs seal with a new one bearing the original seal number"
      },
      {
-      "text": "Issue a new booking"
+      "text": "Cancel the shipment and issue a new booking with the new seal number"
      }
     ],
     "explain": "The new seal must be documented to avoid holds and claims at destination."
@@ -2582,17 +2744,17 @@
     "q": "Under FOB, the box is damaged in the export yard before loading. Who bears the risk?",
     "options": [
      {
-      "text": "The seller — risk passes only on board",
+      "text": "The seller — risk passes only once the box is on board",
       "correct": true
      },
      {
-      "text": "The buyer — it booked the freight"
+      "text": "The buyer — because it booked and pays the ocean freight"
      },
      {
-      "text": "The carrier, always"
+      "text": "The carrier, always, as soon as the box is in the yard"
      },
      {
-      "text": "The terminal, always"
+      "text": "The terminal, always, while the box is in its custody"
      }
     ],
     "explain": "This gap is why ICC recommends FCA for containers; carrier/terminal liability is a separate question. [TO VERIFY:v15]"
@@ -2602,17 +2764,17 @@
     "q": "A reefer alarm shows supply air +6 °C above set point mid-ocean on a frozen cargo. First step?",
     "options": [
      {
-      "text": "Reefer team checks remote data and has the crew inspect and act; inform the customer",
+      "text": "Reefer team checks remote data, has the crew inspect and act; inform the customer",
       "correct": true
      },
      {
-      "text": "Wait until arrival to avoid alarming the customer"
+      "text": "Wait until arrival, so as not to alarm the customer about a short-lived deviation"
      },
      {
-      "text": "Change the set point to match"
+      "text": "Change the set point to +6 °C above, so the alarm stops and the log stays clean"
      },
      {
-      "text": "Switch off the unit to reset"
+      "text": "Switch the unit off and on again to reset it, then watch the next remote readings"
      }
     ],
     "explain": "Early technical intervention and documentation protect the cargo and the claim position. [TO VERIFY:v57]"
@@ -2626,13 +2788,13 @@
       "correct": true
      },
      {
-      "text": "Release immediately: demurrage hurts everyone"
+      "text": "Release immediately against the LOI, since demurrage hurts everyone, the carrier too"
      },
      {
-      "text": "Release to the notify party"
+      "text": "Release to the notify party, who is named on the B/L and can sign for the cargo"
      },
      {
-      "text": "Release if freight is paid"
+      "text": "Release as soon as the freight is paid, since the carrier then has no more risk"
      }
     ],
     "explain": "Delivering without the original exposes the carrier to the lawful B/L holder. [TO VERIFY:v75]"
@@ -2642,17 +2804,17 @@
     "q": "General average is declared after an engine-room fire. What does the consignee need before delivery?",
     "options": [
      {
-      "text": "To provide GA security (bond and guarantee, often via cargo insurer)",
+      "text": "To provide GA security (bond and guarantee, often via the cargo insurer)",
       "correct": true
      },
      {
-      "text": "Nothing if freight was prepaid"
+      "text": "Nothing, as long as the ocean freight was prepaid at origin by the shipper"
      },
      {
-      "text": "A new B/L"
+      "text": "A new set of original B/Ls, issued after the general average declaration"
      },
      {
-      "text": "A new VGM"
+      "text": "A new VGM, since the fire may have changed the weight of the cargo on board"
      }
     ],
     "explain": "Uninsured cargo owners must pay security themselves — a key reason to insure. [TO VERIFY:v76]"
@@ -2662,17 +2824,17 @@
     "q": "A DG tank arrives at the terminal without the DG declaration matching the booking (UN number differs). Terminal action?",
     "options": [
      {
-      "text": "Refuse or hold the box until documents and approval match",
+      "text": "Refuse or hold the box until the documents and DG approval match",
       "correct": true
      },
      {
-      "text": "Accept it and fix the papers later"
+      "text": "Accept it and fix the papers later, before the vessel's arrival"
      },
      {
-      "text": "Stow it under deck to be safe"
+      "text": "Stow it under deck to be safe, away from accommodation and heat"
      },
      {
-      "text": "Change the UN number on the booking"
+      "text": "Change the UN number on the booking to match the declaration"
      }
     ],
     "explain": "Misdeclared DG is a major safety risk; segregation and approval depend on the exact UN number. [TO VERIFY:v59]"
@@ -2682,17 +2844,17 @@
     "q": "A customer disputes detention: the box was ready but the consignee had no delivery slot. Who decides?",
     "options": [
      {
-      "text": "The tariff/contract terms; check free time, clock events and any agreed exceptions",
+      "text": "The tariff or contract terms: free time, clock events, agreed exceptions",
       "correct": true
      },
      {
-      "text": "The Incoterm"
+      "text": "The Incoterm in the sale contract, which allocates delays between parties"
      },
      {
-      "text": "The terminal"
+      "text": "The terminal, which records the gate times and owns the container clock"
      },
      {
-      "text": "Customs"
+      "text": "Customs, since the box stayed under customs control during the whole time"
      }
     ],
     "explain": "D&D is contractual; billing must follow the agreed events and rules. [TO VERIFY:v72]"
@@ -2702,20 +2864,248 @@
     "q": "Under CIF, the buyer finds the insurance excludes the loss that occurred. Why is this common?",
     "options": [
      {
-      "text": "CIF only requires minimum cover (ICC C)",
+      "text": "CIF only requires minimum cover (Institute Cargo Clauses C)",
       "correct": true
      },
      {
-      "text": "Insurance stops at the origin terminal"
+      "text": "The insurance stops at the origin terminal, before loading"
      },
      {
-      "text": "Insurance is the carrier's job"
+      "text": "The insurance is the carrier's job, not the seller's, under CIF"
      },
      {
-      "text": "CIF requires no insurance"
+      "text": "CIF requires no insurance at all; only CIP requires a policy"
      }
     ],
     "explain": "Buyers needing wider cover should ask for CIP (ICC A) or extra cover. [TO VERIFY:v18]"
+   }
+  ]
+ },
+ "footprint": {
+  "title": "Cost & CO₂ — indicative",
+  "kicker": "Indicative · November 2026",
+  "date": "November 2026",
+  "currency": "€",
+  "tip": "Indicative cost and CO₂e of the journey so far — click for the details",
+  "intro": "The two counters add up, step by step, what your container's journey costs and emits. **Orders of magnitude only**: real prices depend on the contract, the date and the carrier.",
+  "note": "Indicative, November 2026. Freight from public spot indices (Drewry WCI, Xeneta) converted at ≈ 0.86 € per US$ [TO VERIFY:v93]; terminal handling and fees from published tariffs; inland legs are estimates. **Not included:** duties and VAT, cargo insurance, demurrage & detention, peak-season or emergency surcharges. The seller / buyer split follows the Incoterm's cost transfer point (export clearance: {exportBy}; import clearance: {importBy}). Under C rules, destination THC is often billed to the buyer unless the freight contract includes it. CO₂e = distance × GLEC default intensity factor (ISO 14083 / GLEC method); a 40' counts as 2 TEU; reefers use the reefer factor at sea plus plug-in energy on land.",
+  "labels": {
+   "pre": "Pre-carriage by {mode} (cargo + tare)",
+   "on": "On-carriage by {mode} (cargo + tare)",
+   "ret": "Empty return by truck (tare only)",
+   "plugO": "Reefer plugged in at the export terminal",
+   "plugD": "Reefer plugged in at the import terminal"
+  },
+  "factors": {
+   "ship": {
+    "kg": 0.0664,
+    "unit": "TEU-km",
+    "label": "Container ship, deep-sea, dry",
+    "v": "v89"
+   },
+   "shipReefer": {
+    "kg": 0.134,
+    "unit": "TEU-km",
+    "label": "Container ship, reefer",
+    "v": "v89"
+   },
+   "feeder": {
+    "kg": 0.128,
+    "unit": "TEU-km",
+    "label": "Feeder ship, dry",
+    "reeferX": 2,
+    "v": "v90"
+   },
+   "truck": {
+    "kg": 0.073,
+    "unit": "t-km",
+    "label": "Articulated truck 34–40 t, container",
+    "v": "v91"
+   },
+   "barge": {
+    "kg": 0.016,
+    "unit": "t-km",
+    "label": "Inland container barge",
+    "v": "v91"
+   },
+   "rail": {
+    "kg": 0.011,
+    "unit": "t-km",
+    "label": "Electric rail, container",
+    "v": "v91"
+   },
+   "reeferDay": {
+    "kg": 40,
+    "unit": "day",
+    "label": "Reefer plugged in on land",
+    "v": "v92"
+   }
+  },
+  "routes": {
+   "SHA-LEH": {
+    "preKm": 120,
+    "onKm": 200,
+    "returnKm": 200,
+    "plugDays": 3,
+    "sea": [
+     {
+      "kind": "ship",
+      "km": 19500,
+      "label": "Shanghai → Le Havre via Suez (≈ 19,500 km) [TO VERIFY:v88]"
+     }
+    ]
+   },
+   "HCM-SIN-LEH": {
+    "preKm": 40,
+    "onKm": 200,
+    "returnKm": 200,
+    "plugDays": 3,
+    "sea": [
+     {
+      "kind": "feeder",
+      "km": 1200,
+      "label": "Feeder Ho Chi Minh City → Singapore (≈ 1,200 km) [TO VERIFY:v88]"
+     },
+     {
+      "kind": "ship",
+      "km": 15600,
+      "label": "Singapore → Le Havre via Suez (≈ 15,600 km) [TO VERIFY:v88]"
+     }
+    ]
+   },
+   "GYE-ANR": {
+    "preKm": 150,
+    "onKm": 60,
+    "returnKm": 60,
+    "plugDays": 3,
+    "sea": [
+     {
+      "kind": "ship",
+      "km": 10500,
+      "label": "Posorja → Antwerp-Bruges via Panama (≈ 10,500 km) [TO VERIFY:v88]"
+     }
+    ]
+   }
+  },
+  "costs": [
+   {
+    "step": 3,
+    "label": "Pre-carriage to the export terminal",
+    "route": {
+     "SHA-LEH": 300,
+     "HCM-SIN-LEH": 150,
+     "GYE-ANR": 350
+    },
+    "v": "v87"
+   },
+   {
+    "step": 4,
+    "label": "Export customs declaration",
+    "eur": 100,
+    "payer": "exportBy",
+    "v": "v86"
+   },
+   {
+    "step": 4,
+    "label": "B/L and documentation fee",
+    "eur": 95,
+    "v": "v86"
+   },
+   {
+    "step": 5,
+    "label": "Origin terminal handling (THC)",
+    "route": {
+     "SHA-LEH": {
+      "20": 130,
+      "40": 195
+     },
+     "HCM-SIN-LEH": {
+      "20": 130,
+      "40": 195
+     },
+     "GYE-ANR": {
+      "20": 200,
+      "40": 300
+     }
+    },
+    "reeferX": 1.5,
+    "v": "v84"
+   },
+   {
+    "step": 7,
+    "label": "Ocean freight incl. bunker surcharge (BAF)",
+    "route": {
+     "SHA-LEH": {
+      "20": 1900,
+      "40": 3000,
+      "reefer": 3800
+     },
+     "HCM-SIN-LEH": {
+      "20": 1950,
+      "40": 3100,
+      "reefer": 3800
+     },
+     "GYE-ANR": {
+      "20": 1350,
+      "40": 2100,
+      "reefer": 4300
+     }
+    },
+    "v": {
+     "SHA-LEH": "v78",
+     "HCM-SIN-LEH": "v79",
+     "GYE-ANR": "v80"
+    },
+    "vReefer": "v81"
+   },
+   {
+    "step": 7,
+    "label": "Out-of-gauge surcharge (lost slots, special stowage)",
+    "eur": 1500,
+    "when": {
+     "family": "oog"
+    },
+    "v": "v82"
+   },
+   {
+    "step": 7,
+    "label": "Dangerous-goods surcharge (IMDG class 3)",
+    "eur": 350,
+    "when": {
+     "family": "tank"
+    },
+    "v": "v83"
+   },
+   {
+    "step": 8,
+    "label": "Destination terminal handling (THC)",
+    "route": {
+     "SHA-LEH": 295,
+     "HCM-SIN-LEH": 295,
+     "GYE-ANR": {
+      "20": 200,
+      "40": 300
+     }
+    },
+    "reeferX": 1.5,
+    "v": "v85"
+   },
+   {
+    "step": 9,
+    "label": "Import customs clearance (broker fee; duties and VAT not included)",
+    "eur": 105,
+    "payer": "importBy",
+    "v": "v86"
+   },
+   {
+    "step": 10,
+    "label": "On-carriage to the consignee, incl. empty return",
+    "route": {
+     "SHA-LEH": 850,
+     "HCM-SIN-LEH": 850,
+     "GYE-ANR": 450
+    },
+    "v": "v87"
    }
   ]
  }

@@ -9,7 +9,7 @@
    "id": "gate",
    "ms": 2700,
    "narration": {
-    "1": "I pass the terminal [[gate-in|gate]]. Cameras read my number, someone checks my seal and my condition, and I get a receipt.",
+    "1": "At the terminal [[gate-in|gate]], cameras read my number and my seal and condition are checked.",
     "2": "Gate-in: OCR reads container and truck, the pre-advice is matched, seal and damage checked, an [[eir]] is issued. Custody passes to the terminal acting for the carrier. [TO VERIFY:v60]",
     "3": "Gate transaction = custody transfer and evidence point: seal, damage, VGM status, DG/OOG/reefer checks. Export detention stops per tariff; storage/demurrage free time starts. [TO VERIFY:v60] [TO VERIFY:v21]"
    },
@@ -23,7 +23,7 @@
    "narration": {
     "1": {
      "_by": "family",
-     "reefer": "A gantry crane lifts me into the [[yard]]. As a reefer, I'm plugged into electricity so I stay cold.",
+     "reefer": "A gantry crane lifts me into the [[yard]], where I'm plugged in to stay cold.",
      "tank": "A gantry crane lifts me into a special area for dangerous goods, away from incompatible cargo.",
      "oog": "I can't be stacked like other boxes, so I wait in a special area for out-of-gauge cargo.",
      "*": "A gantry crane ([[rtg]]) lifts me into the [[yard]], stacked with other boxes for the same ship."
@@ -42,7 +42,7 @@
    "id": "plan",
    "ms": 1600,
    "narration": {
-    "1": "Meanwhile, planners decide exactly where I'll sit on the ship: the [[stowage-plan|stowage plan]]. Heavy boxes low, boxes for the first port on top.",
+    "1": "Planners decide exactly where I'll sit on the ship: the [[stowage-plan|stowage plan]].",
     "2": "Stowage planning uses VGMs, ports of discharge, DG, reefer plugs and stability. The terminal builds the loading sequence from the carrier's plan. [TO VERIFY:v61]",
     "3": "Carrier central planner sends the pre-stow; terminal planner sequences moves; final bay plan exchanged as EDI BAPLIE. Only boxes on the load list with VGM and customs release are loaded. [TO VERIFY:v61]"
    }
@@ -61,8 +61,8 @@
  "fact": {
   "beat": "plan",
   "text": {
-   "1": "The biggest ships on Asia–Europe carry more than 20,000 TEU — and a plan places every single box. [TO VERIFY:v11]",
-   "2": "Every box needs a slot that respects its weight, its port of discharge, DG segregation and reefer plugs — on ships of up to 24,000 TEU. [TO VERIFY:v11] [TO VERIFY:v61]"
+   "1": "The biggest Asia–Europe ships carry 20,000+ TEU, each box placed by plan. [TO VERIFY:v11]",
+   "2": "Up to 24,000 TEU, each slot fitting weight, port, DG and reefer plugs. [TO VERIFY:v11] [TO VERIFY:v61]"
   }
  },
  "hotspots": [
@@ -232,17 +232,17 @@
       },
       {
        "id": "b",
-       "text": "That the box is loaded on the ship",
+       "text": "That the box has been loaded on board the vessel named in the booking",
        "fb": "Loading comes later — at step 6."
       },
       {
        "id": "c",
-       "text": "That customs has released the export",
+       "text": "That customs has released the export and the box may now be loaded",
        "fb": "The release is a separate customs message."
       },
       {
        "id": "d",
-       "text": "That freight has been paid",
+       "text": "That the ocean freight has been paid and the B/L can now be issued",
        "fb": "Payment is a commercial matter, not a gate event."
       }
      ],
@@ -258,17 +258,17 @@
       },
       {
        "id": "b",
-       "text": "The terminal",
+       "text": "The terminal, because the damage was found at its own gate",
        "fb": "The damage was recorded at the terminal's gate, before it took charge."
       },
       {
        "id": "c",
-       "text": "The carrier absorbs it",
+       "text": "The carrier, which absorbs small dents as normal wear and tear",
        "fb": "Possible commercially, but the tariff normally allows a recharge."
       },
       {
        "id": "d",
-       "text": "The buyer under any Incoterm",
+       "text": "The buyer, under any Incoterm, as the final owner of the cargo",
        "fb": "Equipment damage follows the equipment interchange terms, not the Incoterm."
       }
      ],
@@ -351,19 +351,19 @@
     {
      "id": "a",
      "correct": true,
-     "text": "When my ship arrives, a giant crane loads me on board.",
+     "text": "When my ship arrives, a giant crane lifts me on board.",
      "confirm": "Yes! A quay crane lifts me from a terminal truck onto the ship, following the plan. Under {incoterm}, risk passes to the buyer at step {riskStep}."
     },
     {
      "id": "b",
-     "text": "A truck takes me to the customer at destination.",
+     "text": "A truck takes me straight to the customer at destination.",
      "why": "I haven't crossed the ocean yet!",
      "realLife": "Delivery happens weeks later, after the voyage and import customs.",
      "whenRight": "That's step 10."
     },
     {
      "id": "c",
-     "text": "I go back to the shipper to be checked again.",
+     "text": "I go back to the seller's warehouse to be checked again.",
      "why": "I was already checked at the gate. Going back would make me miss my ship.",
      "realLife": "An extra trip, extra costs and a missed sailing.",
      "whenRight": "Only if the shipper had to fix a real problem (e.g. damaged cargo)."
@@ -376,26 +376,26 @@
     {
      "id": "a",
      "correct": true,
-     "text": "The vessel berths; quay cranes load boxes on the load list in planned sequence; lashing secures them.",
+     "text": "The vessel berths; quay cranes load the load-list boxes in planned sequence; lashing follows.",
      "confirm": "Correct. Only boxes on the load list — VGM, customs release, booking — are loaded, in the terminal's crane sequence. [TO VERIFY:v61]"
     },
     {
      "id": "b",
-     "text": "The shipped-on-board B/L is issued now that the box is in the yard.",
+     "text": "The shipped-on-board B/L is issued at once, now that the box is safely stacked in the yard.",
      "why": "'Shipped on board' needs the box to be on board.",
      "realLife": "An early on-board B/L is a false statement.",
      "whenRight": "After loading (step 6). [TO VERIFY:v50]"
     },
     {
      "id": "c",
-     "text": "The box goes to a CFS for a final check of its contents.",
+     "text": "The box goes to a container freight station (CFS) for a final check of its contents first.",
      "why": "FCL boxes stay sealed; CFS handling is for LCL.",
      "realLife": "Opening an FCL box without reason breaks the seal chain.",
      "whenRight": "Only if customs orders an inspection."
     },
     {
      "id": "d",
-     "text": "Boxes are loaded in the order they arrived at the terminal.",
+     "text": "Boxes are loaded in the order they arrived at the terminal: first in, first loaded on board.",
      "why": "Loading follows the stowage plan, not arrival order.",
      "realLife": "Random loading would ruin stability and discharge planning.",
      "whenRight": "Never."
@@ -408,26 +408,26 @@
     {
      "id": "a",
      "correct": true,
-     "text": "Alert the customer and its broker now to supply the documents; track the hold; warn that the box will be rolled if not released before the load list closes.",
+     "text": "Get the customer and broker to supply the documents now; track the hold; warn of a roll if not cleared.",
      "confirm": "Right. Only the declarant can clear a customs hold; the carrier's role is fast communication and contingency (rolling). A held box is never loaded. [TO VERIFY:v45]"
     },
     {
      "id": "b",
-     "text": "Ask the terminal to load it anyway: the hold is only documentary.",
+     "text": "Ask the terminal to load the box anyway: a documentary hold does not stop the physical loading.",
      "why": "A hold is a hold: terminals don't load held boxes.",
      "realLife": "Loading would breach customs rules — fines for terminal and carrier.",
      "whenRight": "Never."
     },
     {
      "id": "c",
-     "text": "Wait: holds are usually lifted automatically.",
+     "text": "Wait and do nothing: documentary holds are usually lifted automatically, well before the vessel arrives.",
      "why": "Documentary checks need documents from the declarant.",
      "realLife": "The box misses the vessel and the customer hears it too late.",
      "whenRight": "Never as a strategy."
     },
     {
      "id": "d",
-     "text": "Contact customs yourself and send the commercial invoice you have on file.",
+     "text": "Contact customs yourself and send them the commercial invoice you have on file for this shipment.",
      "why": "The carrier isn't the declarant and may not hold the right documents.",
      "realLife": "Customs deals with the declarant; unofficial documents can make things worse.",
      "whenRight": "Only if your company acts as customs broker under a mandate."

@@ -1,7 +1,8 @@
 <!doctype html>
 <!--
-  Bob's Adventure — Mobile · v0.1-mobile (landscape phones). Forked from robing-jpg/bob-s-adventure v0.4.1.
-  A Container Journey — v0.3 engine (full journey: 11 steps × 3 levels, 7 container types, 3 routes, 11 Incoterms)
+  Bob's Adventure — Mobile · v0.1-mobile (landscape phones), forked from robing-jpg/bob-s-adventure v0.5.
+  Mobile changes: [1b] MOBILE CSS block (end of the styles) + JS lines tagged "MOBILE".
+  A Container Journey — v0.3 (full journey: 11 steps × 3 levels, 7 container types, 3 routes, 11 Incoterms)
   Built from: src/engine.html + src/content/*.json  →  python3 src/build.py  →  dist/container-journey_v0.3.html
 
   FILE MAP (search for the markers)
@@ -27,7 +28,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bob's Adventure — Mobile</title>
 <style>
 /* ===================== [1] STYLES ===================== */
@@ -45,8 +46,6 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
-/* Mobile: stop iOS landscape text inflation and Android "font boosting", which enlarged the longest answer (often the right one). */
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font:17px/1.45 var(--font);color:var(--c-text);background:#0E2230;overflow:hidden}
 button{font:inherit;color:inherit;cursor:pointer}
 [hidden]{display:none!important}
@@ -216,10 +215,8 @@ button.jdot{cursor:pointer}
 .kicker{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--c-primary);background:var(--c-primary-soft);border-radius:999px;padding:2px 9px;margin-top:10px}
 .x{border:0;background:#EEF2F5;width:40px;height:40px;border-radius:50%;font-size:1.4rem;line-height:1;margin-top:8px;flex:0 0 40px}
 .sheet p{margin:0 0 .7em}
-/* Answer options: one regular grid, every button the same size and font, whatever its text length or state. */
-.opts{display:grid;gap:8px;margin:8px 0;grid-auto-rows:1fr}
-.opt{display:flex;gap:10px;align-items:center;text-align:left;border:2px solid var(--c-line);background:#fff;border-radius:14px;padding:10px 12px;min-height:48px;width:100%;height:100%;font:400 16px/1.35 var(--font)}
-.opt .term{font-weight:400;font-size:inherit}   /* glossary links inside answers must not stand out */
+.opts{display:grid;gap:8px;margin:8px 0}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:2px solid var(--c-line);background:#fff;border-radius:14px;padding:10px 12px;min-height:44px;width:100%}
 .opt:hover:not([disabled]){border-color:var(--c-primary);background:#F6FAFC}
 .opt .L{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--c-primary-soft);color:var(--c-primary);font-weight:800}
 .opt.ruled{color:var(--c-muted);background:#F5F6F7;text-decoration:line-through;cursor:not-allowed}
@@ -318,7 +315,7 @@ button.frow:hover{background:#EEF5F9}
 .dv-check{flex:0 0 auto;background:#fff;border-top:4px solid var(--c-star);padding:10px 16px 12px;box-shadow:0 -10px 30px rgba(0,0,0,.3);max-height:48vh;overflow:auto}
 .dv-check .q{font-weight:800;margin:0 0 6px}
 .dv-check .opts{grid-template-columns:1fr 1fr;margin:0}
-.dv-check .opt{padding:7px 10px}
+.dv-check .opt{padding:7px 10px;font-size:.9rem}
 .dv-check .fbline{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:8px;font-size:.9rem}
 .dv-check .fbline p{margin:0}
 
@@ -416,17 +413,225 @@ details.kp ul{margin:0 0 10px;padding-left:2em}
   .dv-check{padding:6px 10px 8px}
   .dv-check .q{font-size:.88rem;margin-bottom:4px}
   .dv-check .opts{gap:5px}
-  .dv-check .opt{padding:4px 10px;min-height:44px;border-radius:10px}
+  .dv-check .opt{padding:3px 8px;font-size:.76rem;min-height:34px;border-radius:10px;line-height:1.25}
   .dv-check .opt .L{display:none}
   .dv-head{padding:2px 10px}.dv-head .x{width:36px;height:36px}
   .explain{position:sticky;top:0;font-size:.82rem;padding:10px 12px}
   .dv-instr{display:none}
 }
 @media (orientation:portrait) and (max-width:700px){ .rotate{display:flex} }
+
+/* ---------- v0.5: answer buttons — same size for every option (no visual clue to the right answer) ---------- */
+.opts{grid-auto-rows:1fr}
+.opt{height:100%;align-items:center}
+@media (max-width:760px),(max-height:420px){
+  .opts{grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:6px}
+  .opt{font-size:.8rem;line-height:1.25;padding:6px 8px;min-height:44px}
+  .opt .L{flex-basis:22px;height:22px;font-size:.75rem}
+  .opt .st{font-size:.68rem;padding-left:4px}
+}
+
+/* ---------- v0.5: cost & CO2 meter (two discreet pills in the top bar) ---------- */
+.meter{gap:4px;padding:0 4px;height:32px;background:transparent;border:0}
+.meter .pl{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.45);font-size:.78rem;font-weight:700;font-variant-numeric:tabular-nums}
+.meter .pl.bump{animation:pop .5s}
+table.fp{width:100%;border-collapse:collapse;font-size:.86rem}
+table.fp th,table.fp td{padding:5px 6px;border-bottom:1px solid var(--c-line);text-align:left;vertical-align:top}
+table.fp td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.fp tr.later{color:var(--c-muted);opacity:.65}
+table.fp tfoot td{font-weight:800;border-bottom:0}
+.payer{display:inline-block;font-size:.7rem;font-weight:800;border-radius:999px;padding:1px 7px;color:#fff;white-space:nowrap}
+.payer.seller{background:var(--c-seller)}.payer.buyer{background:var(--c-buyer)}
+.split{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:8px 0 4px}
+.split span{display:block;height:100%}
+@media (max-width:760px){ .meter .pl{padding:0 6px;font-size:.7rem} }
+
+/* ---------- v0.5: nickname + definition + results ---------- */
+.nick{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.nick input{font:inherit;padding:10px 12px;border:2px solid var(--c-line);border-radius:12px;min-width:220px}
+.nick input:focus-visible{outline:3px solid var(--c-text);outline-offset:2px}
+.privacy{font-size:.82rem;color:var(--c-muted);margin:8px 0 0}
+.incodef{border-left:5px solid var(--c-primary);background:var(--c-primary-soft);padding:9px 12px;border-radius:10px;font-size:.92rem;margin:0 0 10px}
+.fixedinco{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.fixedinco .badge{font-weight:900;font-size:1.4rem;color:#fff;background:var(--c-primary);border-radius:14px;padding:8px 14px}
+.review li{margin:4px 0}
+.review .tag{font-size:.7rem;font-weight:800;color:var(--c-muted);text-transform:uppercase;letter-spacing:.05em;margin-right:6px}
+
+/* ---------- v0.5: risk / cost transfer animation (full screen, original visuals) ---------- */
+.xfer{position:fixed;inset:0;z-index:90;display:none;place-items:center;overflow:hidden;color:#fff;background:radial-gradient(circle at 50% 42%,#1E4A66 0%,#0B1824 72%)}
+.xfer.open{display:grid}
+.xfer .burst{position:absolute;inset:-60%;background:repeating-conic-gradient(from 0deg,rgba(255,255,255,.06) 0 7deg,transparent 7deg 14deg);animation:xfSpin 18s linear infinite}
+.xfer .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;animation:xfFlash 1s ease-out both}
+.xfer .flash.f2{animation-delay:2.75s}
+.xf-box{position:relative;width:min(900px,94vw);text-align:center;padding:10px}
+.xf-kicker{display:inline-block;font-size:.78rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:4px 12px}
+.xf-track{position:relative;height:clamp(150px,30vh,220px);margin:8px 0}
+.xf-party{position:absolute;top:50%;transform:translateY(-50%);width:150px;display:grid;justify-items:center;gap:4px;font-weight:900;letter-spacing:.1em;font-size:.9rem}
+.xf-party svg{width:clamp(70px,14vh,110px);height:auto}
+.xf-party.seller{left:0;color:#A8DAF0}.xf-party.buyer{right:0;color:#E0CCF7}
+.xf-party.buyer svg{animation:xfLand .7s ease 2.8s both}
+.xf-arrow{position:absolute;left:160px;right:160px;top:50%;border-top:3px dashed rgba(255,255,255,.35)}
+.xf-arrow::after{content:"";position:absolute;right:-2px;top:-9px;border:8px solid transparent;border-left:12px solid rgba(255,255,255,.55)}
+.xf-token{position:absolute;top:50%;left:calc(100% - 150px);width:150px;margin-top:-58px;display:grid;justify-items:center;animation:xfX 1.5s cubic-bezier(.55,0,.35,1) 1.3s both}
+.xf-token{--bx:40px;--by:-52px;--bs:.62;--arc:-80px}
+.xf-token>div{transform:translate(var(--bx),var(--by)) scale(var(--bs));animation:xfY 1.5s ease-in-out 1.3s both}
+.xf-token svg{width:clamp(64px,13vh,96px);height:auto;filter:drop-shadow(0 0 14px rgba(255,214,90,.9));animation:xfGlow .45s ease-in-out .2s 3 alternate}
+.xf-title{font-size:clamp(1.5rem,4.6vh,2.4rem);font-weight:900;margin:4px 0 2px;animation:xfPop .6s cubic-bezier(.2,1.5,.4,1) 2.9s both}
+.xf-text{font-size:clamp(.92rem,2.4vh,1.08rem);max-width:720px;margin:6px auto;animation:xfFade .6s ease 3.3s both}
+.xf-def{font-size:clamp(.78rem,2vh,.88rem);color:#C9DCE8;max-width:720px;margin:8px auto 12px;animation:xfFade .6s ease 3.6s both}
+.xf-btns{display:flex;gap:10px;justify-content:center;animation:xfFade .4s ease 3.4s both}
+.xfer .xf-skip{position:absolute;top:12px;right:12px;z-index:2;background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.6)}
+.xf-spark{position:absolute;left:calc(100% - 75px);top:50%;width:8px;height:8px;border-radius:50%;background:#FFD65A;opacity:0;animation:xfSpark .9s ease-out 2.8s both}
+@keyframes xfSpin{to{transform:rotate(360deg)}}
+@keyframes xfFlash{0%{opacity:0}12%{opacity:.95}100%{opacity:0}}
+@keyframes xfX{from{left:0}to{left:calc(100% - 150px)}}
+@keyframes xfY{0%{transform:translate(var(--bx),var(--by)) scale(var(--bs))}50%{transform:translate(0,var(--arc)) scale(1.35) rotate(-10deg)}100%{transform:translate(var(--bx),var(--by)) scale(var(--bs))}}
+@keyframes xfGlow{to{filter:drop-shadow(0 0 30px rgba(255,240,170,1)) brightness(1.35)}}
+@keyframes xfLand{0%{filter:none}40%{filter:drop-shadow(0 0 26px #fff) brightness(1.6)}100%{filter:drop-shadow(0 0 10px rgba(224,204,247,.8))}}
+@keyframes xfPop{from{opacity:0;transform:scale(.55)}to{opacity:1;transform:none}}
+@keyframes xfFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes xfSpark{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+@media (max-height:420px){ .xf-track{height:120px;margin:2px 0} .xf-def{display:none} .xf-text{margin:2px auto} .xf-title{margin:0}
+  .xf-token{--bx:36px;--by:-18px;--bs:.45;--arc:-30px} .xf-box{padding-top:30px} .fp-intro{display:none} }
+/* reduced motion: the global rule removes every animation, so the base styles above ARE the final state
+   (token already with the buyer, texts visible): a calm, static card with the same information. */
 @media (prefers-reduced-motion:reduce){ *,*::before,*::after{animation:none!important;transition:none!important} }
+
+/* ===================== [1b] MOBILE — landscape phones (640×360 … 915×412) =====================
+   One block, last in the styles, so it overrides the shared desktop rules above. Rules from the mobile brief:
+   scene ≥ 60 % of the height · narration ≤ 2 lines (fold/unfold) · one surface at a time · sheets ≤ 50 % height ·
+   text ≥ 14 px, answers 16 px, touch targets ≥ 44 px · safe areas (notch, home indicator). */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* no "font boosting": it enlarged the longest answer */
+:root{--top:44px;--bar:52px;--sl:env(safe-area-inset-left,0px);--sr:env(safe-area-inset-right,0px);--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px)}
+body{font-size:15px}
+#app{grid-template-rows:calc(var(--top) + var(--st)) minmax(0,1fr) calc(var(--bar) + var(--sb))}
+.top{padding:var(--st) calc(4px + var(--sr)) 0 calc(2px + var(--sl));gap:4px}
+.lvl,.stepno,.jline .mk,.ttl{display:none}
+.jline{margin:0 6px;min-width:120px}
+.jdot.cur{width:26px;height:26px;font-size:14px}
+button.jdot{position:relative}
+button.jdot::after{content:"";position:absolute;inset:-14px -4px}          /* larger tap area (dots are 22 px apart) */
+.chip{position:relative;z-index:0;height:44px;border:0;background:none;padding:0 10px;font-size:14px}
+.chip::before{content:"";position:absolute;inset:6px 2px;border:1.5px solid rgba(255,255,255,.7);border-radius:999px;background:rgba(255,255,255,.12);z-index:-1}
+.chip.meter::before{display:none}
+.meter{padding:0 2px;gap:4px}
+.meter .pl{height:30px;padding:0 8px;font-size:14px}
+.bar{padding:0 calc(8px + var(--sr)) var(--sb) calc(8px + var(--sl));gap:8px}
+.pill{font-size:16px}
+.ess-count{font-size:14px}
+.cta-wrap .tip{font-size:14px}
+/* hotspots: only essentials, documents and choices are rendered on mobile (see visibleHs) */
+#hs{left:var(--sl);right:var(--sr)}
+.hs{min-height:44px;font-size:14px;padding:3px 12px 3px 5px}
+.hs .ic{width:30px;height:30px;flex-basis:30px;font-size:14px}
+.hs .badge{display:none}
+/* narration: a 2-line strip, one button folds/unfolds it, "…" shows the rest of a long line */
+.narr{left:calc(8px + var(--sl));bottom:8px;max-width:min(580px,72%);padding:4px 4px 4px 8px;gap:8px;align-items:center;border-radius:14px}
+.narr .av{flex:0 0 34px}.narr .av svg{width:34px;height:auto}
+.narr .av div{font-size:1.4rem!important}
+.narr .who,.narr .cap{display:none}
+.narr .say{font-size:15px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.narr.expanded .say{display:block;-webkit-line-clamp:unset;max-height:34vh;overflow:auto}
+.narr.expanded .cap{display:block;font-size:14px}
+.narr .tools{flex-direction:row;align-items:center;margin:0;gap:0}
+.narr .mini{min-width:44px;height:44px;font-size:18px}
+.narr .more{display:none;min-width:44px;height:44px;font-size:14px}
+.narr.clamped .more,.narr.expanded .more{display:inline-block}
+.narr.min{padding:2px 2px 2px 6px}
+/* striking fact: one line at the top of the scene */
+.fact{left:calc(8px + var(--sl));top:8px;max-width:min(600px,74%);font-size:14px;padding:2px 2px 2px 10px;align-items:center;border-radius:12px;gap:8px}
+.fact b{display:none}
+.fact .ftxt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3}
+.fact .mini{min-width:44px;height:44px;font-size:18px}
+.fact.min{width:44px;height:44px;padding:0}
+/* one surface at a time: while a sheet, document, transfer moment or popover is open, the narration and fact hide */
+body.surface .narr,body.surface #fact{visibility:hidden}
+/* bottom sheets: max 50 % of the height, internal scroll, compact sticky header */
+.backdrop{inset:calc(var(--top) + var(--st)) 0 0 0}
+.sheet,.sheet.wide{width:100%;max-height:50vh;max-height:50dvh;border-radius:16px 16px 0 0;padding:0 calc(14px + var(--sr)) calc(12px + var(--sb)) calc(14px + var(--sl));overscroll-behavior:contain}
+.sh-head{padding:2px 0 4px;gap:8px;align-items:center}
+.sh-head::before{display:none}
+.sh-head>div{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:8px}
+.sh-head h2{margin:0;font-size:16px}
+.kicker{margin:0;font-size:14px;text-transform:none;letter-spacing:0;padding:1px 8px}
+.x{width:44px;height:44px;flex-basis:44px;margin:0}
+.sheet p{margin:0 0 .5em}
+.hint{font-size:14px}
+.tabs button{font-size:15px}
+/* answers: one regular grid, same 16 px font and same button size for every option */
+.opts{grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:6px}
+.opt{height:100%;align-items:center;font:400 16px/1.3 var(--font);padding:6px 10px;min-height:48px;gap:8px}
+.opt .term{font-weight:400;font-size:inherit}
+.opt .L{flex:0 0 26px;height:26px;font-size:14px}
+.opt .st{font-size:14px;padding-left:4px}
+@media (hover:none){ .opt:hover:not([disabled]),.chcard:hover{border-color:var(--c-line);background:#fff} .cta-wrap .tip{display:none} }   /* touch: no sticky hover, no tooltip left over the scene (the ★ counter says it) */
+.fb{padding:8px 12px}
+.fb h3{font-size:16px}
+/* document viewer: paper on the left, explanation and check on the right (nothing covers the paper) */
+.docv.open{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,44%);grid-template-rows:auto auto minmax(0,1fr);column-gap:10px;padding:0 calc(8px + var(--sr)) var(--sb) calc(8px + var(--sl))}
+.dv-head{grid-column:1/-1;padding:2px 0}
+.dv-head h2{font-size:16px}
+.dv-head .x{width:44px;height:44px}
+.dv-instr{display:none}
+.dv-body{display:contents}
+.paper{grid-column:1;grid-row:2/4;overflow:auto;min-height:0;margin:0 0 8px;padding:12px 38px 12px 12px;font-size:14px}
+.paper .ph small,.paper .stamp{font-size:14px}
+.frow{grid-template-columns:1fr;gap:0;padding:5px 4px}
+.frow .fl,.frow .fs{font-size:14px}
+.explain{grid-column:2;grid-row:2;position:static;max-height:36vh;overflow:auto;font-size:14px;padding:8px 12px;border-radius:12px}
+.dv-check{grid-column:2;grid-row:3;min-height:0;max-height:none;overflow:auto;border-radius:12px;margin:8px 0;padding:8px 10px}
+.dv-check .q{font-size:15px}
+.dv-check .opts{grid-template-columns:1fr}
+.dv-check .opt{padding:6px 10px;min-height:48px;font-size:16px}
+.dv-check .opt .L{display:grid}
+/* risk / cost transfer moment: shorter (≈ 3 s), big Skip button */
+.xf-track{height:96px;margin:2px 0}
+.xf-box{padding-top:26px}
+.xf-kicker{font-size:14px}
+.xf-token,.xf-token>div{animation-delay:.35s!important;animation-duration:1s!important}
+.xf-token svg{animation-delay:0s!important}
+.xf-party.buyer svg,.xf-spark,.xfer .flash.f2{animation-delay:1.35s!important}
+.xf-title{animation-delay:1.45s!important;font-size:24px}
+.xf-text{animation-delay:1.75s!important;font-size:15px;margin:2px auto}
+.xf-btns{animation-delay:1.9s!important}
+.xf-def{display:block;animation-delay:2.1s!important;font-size:14px;margin:4px auto 8px}
+.xfer .xf-skip{top:calc(8px + var(--st));right:calc(10px + var(--sr));min-height:44px;font-size:16px;background:#fff;color:var(--c-primary);border-color:#fff}
+/* glossary popover, toast */
+.pop{width:min(360px,90vw);max-height:50vh;max-height:50dvh;font-size:14px}
+.toast{bottom:calc(var(--bar) + var(--sb) + 8px);font-size:14px}
+.term{font-size:inherit}
+.vchip{font-size:14px;padding:0 4px}
+/* full-page screens: menu, nickname, quiz, summary */
+.wrap{padding:12px calc(16px + var(--sr)) calc(40px + var(--sb)) calc(16px + var(--sl))}
+.logo{font-size:14px}
+.hero{grid-template-columns:1fr}.hero .heroart{display:none}.hero h1{font-size:1.5rem}
+.grp{padding:12px 14px;margin:10px 0}
+.cards{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.cardopt .d,.cardopt .m,.note,.privacy,.incodef{font-size:14px}
+.linkbtn{min-height:44px}
+.nick input{font-size:16px;min-height:44px;min-width:200px}
+.nick label{min-height:44px;display:inline-flex;align-items:center}
+.chcard .d{font-size:14px}
+.menu-list button small,.legend,.review .tag,.payer,table.it,table.it th,table.fp{font-size:14px}
+.band span{font-size:14px}
+details.kp summary{min-height:44px;display:flex;align-items:center}
+.sgrid{grid-template-columns:1fr}
+.qcard{padding:14px 16px}
+[style*="font-size:."]:not(svg *){font-size:14px!important}
+.intro .skip{top:calc(10px + var(--st));right:calc(12px + var(--sr));min-height:44px}
+.intro .brandtop{left:calc(16px + var(--sl))}
+.speech .who{font-size:14px}
+/* "Turn your phone": Bob in a phone that turns */
+.rotate .ph{display:grid;place-items:center;width:84px;height:130px}
+.rotate .rbob svg{width:64px;height:auto}
+@media (orientation:portrait) and (max-width:1024px){ .rotate{display:flex} }
+@media (orientation:landscape){ .rotate{display:none} }
 </style>
 </head>
 <body>
+<!-- Shared SVG gradients/patterns: ONE copy for the whole page (see mountDefs). Never hidden with display:none,
+     otherwise every url(#id) that points here renders empty. -->
+<svg id="svgDefs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
 <!-- Intro: Bob introduces himself -->
 <section id="intro" class="screen intro" aria-labelledby="introTitle" hidden></section>
 <!-- Start menu -->
@@ -440,6 +645,7 @@ details.kp ul{margin:0 0 10px;padding-left:2em}
     <span class="lvl" id="lvlBadge"></span>
     <nav class="jline" aria-label="Journey: 11 steps"><ol id="jsteps"></ol><span class="jbox" id="jbox" aria-hidden="true"></span></nav>
     <span class="stepno" id="stepno"></span>
+    <button class="chip meter" id="bMeter" aria-haspopup="dialog"></button>
     <button class="chip" id="bInco" aria-haspopup="dialog"></button>
   </header>
   <main class="scene" id="stage" aria-labelledby="sceneTitle">
@@ -464,7 +670,9 @@ details.kp ul{margin:0 0 10px;padding-left:2em}
 <div class="pop" id="pop" role="dialog"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div id="confetti" aria-hidden="true"></div>
-<div class="rotate" role="alert"><div class="ph" aria-hidden="true"></div><strong style="font-size:1.3rem">Turn your phone sideways ↻</strong><span>This journey is designed for landscape.</span></div>
+<!-- v0.5: full-screen risk / cost transfer moment -->
+<section class="xfer" id="xfer" role="dialog" aria-modal="true" aria-labelledby="xfTitle"></section>
+<div class="rotate" role="alert"><div class="ph" aria-hidden="true"><div class="rbob"></div></div><strong style="font-size:1.3rem">Turn your phone sideways ↻</strong><span>Bob's journey is designed for landscape.</span></div>
 
 <script>
 /* ===================== [2] CONFIG — rebrand here ===================== */
@@ -472,6 +680,7 @@ const CONFIG = {
   companyName: "Your Carrier",
   logoText: "YC",
   appTitle: "Bob's Adventure — Mobile",  // game title
+  platform: "mobile",                     // MOBILE: sent as "version" with the results (same Google Sheet as desktop)
   appSubtitle: "A Container Journey",     // shown under the title
   heroName: "Bob",                        // the container's name (also edit the texts in global.json)
   containerOwnerCode: "DEMU",            // fictional ISO 6346 owner code (check the BIC register before reusing)
@@ -480,7 +689,12 @@ const CONFIG = {
             text:"#1B2631", muted:"#4F5B66", ok:"#1D7048", okBg:"#E3F4EA", star:"#F2B705",
             seller:"#0B4F6C", buyer:"#6B4396", skyTop:"#5EA9DA", skyBottom:"#DCEFF8" },
   /* ILLUSTRATIVE values only — replace with your own tariff. [TO VERIFY:v12] */
-  tariff: { currency: "€", freeDays: 7, detentionPerDay: 80, storagePerDay: 40, blAmendmentFee: 60 }
+  tariff: { currency: "€", freeDays: 7, detentionPerDay: 80, storagePerDay: 40, blAmendmentFee: 60 },
+  /* v0.5 — results tracking. Paste the Google Apps Script web-app URL (ends with /exec) to send every finished journey
+     to the team's Google Sheet (see docs/RESULTS_SETUP.md). Empty = results stay on this device (+ CSV download). */
+  resultsEndpoint: "",
+  resultsToken: "",                       // optional shared secret, must match the TOKEN script property
+  level1Incoterm: "FOB"                   // Level 1 does not choose: this rule is set for the learner (see HANDOFF)
 };
 </script>
 
@@ -517,9 +731,15 @@ const CONFIG = {
   function load() { try { return JSON.parse(localStorage.getItem(STORE)); } catch (e) { return null; } }
   function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { /* storage unavailable: memory only */ } }
   function freshJourney(settings) {
-    return { v: 3, settings: Object.assign({}, settings), screen: 'journey', step: 1, maxStep: 1, i: 0, departed: false,
+    return { v: 3, player: player(), settings: Object.assign({}, settings), screen: 'journey', step: 1, maxStep: 1, i: 0, departed: false,
              consulted: {}, docs: {}, q: {}, firstTry: {}, completed: [], choices: {}, quiz: null, narrMin: false, factMin: {} };
   }
+  /* v0.5 — nickname (stored on this device only; no full name, no e-mail) */
+  const PLAYER = STORE + '-player', RESULTS = STORE + '-results';
+  function player() { try { return localStorage.getItem(PLAYER) || ''; } catch (e) { return window.__nick || ''; } }
+  function setPlayer(v) { window.__nick = v; try { localStorage.setItem(PLAYER, v); } catch (e) {} }
+  // 2–20 characters; letters, digits, space, . _ -; an e-mail address is refused
+  function validNick(v) { v = String(v || '').trim(); return /^[\p{L}\p{N} ._-]{2,20}$/u.test(v) && !v.includes('@') ? v : ''; }
   const cur = () => (S && S.screen !== 'menu' ? S.settings : draft) || (S && S.settings) || draft;
   const L = () => +cur().level;
   const container = () => C.containers.find(c => c.id === cur().container) || C.containers[0];
@@ -621,7 +841,6 @@ const CONFIG = {
   function bobSVG() {
     const ribs = Array.from({ length: 15 }, (_, i) => `<rect x="${52 + i * 15}" y="48" width="6" height="124" fill="#000" opacity=".1"/>`).join('');
     return `<svg id="bob" class="mood-smile" viewBox="0 0 340 300" role="img" aria-label="${esc(CONFIG.heroName)}, an orange shipping container with a friendly face, waving">
-      <defs><linearGradient id="bobGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--c-box)" stop-opacity=".9"/><stop offset=".2" stop-color="var(--c-box)"/><stop offset="1" stop-color="var(--c-box-dark)"/></linearGradient></defs>
       <rect x="-2000" y="206" width="4340" height="90" fill="#B9C2C9"/><rect x="-2000" y="206" width="4340" height="6" fill="#fff" opacity=".45"/><rect x="-2000" y="290" width="4340" height="8" fill="#7E8A95"/><g><rect x="-10" y="186" width="22" height="22" rx="6" fill="#33424F"/><rect x="-16" y="182" width="34" height="8" rx="4" fill="#33424F"/></g><ellipse cx="170" cy="207" rx="140" ry="9" fill="#0E2230" opacity=".22"/>
       <g class="bob-body">
         <path d="M44 120 C 18 128, 10 150, 16 170" stroke="var(--c-box-dark)" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="16" cy="172" r="11" fill="#FFF3E6" stroke="var(--c-box-dark)" stroke-width="4"/>
@@ -651,7 +870,7 @@ const CONFIG = {
       <circle cx="1090" cy="110" r="46" fill="#FFF6CF" opacity=".9"/>
       <g opacity=".6">${crane(80)}${crane(300)}${crane(1050)}<rect x="560" y="400" width="300" height="50" fill="#7F97A9"/><rect x="800" y="350" width="40" height="50" fill="#7F97A9"/>
         ${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${580 + i * 36}" y="${376}" width="32" height="22" fill="${PALETTE[i]}"/>`).join('')}</g>
-      <rect x="-100" y="455" width="1500" height="200" fill="url(#gSeaI)"/><defs><linearGradient id="gSeaI" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5E9FC6"/><stop offset="1" stop-color="#2F6E95"/></linearGradient></defs>
+      <rect x="-100" y="455" width="1500" height="200" fill="url(#gSea)"/>
       <g class="waves-i">${waves}</g></svg>
       <svg class="gull" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 Q10 0 20 10 Q30 0 38 10" stroke="#33424F" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
   }
@@ -703,6 +922,8 @@ const CONFIG = {
     if (S) S.screen = 'menu';
     if (!draft) draft = S ? Object.assign({}, S.settings) : { level: 1, container: '40HC', route: 'SHA-LEH', incoterm: 'FOB' };
     const lvl = +draft.level;
+    if (lvl === 1) draft.incoterm = CONFIG.level1Incoterm;   // v0.5: Level 1 does not choose the Incoterm
+    const nick = player();
     const card = (name, id, checked, inner) => `<div class="cardopt"><input type="radio" name="${name}" id="${name}-${id}" value="${id}" ${checked ? 'checked' : ''}><label for="${name}-${id}">${inner}</label></div>`;
     const incoList = Object.keys(C.incoterms).filter(k => lvl >= 2 || showAllInco || C.incoterms[k].common || k === draft.incoterm);
     const ic = C.incoterms;
@@ -710,13 +931,18 @@ const CONFIG = {
     const compat = R((r.compat || {})[f]);
     const resumable = S && JSON.stringify(S.settings) === JSON.stringify(draft) && S.completed.length < 11;
     const done = S && S.completed.length >= 11 && JSON.stringify(S.settings) === JSON.stringify(draft);
-    $('#menu').innerHTML = `<svg width="0" height="0" style="position:absolute" aria-hidden="true">${DEFS}</svg><div class="wrap">
+    $('#menu').innerHTML = `<div class="wrap">
       <div class="brandbar"><span class="logo" aria-hidden="true">${esc(CONFIG.logoText)}</span><strong>${esc(CONFIG.companyName)}</strong><span style="color:var(--c-muted)">· onboarding</span></div>
       <div class="hero"><div>
           <h1 id="menuTitle">${esc(CONFIG.appTitle)}</h1><p style="font-weight:800;color:var(--c-primary);margin:-.2em 0 .6em">${esc(CONFIG.appSubtitle)}</p>
           <p>${rich(C.ui.welcome)}</p>
           <p style="font-size:.9rem">${rich(C.ui.howto)}</p>
         </div><div class="heroart" aria-hidden="true">${avatar(240)}</div></div>
+
+      <fieldset class="grp"><legend>${esc(plain(C.ui.nickTitle))}</legend>
+        <div class="nick"><label for="mNick">${esc(plain(C.ui.nickLabel))}</label><input id="mNick" type="text" maxlength="20" autocomplete="nickname" spellcheck="false" autocapitalize="none" autocorrect="off" enterkeyhint="done" value="${esc(nick)}" placeholder="${esc(plain(C.ui.nickPlaceholder))}" aria-describedby="mNickHelp mPriv">
+        <span id="mNickHelp" role="status" style="font-size:.85rem;color:var(--c-muted)">${nick ? '✓' : esc(plain(C.ui.nickHelp))}</span></div>
+        <p class="privacy" id="mPriv">${rich(C.ui.privacy)}</p></fieldset>
 
       <fieldset class="grp"><legend>1. Your level</legend><div class="cards">
         ${C.levels.map(l => card('level', l.id, +l.id === lvl, `<span class="t">${esc(l.name)}</span><span class="d">${esc(l.desc)}</span>`)).join('')}
@@ -730,16 +956,16 @@ const CONFIG = {
         ${C.routes.map(x => card('route', x.id, x.id === draft.route, `<span class="t">${esc(x.name)}</span><span class="m">${esc(x.lane)} · ${esc(x.type)}</span><span class="d">${rich(x.detail)}</span>`)).join('')}
       </div>${compat ? `<p class="note" role="note">${rich(compat)}</p>` : ''}</fieldset>
 
-      <fieldset class="grp"><legend>4. Incoterm 2020 — who pays and who carries the risk, where</legend><div class="cards">
-        ${incoList.map(k => card('incoterm', k, k === draft.incoterm, `<span class="t">${k} — ${esc(ic[k].short)}</span><span class="m">▲ risk at step ${ic[k].risk} · ● cost to step ${ic[k].cost} · freight: ${esc(ic[k].freight.toLowerCase())}</span><span class="d">${rich(ic[k].card)}</span>`)).join('')}
-      </div>
-      ${lvl === 1 ? `<button class="linkbtn" id="mAllInco">${showAllInco ? 'Show only the 5 most common rules' : 'Show all 11 rules'}</button>` : ''}
-      <button class="linkbtn" id="mGuide" style="margin-left:14px">Open the Incoterms guide</button></fieldset>
+      <fieldset class="grp"><legend>4. Incoterm 2020 — who pays and who carries the risk, where</legend>
+        <p class="incodef">${rich(C.ui.incoDef)}</p>
+        ${lvl === 1 ? `<div class="fixedinco"><span class="badge">${esc(draft.incoterm)}</span><div><strong>${esc(plain(ic[draft.incoterm].name))}</strong><br><span style="font-size:.92rem">${rich(C.ui.l1Inco)}</span></div></div>`
+        : `<div class="cards">${incoList.map(k => card('incoterm', k, k === draft.incoterm, `<span class="t">${k} — ${esc(ic[k].short)}</span><span class="m">▲ risk at step ${ic[k].risk} · ● cost to step ${ic[k].cost} · freight: ${esc(ic[k].freight.toLowerCase())}</span><span class="d">${rich(ic[k].card)}</span>`)).join('')}</div>`}
+      <button class="linkbtn" id="mGuide" style="margin-top:8px">Open the Incoterms guide</button></fieldset>
 
       <div class="actions">
         ${resumable ? `<button class="pill primary big go" id="mResume">▶ Resume — step ${S.step}</button>` : ''}
         ${done ? `<button class="pill primary big go" id="mSummary">See my summary</button>` : ''}
-        <button class="pill ${resumable || done ? '' : 'primary'} big" id="mStart">${resumable || done ? 'Start again from step 1' : 'Start the journey ▶'}</button>
+        <button class="pill ${resumable || done ? '' : 'primary'} big" id="mStart" ${nick ? '' : 'disabled aria-describedby="mNickHelp"'}>${resumable || done ? 'Start again from step 1' : 'Start the journey ▶'}</button>
         <button class="linkbtn" id="mIntro">▶ Meet ${esc(CONFIG.heroName)} again</button>
         <button class="linkbtn" id="mGloss">Glossary</button>
         ${CONFIG.showVerifyMarkers ? '<button class="linkbtn" id="mVerify">Verification list</button>' : ''}
@@ -751,7 +977,11 @@ const CONFIG = {
       const keepFocus = `${inp.name}-${inp.value}`;
       renderMenu(); const again = document.getElementById(keepFocus); if (again) again.focus();
     }));
-    const a = $('#mAllInco'); if (a) a.onclick = () => { showAllInco = !showAllInco; renderMenu(); $('#mAllInco').focus(); };
+    const nk = $('#mNick');
+    // MOBILE: keep the field visible above the keyboard; "done" closes the keyboard and moves to Start
+    nk.onfocus = () => setTimeout(() => nk.scrollIntoView({ block: 'center' }), 350);
+    nk.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); nk.blur(); const st = $('#mStart'); if (st && !st.disabled) st.focus(); } };
+    nk.oninput = () => { const v = validNick(nk.value); $('#mNickHelp').textContent = v ? '✓' : plain(C.ui.nickHelp); $('#mStart').disabled = !v; if (v) setPlayer(v); };
     $('#mGuide').onclick = e => openIncoGuide(e.currentTarget);
     $('#mGloss').onclick = e => openGlossary(e.currentTarget);
     $('#mIntro').onclick = () => renderIntro();
@@ -760,6 +990,8 @@ const CONFIG = {
     const sm = $('#mSummary'); if (sm) sm.onclick = () => { S.screen = 'summary'; save(); renderSummary(); };
     $('#mStart').onclick = () => {
       if (S && S.completed.length && !resumable && !done) { /* settings changed: a new journey starts (storyboard v2 decision) */ }
+      if (!validNick($('#mNick').value)) { $('#mNick').focus(); return; }
+      setPlayer(validNick($('#mNick').value));
       S = freshJourney(draft); initChoices(); save(); openJourney();
     };
   }
@@ -777,7 +1009,12 @@ const CONFIG = {
   const beats = s => s.beats.filter(ok);
   const curBeat = () => beats(step())[S.i];
   const gIdx = (s, id) => id === 'start' ? -1 : id === 'depart' ? 998 : s.beats.findIndex(b => b.id === id);
-  const essentials = s => (s.hotspots || []).filter(h => ok(h) && h.essential && h.essential.includes(L()));
+  const essAll = s => (s.hotspots || []).filter(h => ok(h) && h.essential && h.essential.includes(L()));
+  // MOBILE: Level 1 opens at most 2 essentials per step (route- or container-specific ones first).
+  const essentials = s => { const a = essAll(s); return L() !== 1 || a.length <= 2 ? a : a.slice().sort((x, y) => (y.when ? 1 : 0) - (x.when ? 1 : 0)).slice(0, 2); };
+  const isEss = (s, h) => essentials(s).includes(h);
+  // MOBILE: non-essential "info" hotspots are not shown (documents and choices stay).
+  const mobileHs = (s, h) => isEss(s, h) || !!docOf(h) || !!h.choice;
   const consulted = id => (S.consulted[S.step] || []).includes(id);
   const docOf = h => (h.doc ? R(h.doc) : null) || null;
 
@@ -821,7 +1058,7 @@ const CONFIG = {
     const svg = $('#scene');
     svg.classList.add('instant'); paint(s, -1);
     requestAnimationFrame(() => requestAnimationFrame(() => { svg.classList.remove('instant'); sceneTo(true); }));
-    renderNarr(true); renderFact(); renderHs(); renderBar(); face(null);
+    renderNarr(true); renderFact(); renderHs(); renderBar(); face(null); renderMeter();
     save();
   }
 
@@ -915,11 +1152,11 @@ const CONFIG = {
   function visibleHs() {
     const s = step(), gi = s.beats.indexOf(curBeat());
     if (S.departed) return [];
-    return (s.hotspots || []).filter(h => ok(h) && gIdx(s, h.beat) <= gi && (!h.until || gi <= gIdx(s, h.until)));
+    return (s.hotspots || []).filter(h => ok(h) && mobileHs(s, h) && gIdx(s, h.beat) <= gi && (!h.until || gi <= gIdx(s, h.until)));
   }
   function renderHs() {
     $('#hs').innerHTML = visibleHs().map(h => {
-      const ess = h.essential && h.essential.includes(L()), seen = consulted(h.id), doc = docOf(h), ch = h.choice;
+      const ess = isEss(step(), h), seen = consulted(h.id), doc = docOf(h), ch = h.choice;
       const ic = seen ? '✓' : ess ? '★' : doc ? '📄' : ch ? '⇄' : 'i';
       const badge = doc ? `<span class="badge">${seen ? '✓ checked' : 'Open me'}</span>` : ch ? `<span class="badge">${seen ? esc(choiceLabel(ch)) : 'Choose'}</span>` : (ess ? `<span class="badge">${seen ? '✓' : 'Essential'}</span>` : '');
       const lab = plain(h.label);
@@ -930,18 +1167,28 @@ const CONFIG = {
     placeHs();
   }
   function placeHs() {
-    const svg = $('#scene'); if (!svg || $('#app').hidden) return;
-    const m = svg.getScreenCTM(), box = $('#stage').getBoundingClientRect(); if (!m) return;
+    const svg = $('#scene'), ho = $('#hs'); if (!svg || $('#app').hidden) return;
+    const m = svg.getScreenCTM(), box = ho.getBoundingClientRect(); if (!m) return;
     const pt = svg.createSVGPoint();
-    const nr = $('#narr').getBoundingClientRect();   // keep hotspots clear of the narration bubble
-    const nb = { l: nr.left - box.left - 8, r: nr.right - box.left + 8, t: nr.top - box.top - 8 };
-    $$('#hs .hs').forEach(b => {
-      pt.x = +b.dataset.x; pt.y = +b.dataset.y; const p = pt.matrixTransform(m);
-      const half = b.offsetWidth / 2 + 6, hh = b.offsetHeight / 2;
-      let x = Math.max(half, Math.min(box.width - half, p.x - box.left)), y = Math.max(22, Math.min(box.height - 22, p.y - box.top));
-      if (x + half > nb.l && x - half < nb.r && y + hh > nb.t) y = Math.max(22, nb.t - hh - 4);
-      b.style.left = x + 'px'; b.style.top = y + 'px';
-    });
+    // MOBILE: obstacles = narration strip and striking fact (offset* ignores their "pop" animation transform);
+    // each hotspot takes the nearest free spot (vertical, then sideways moves), so labels never overlap.
+    const avoid = [$('#narr'), $('#fact .fact')].filter(e => e && e.getClientRects().length && getComputedStyle(e).visibility !== 'hidden').map(e => {
+      const l = e.offsetLeft - ho.offsetLeft, t = e.offsetTop - ho.offsetTop; return { l: l - 6, r: l + e.offsetWidth + 6, t: t - 6, b: t + e.offsetHeight + 6 }; });
+    const hit = (a, c) => a.l < c.r && a.r > c.l && a.t < c.b && a.b > c.t, placed = [];
+    $$('#hs .hs').map(b => { pt.x = +b.dataset.x; pt.y = +b.dataset.y; const p = pt.matrixTransform(m); return { b, x: p.x - box.left, y: p.y - box.top, half: b.offsetWidth / 2 + 3, hh: b.offsetHeight / 2 + 2 }; })
+      .sort((u, v) => u.y - v.y || u.x - v.x).forEach(o => {
+        const minX = o.half, maxX = box.width - o.half, minY = o.hh + 2, maxY = box.height - o.hh - 2;
+        const x0 = Math.max(minX, Math.min(maxX, o.x)), y0 = Math.max(minY, Math.min(maxY, o.y)), step = 2 * o.hh + 2;
+        const cands = [];
+        for (let i = -8; i <= 8; i++) [0, .5, -.5, 1, -1, 1.5, -1.5, 2.5, -2.5, 4, -4].forEach(j => cands.push([x0 + j * o.half * 2, y0 + i * step / 2, Math.abs(i) * step / 2 + Math.abs(j) * o.half * 2]));
+        cands.sort((u, v) => u[2] - v[2]);
+        const rect = (x, y) => ({ l: x - o.half, r: x + o.half, t: y - o.hh, b: y + o.hh });
+        const inside = cands.filter(([x, y]) => x >= minX && x <= maxX && y >= minY && y <= maxY);
+        const over = (x, y) => avoid.concat(placed).reduce((t, a) => { const r = rect(x, y); return t + Math.max(0, Math.min(r.r, a.r) - Math.max(r.l, a.l)) * Math.max(0, Math.min(r.b, a.b) - Math.max(r.t, a.t)); }, 0);
+        const free = inside.find(([x, y]) => !avoid.concat(placed).some(a => hit(rect(x, y), a)));
+        const [x, y] = free || inside.reduce((best, c) => (over(c[0], c[1]) < over(best[0], best[1]) ? c : best), [x0, y0]);   // crowded: least overlap
+        placed.push(rect(x, y)); o.b.style.left = x + 'px'; o.b.style.top = y + 'px';
+      });
   }
   function consult(id) {
     const arr = S.consulted[S.step] || (S.consulted[S.step] = []);
@@ -956,7 +1203,7 @@ const CONFIG = {
     if (h.visual === 'vgm') html += `<div class="sum" role="img" aria-label="${esc(plain('Tare {tare} kilograms plus cargo {cargoKg} kilograms equals {vgm} kilograms'))}">
       <span>Tare ${tpl('{tare}')} kg</span><span class="op">+</span><span>Goods &amp; packing ${tpl('{cargoKg}')} kg</span><span class="op">=</span><span class="tot">VGM ${tpl('{vgm}')} kg</span></div><p style="font-size:.85rem;color:var(--c-muted)">Illustrative figures.</p>`;
     if (h.more) html += `<p style="color:var(--c-muted);font-size:.92rem">${rich(h.more)}</p>`;
-    const ess = h.essential && h.essential.includes(L());
+    const ess = isEss(step(), h);
     openSheet(plain(h.label), html, { kind: (ess ? '★ Essential · ' : '') + plain(h.kind), opener, after: () => consult(h.id) });
   }
   function openChoice(h, opener) {
@@ -981,13 +1228,16 @@ const CONFIG = {
   function renderNarr(fresh) {
     const b = curBeat(), n = $('#narr'), inc = b.kind === 'incident';
     const cap = b.caption && R(b.caption) ? `<p class="cap">${rich(b.caption)}</p>` : '';
+    if (fresh) narrMore = false;   // MOBILE: every new scene starts folded to 2 lines
     n.className = 'narr' + (inc ? ' incident' : '') + (S.narrMin ? ' min' : '') + (narrMore ? ' expanded' : '') + (fresh ? ' fresh' : '');
     n.innerHTML = `<div class="av" aria-hidden="true">${inc ? '<div style="font-size:2rem;text-align:center">⚠️</div>' : avatar(46)}</div>
       <div class="txt"><p class="who">${inc ? 'Incident — what would you do?' : esc(C.ui.speaker)}</p><p class="say">${rich(b.narration)}</p>${cap}</div>
       <div class="tools"><button class="mini" id="nMin" aria-expanded="${!S.narrMin}" aria-label="${S.narrMin ? 'Show narration' : 'Hide narration'}">${S.narrMin ? '▸' : '–'}</button>
-      <button class="more" id="nMore" aria-expanded="${narrMore}">${narrMore ? 'less ▴' : 'more ▾'}</button></div>`;
+      <button class="more" id="nMore" aria-expanded="${narrMore}" aria-label="${narrMore ? 'Show less' : 'Read the whole line'}">${narrMore ? '▴' : '…'}</button></div>`;
     $('#nMin').onclick = () => { S.narrMin = !S.narrMin; save(); renderNarr(); };
     $('#nMore').onclick = () => { narrMore = !narrMore; renderNarr(); };
+    // MOBILE: show "…" only when the 2-line clamp hides part of the text
+    const say = $('.say', n); n.classList.toggle('clamped', !narrMore && !S.narrMin && !!say && say.scrollHeight > say.clientHeight + 2);
     placeHs();
   }
   let narrMore = false;
@@ -1000,12 +1250,12 @@ const CONFIG = {
       <span aria-hidden="true" style="font-size:1.3rem">💡</span><div class="ftxt"><b>Striking fact</b>${rich(fa.text)}</div>
       <button class="mini" aria-label="Minimise fact">×</button></div>`;
     const el = $('.fact', f);
-    $('.mini', el).onclick = e => { e.stopPropagation(); S.factMin[s.id] = true; save(); renderFact(); };
-    if (min) { const open = () => { S.factMin[s.id] = false; renderFact(); }; el.onclick = open; el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }; }
+    $('.mini', el).onclick = e => { e.stopPropagation(); S.factMin[s.id] = true; save(); renderFact(); placeHs(); };
+    if (min) { const open = () => { S.factMin[s.id] = false; renderFact(); placeHs(); }; el.onclick = open; el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }; }
   }
 
   /* ---------- Bottom bar ---------- */
-  function sceneEssDone() { const b = curBeat(); return visibleHs().filter(h => h.essential && h.essential.includes(L()) && h.beat === b.id).every(h => consulted(h.id)); }
+  function sceneEssDone() { const b = curBeat(); return visibleHs().filter(h => isEss(step(), h) && h.beat === b.id).every(h => consulted(h.id)); }
   function solved(s) { const q = S.q[s.id]; return !!(q && q.solved); }
   function renderBar() {
     const s = step(), bs = beats(s), last = S.i === bs.length - 1, ess = essentials(s), seenN = ess.filter(h => consulted(h.id)).length;
@@ -1124,7 +1374,110 @@ const CONFIG = {
     const m = paint(s, s.beats.indexOf(curBeat())); if (m) wheels(m);
     renderHs(); renderFact(); renderBar();
     later(() => renderTop(Math.min(11, s.id + 1)), reduce ? 0 : 1300);
-    later(openKeyPoints, reduce ? 50 : Math.min(3000, (m || 800) + 400));
+    renderMeter(true);
+    // v0.5: when the box passes the Incoterm transfer point, play the full-screen "transfer" moment first
+    const ic = inco(), kind = s.id === ic.risk && s.id === ic.cost ? 'both' : s.id === ic.risk ? 'risk' : s.id === ic.cost ? 'cost' : null;
+    later(() => (kind ? showXfer(kind, openKeyPoints) : openKeyPoints()), reduce ? 50 : Math.min(3000, (m || 800) + 400));
+  }
+
+  /* ---------- v0.5: risk / cost transfer moment ----------
+     A full-screen beat in the spirit of a game "evolution" scene, with original visuals only: flash, the RISK shield
+     (or the € coin) leaves the seller and flies to the buyer, then the rule's name and one sentence on what changed.
+     Skip button, Escape key, and a static version when the learner prefers reduced motion. */
+  const SELLER_SVG = `<svg viewBox="0 0 120 100" aria-hidden="true"><rect x="8" y="44" width="104" height="50" rx="3" fill="#D7E9F3"/><path d="M8 44 l20 -18 v18 l20 -18 v18 l20 -18 v18 h44 v6 H8z" fill="#7FB3CF"/><rect x="86" y="8" width="12" height="36" fill="#7FB3CF"/><rect x="20" y="60" width="18" height="14" fill="#0B4F6C"/><rect x="46" y="60" width="18" height="14" fill="#0B4F6C"/><rect x="74" y="58" width="26" height="36" fill="#0B4F6C"/></svg>`;
+  const BUYER_SVG = `<svg viewBox="0 0 120 100" aria-hidden="true"><path d="M6 46 L60 12 L114 46 Z" fill="#B79BD9"/><rect x="14" y="46" width="92" height="48" rx="3" fill="#EFE6FA"/><rect x="40" y="58" width="40" height="36" fill="#6B4396"/><g stroke="#EFE6FA" stroke-width="2"><line x1="40" y1="70" x2="80" y2="70"/><line x1="40" y1="82" x2="80" y2="82"/></g><rect x="20" y="56" width="14" height="12" fill="#6B4396"/><rect x="86" y="56" width="14" height="12" fill="#6B4396"/></svg>`;
+  const SHIELD_SVG = `<svg viewBox="0 0 100 116" aria-hidden="true"><path d="M50 4 L92 18 V54 C92 84 72 102 50 112 C28 102 8 84 8 54 V18 Z" fill="#F2B705" stroke="#fff" stroke-width="5"/><path d="M50 16 L80 26 V54 C80 76 66 90 50 98 Z" fill="#fff" opacity=".25"/><text x="50" y="66" text-anchor="middle" font-size="24" font-weight="900" fill="#3A2A00" font-family="system-ui,sans-serif">RISK</text></svg>`;
+  const COIN_SVG = `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="#F2B705" stroke="#fff" stroke-width="5"/><circle cx="50" cy="50" r="32" fill="none" stroke="#8A6A00" stroke-width="3" opacity=".6"/><text x="50" y="62" text-anchor="middle" font-size="36" font-weight="900" fill="#3A2A00" font-family="system-ui,sans-serif">€</text></svg>`;
+  let xferDone = null, xferReturn = null;
+  function showXfer(kind, done) {
+    const ic = inco(), X = C.ui.xfer, code = cur().incoterm, el = $('#xfer');
+    const point = R(ic.point && ic.point[kind === 'cost' ? 'cost' : 'risk']) || '';
+    const say = s => rich(tpl(String(R(s) || '')).replace('{point}', tpl(point)));
+    const extra = kind === 'risk' && ic.group === 'C' ? `<p class="xf-text">${say(X.cNote)}</p>` : '';
+    const token = kind === 'cost' ? COIN_SVG : kind === 'both' ? SHIELD_SVG.replace('<svg ', '<svg style="margin-bottom:-18px" ') + COIN_SVG.replace('<svg ', '<svg style="width:56px" ') : SHIELD_SVG;
+    const sparks = reduce ? '' : Array.from({ length: 14 }, (_, k) => { const a = k / 14 * Math.PI * 2, d = 70 + (k % 3) * 30; return `<i class="xf-spark" style="--dx:${(Math.cos(a) * d).toFixed(0)}px;--dy:${(Math.sin(a) * d).toFixed(0)}px"></i>`; }).join('');
+    xferDone = done; xferReturn = document.activeElement;
+    el.innerHTML = `<div class="burst" aria-hidden="true"></div><div class="flash" aria-hidden="true"></div><div class="flash f2" aria-hidden="true"></div>
+      <button class="pill xf-skip" id="xfSkip">${esc(plain(X.skip))} ⏭</button>
+      <div class="xf-box">
+        <span class="xf-kicker">${esc(plain(X.kicker[kind]))}</span>
+        <div class="xf-track" role="img" aria-label="${esc(plain(X.alt[kind]))}">
+          <div class="xf-party seller">${SELLER_SVG}<span>SELLER</span></div><div class="xf-arrow"></div>
+          <div class="xf-party buyer">${BUYER_SVG}<span>BUYER</span></div>
+          <div class="xf-token"><div>${token}</div></div>${sparks}
+        </div>
+        <h2 class="xf-title" id="xfTitle">${esc(code)} — ${esc(plain(ic.short))}</h2>
+        <p class="xf-text">${say(X.text[kind])}</p>${extra}
+        <p class="xf-def">${rich(C.ui.incoDef)}</p>
+        <div class="xf-btns"><button class="pill primary go" id="xfGo">${esc(plain(X.go))} ▶</button></div>
+      </div>`;
+    el.classList.add('open');
+    $('#xfSkip').onclick = closeXfer; $('#xfGo').onclick = closeXfer;
+    setTimeout(() => { const s = $('#xfSkip'); if (s) s.focus(); }, 60);
+  }
+  function closeXfer() {
+    const el = $('#xfer'); if (!el.classList.contains('open')) return;
+    el.classList.remove('open'); el.innerHTML = '';
+    const d = xferDone; xferDone = null; if (d) d();
+  }
+  const xferOpen = () => $('#xfer').classList.contains('open');
+
+  /* ---------- v0.5: indicative cost (€) and CO2e meter ----------
+     All values live in content: global.json → footprint (with sources and TO VERIFY flags). Cost items are split
+     seller / buyer from the Incoterm's cost step (export / import clearance follow the rule's exportBy / importBy).
+     CO2e = distance × default intensity factor (GLEC): TEU-km at sea (40' = 2 TEU), tonne-km on land. */
+  function pickVal(v, c) {
+    if (v == null || typeof v !== 'object') return v;
+    for (const k of [c.id, c.family, String(c.len), '*']) if (v[k] != null) return v[k];
+    return null;
+  }
+  function footprint() {
+    const F = C.footprint, r = route(), c = container(), ic = inco(), RT = F.routes[r.id] || {}, fac = F.factors;
+    const teu = c.len === 40 ? 2 : 1, cargoT = ((r.cargoKg || {})[c.family] || 10000) / 1000, grossT = cargoT + c.tare / 1000;
+    const rows = [];
+    (F.costs || []).forEach(it => {
+      if (it.when && !ok({ when: it.when })) return;
+      const eur = pickVal((it.route || {})[r.id] != null ? it.route[r.id] : it.eur, c); if (!eur) return;
+      const x = c.family === 'reefer' && it.reeferX ? it.reeferX : 1;
+      const payer = it.payer ? (ic[it.payer] === 'seller' ? 'seller' : 'buyer') : (it.step <= ic.cost ? 'seller' : 'buyer');
+      const v = it.v && typeof it.v === 'object' ? (c.family === 'reefer' && it.vReefer) || it.v[r.id] : it.v;
+      rows.push({ step: it.step, label: it.label, eur: Math.round(eur * x / 5) * 5, payer, kg: 0, v });
+    });
+    const land = (mode, km) => km * grossT * ((fac[mode] || fac.truck).kg);
+    const co2 = (step, label, kg, v) => rows.push({ step, label, eur: 0, payer: null, kg, v });
+    co2(3, plain(F.labels.pre).replace('{mode}', choiceLabel('mode') || 'truck'), land(S.choices.mode, RT.preKm || 0), fac[S.choices.mode || 'truck'].v);
+    if (c.family === 'reefer') { co2(5, plain(F.labels.plugO), (RT.plugDays || 0) * fac.reeferDay.kg, fac.reeferDay.v); }
+    (RT.sea || []).forEach(leg => { const f = fac[leg.kind], k = c.family === 'reefer' ? (leg.kind === 'ship' ? fac.shipReefer.kg : f.kg * fac.feeder.reeferX) : f.kg;
+      co2(7, leg.label, leg.km * teu * k, c.family === 'reefer' && leg.kind === 'ship' ? fac.shipReefer.v : f.v); });
+    if (c.family === 'reefer') co2(8, plain(F.labels.plugD), (RT.plugDays || 0) * fac.reeferDay.kg, fac.reeferDay.v);
+    co2(10, plain(F.labels.on).replace('{mode}', choiceLabel('onMode') || 'truck'), land(S.choices.onMode, RT.onKm || 0), fac[S.choices.onMode || 'truck'].v);
+    co2(11, plain(F.labels.ret), (RT.returnKm || 0) * (c.tare / 1000) * fac.truck.kg, fac.truck.v);
+    return rows;
+  }
+  const reached = step => S && S.completed.includes(step);
+  function meterTotals() { const rows = footprint().filter(x => reached(x.step)); return { eur: rows.reduce((a, x) => a + x.eur, 0), kg: rows.reduce((a, x) => a + x.kg, 0) }; }
+  const fmtT = kg => (kg / 1000).toLocaleString('en-GB', { maximumFractionDigits: kg < 10000 ? 1 : 0, minimumFractionDigits: kg < 10000 ? 1 : 0 });
+  function renderMeter(bump) {
+    const b = $('#bMeter'); if (!b || !S || !C.footprint) return;
+    const T = meterTotals(), cu = C.footprint.currency;
+    const k = n => n >= 1000 ? (n / 1000).toLocaleString('en-GB', { maximumFractionDigits: n < 10000 ? 1 : 0 }) + 'k' : fmt(n);   // MOBILE: compact numbers
+    b.innerHTML = `<span class="pl ${bump ? 'bump' : ''}" aria-hidden="true">${cu}&nbsp;${k(T.eur)}</span><span class="pl ${bump ? 'bump' : ''}" aria-hidden="true">CO₂&nbsp;${fmtT(T.kg)}t</span><span class="sr">Indicative cost about ${cu} ${fmt(T.eur)} and CO2 about ${fmtT(T.kg)} tonnes so far; tap for details</span>`;
+    b.title = plain(C.footprint.tip);
+  }
+  function openMeter(opener) {
+    const F = C.footprint, rows = footprint(), cu = F.currency, all = rows.reduce((a, x) => a + x.eur, 0), kgAll = rows.reduce((a, x) => a + x.kg, 0);
+    const sel = rows.filter(x => x.payer === 'seller').reduce((a, x) => a + x.eur, 0), buy = all - sel, T = meterTotals();
+    const body = `<p class="fp-intro" style="margin-top:0">${rich(F.intro)}</p>
+      <div class="scores"><div>So far<strong>${cu} ≈ ${fmt(T.eur)}</strong>CO₂e ≈ ${fmtT(T.kg)} t</div><div>Whole journey<strong>${cu} ≈ ${fmt(all)}</strong>CO₂e ≈ ${fmtT(kgAll)} t</div>
+        <div>Under ${esc(cur().incoterm)}<strong style="font-size:1rem"><span class="payer seller">Seller</span> ${cu} ${fmt(sel)} · <span class="payer buyer">Buyer</span> ${cu} ${fmt(buy)}</strong></div></div>
+      <div class="split" role="img" aria-label="Seller pays about ${fmt(sel)}, buyer about ${fmt(buy)}"><span style="width:${all ? sel / all * 100 : 0}%;background:var(--c-seller)"></span><span style="width:${all ? buy / all * 100 : 0}%;background:repeating-linear-gradient(45deg,var(--c-buyer) 0 6px,#8A66B5 6px 12px)"></span></div>
+      <div style="overflow:auto"><table class="fp"><caption class="sr">Indicative cost and CO2 by step</caption>
+        <thead><tr><th>Step</th><th>Item</th><th class="n">${cu} ≈</th><th>Paid by</th><th class="n">CO₂e kg</th></tr></thead><tbody>
+        ${rows.sort((a, b) => a.step - b.step).map(x => `<tr class="${reached(x.step) ? '' : 'later'}"><td>${x.step}</td><td>${rich(x.label)} ${x.v ? rich('[TO VERIFY:' + x.v + ']') : ''}${reached(x.step) ? '' : ' <small>(upcoming)</small>'}</td>
+          <td class="n">${x.eur ? fmt(x.eur) : '—'}</td><td>${x.payer ? `<span class="payer ${x.payer}">${x.payer === 'seller' ? 'Seller' : 'Buyer'}</span>` : ''}</td><td class="n">${x.kg ? fmt(x.kg) : '—'}</td></tr>`).join('')}
+        </tbody><tfoot><tr><td></td><td>Total (whole journey)</td><td class="n">${fmt(all)}</td><td></td><td class="n">${fmt(kgAll)}</td></tr></tfoot></table></div>
+      <p style="font-size:.82rem;color:var(--c-muted)">${rich(F.note)}</p>`;
+    openSheet(plain(F.title), body, { kind: plain(F.kicker), opener, wide: true });
   }
   function docTotals(steps) {
     let pts = 0, max = 0;
@@ -1239,7 +1592,7 @@ const CONFIG = {
     const s = step(), D = s.dossier || {};
     const tabs = [['documents', 'Documents'], ['costs', 'Costs'], ['risks', 'Risks'], ['jobs', 'Jobs'], ['incoterm', 'Incoterm']];
     const body = k => k === 'incoterm' ? `<p>${rich(lensText(s.id))}</p><button class="linkbtn" id="dsGuide">Open the Incoterms guide</button>`
-      : `<ul>${(R(D[k]) || []).filter(x => typeof x === 'string' || ok(x)).map(t => `<li>${rich(typeof t === 'string' ? t : t.text)}</li>`).join('')}</ul>`;
+      : `<ul>${(R(D[k]) || []).filter(x => typeof x === 'string' || ok(x)).slice(0, 2).map(t => `<li>${rich(typeof t === 'string' ? t : t.text)}</li>`).join('')}</ul>`;
     const bindGuide = () => { const g = $('#dsGuide'); if (g) g.onclick = e => openIncoGuide(e.currentTarget); };
     openSheet(`Step file — ${plain(s.title)}`, `<div class="tabs" role="tablist" aria-label="Step file">${tabs.map(([k, n], i) => `<button role="tab" id="t-${k}" aria-controls="tp" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-k="${k}">${n}</button>`).join('')}</div>
       <div id="tp" role="tabpanel" aria-labelledby="t-documents">${body('documents')}</div>`, { kind: `📁 Level ${L()}`, opener, focus: '#t-documents', bind: sh => {
@@ -1268,7 +1621,7 @@ const CONFIG = {
   function openIncoGuide(opener) {
     const show = Object.keys(C.incoterms).filter(k => L() >= 2 || guideAll || C.incoterms[k].common);
     const ic = C.incoterms, curK = cur().incoterm, me = ic[curK];
-    const body = () => `
+    const body = () => `<p class="incodef">${rich(C.ui.incoDef)}</p>
       <p><strong>${esc(curK)} — ${esc(plain(me.name))}.</strong> ${rich(me.summary)}</p>${incoBand(S && !$('#app').hidden ? S.step : 0)}
       <div style="overflow:auto"><table class="it"><caption class="sr">Incoterms 2020 rules</caption><thead><tr><th>Rule</th><th>Mode</th><th>Risk ▲</th><th>Cost ●</th><th>Ocean freight</th><th>Export / import clearance</th><th>Insurance</th></tr></thead><tbody>
       ${show.map(k => `<tr class="${k === curK ? 'cur' : ''}"><td><strong>${k}</strong><br>${esc(ic[k].short)}</td><td>${esc(ic[k].mode)}</td><td class="c">step ${ic[k].risk}</td><td class="c">step ${ic[k].cost}</td><td>${esc(ic[k].freight)}</td><td>${esc(ic[k].exportBy)} / ${esc(ic[k].importBy)}</td><td>${rich(ic[k].insurance)}</td></tr>`).join('')}
@@ -1319,6 +1672,7 @@ const CONFIG = {
   function startQuiz() {
     const pool = (R(C.quiz) || []).filter(ok);
     S.quiz = { order: shuffle(pool.map(q => q.id)), i: 0, answers: {}, done: false, level: L() };
+    S.resultId = null;   // a retake produces a new results record
     S.screen = 'quiz'; save(); renderQuiz();
   }
   function renderQuiz() {
@@ -1347,9 +1701,8 @@ const CONFIG = {
     const ids = Object.keys(S.firstTry), okN = ids.filter(k => S.firstTry[k].ok).length, pct = ids.length ? Math.round(okN / ids.length * 100) : 0;
     const dt = docTotals(), Z = S.quiz, qOk = Z ? Object.values(Z.answers).filter(a => a.ok).length : 0, qN = Z ? Z.order.length : 0;
     const lvl = C.levels.find(l => +l.id === L()), next = C.levels.find(l => +l.id === L() + 1);
-    const review = C.steps.filter(s => (S.firstTry[s.id] && !S.firstTry[s.id].ok));
-    const docReview = [];
-    C.steps.forEach(s => (s.hotspots || []).forEach(h => { const d = docOf(h); if (!d || !ok(h)) return; const st = S.docs[`${s.id}:${d}`]; if (st && st.done && st.pts < 1) docReview.push(`Step ${s.id} — ${plain(s.docs[d].title)} (${st.pts} pt)`); }));
+    const items = resultItems(), review = items.filter(x => !x.ok);
+    const rec = Z && Z.done ? recordResults() : null;
     $('#summary').innerHTML = `<div class="wrap">
       <div class="brandbar"><span class="logo" aria-hidden="true">${esc(CONFIG.logoText)}</span><strong>${esc(CONFIG.companyName)}</strong></div>
       <h1 id="sumTitle">Your journey summary</h1>
@@ -1360,15 +1713,70 @@ const CONFIG = {
         <div>Final quiz<strong>${qOk}/${qN}</strong>${qN ? Math.round(qOk / qN * 100) + '%' : 'not taken'}</div></div>
       ${pct > 80 && next ? `<p class="fb right" style="margin:10px 0"><strong>Great result!</strong> You answered more than 80% right at the first try. Next time, try <strong>${esc(next.name)}</strong>. <button class="pill primary go" id="smNext" style="margin-left:8px">Try ${esc(next.short)} ▶</button></p>` : ''}
       <div class="sgrid">
-        <div class="grp"><h2>Steps to review</h2>${review.length || docReview.length ? `<ul>${review.map(s => `<li>Step ${s.id} — ${esc(plain(s.title))}</li>`).join('')}${docReview.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : '<p>None — well done.</p>'}</div>
+        <div class="grp"><h2>${esc(plain(C.ui.reviewTitle))}</h2><p style="font-size:.85rem;color:var(--c-muted);margin-top:-4px">${esc(plain(C.ui.reviewHelp))}</p>
+          ${review.length ? `<ul class="review">${review.map(x => `<li><span class="tag">${esc(x.tag)}</span>${esc(x.label)}</li>`).join('')}</ul>` : '<p>None — well done.</p>'}
+          <p style="font-size:.85rem;margin:10px 0 4px" role="status" id="smSent">${rec ? esc(plain(rec.sent ? C.ui.resultsSent : CONFIG.resultsEndpoint ? C.ui.resultsSending : C.ui.resultsLocal)) : ''}</p>
+          <button class="pill" id="smCsv">⬇ ${esc(plain(C.ui.csvButton))}</button></div>
         <div class="grp"><h2>Key points</h2>${C.steps.filter(s => S.completed.includes(s.id)).map(s => `<details class="kp"><summary>Step ${s.id} · ${esc(plain(s.title))}</summary><ul>${(R(s.keyPoints) || []).map(k => `<li>${rich(k)}</li>`).join('')}</ul></details>`).join('')}</div>
       </div>
       <div class="actions"><button class="pill primary" id="smMenu">⌂ Back to the start menu</button><button class="pill" id="smQuiz">Retake the final quiz</button><button class="pill" id="smGuide">Incoterms guide</button></div>
     </div>`;
     $('#smMenu').onclick = () => { draft = Object.assign({}, S.settings); renderMenu(); };
+    $('#smCsv').onclick = downloadCsv;
     $('#smQuiz').onclick = startQuiz;
     $('#smGuide').onclick = e => openIncoGuide(e.currentTarget);
     const n = $('#smNext'); if (n) n.onclick = () => { draft = Object.assign({}, S.settings, { level: L() + 1 }); renderMenu(); };
+  }
+
+  /* ---------- v0.5: results (nickname, scores, right/wrong per question at the first try) ---------- */
+  // Every scored item of the journey: step questions (first try), document checks (1 pt = first try) and the final quiz.
+  function resultItems() {
+    const out = [];
+    C.steps.forEach(s => {
+      const ft = S.firstTry[s.id]; if (ft) out.push({ id: `S${s.id}`, tag: `Step ${s.id}`, label: `${plain(s.title)} — ${plain(R(s.question).prompt)}`, ok: !!ft.ok });
+      (s.hotspots || []).forEach(h => { const d = docOf(h); if (!d || !ok(h)) return; const st = S.docs[`${s.id}:${d}`]; if (st && st.done) out.push({ id: `D${s.id}-${d}`, tag: `Step ${s.id} · document`, label: plain(s.docs[d].title), ok: st.pts === 1, pts: st.pts }); });
+    });
+    const Z = S.quiz, pool = R(C.quiz) || [];
+    if (Z) Z.order.forEach(id => { const a = Z.answers[id], q = pool.find(x => x.id === id); if (a && q) out.push({ id: `Q-${id}`, tag: 'Final quiz', label: plain(q.q), ok: !!a.ok }); });
+    return out;
+  }
+  function loadResults() { try { return JSON.parse(localStorage.getItem(RESULTS)) || []; } catch (e) { return window.__results || []; } }
+  function saveResults(list) { window.__results = list; try { localStorage.setItem(RESULTS, JSON.stringify(list)); } catch (e) {} }
+  // Built once per finished journey (S.resultId), kept on this device, and sent to CONFIG.resultsEndpoint if set.
+  function recordResults() {
+    let list = loadResults(), rec = S.resultId && list.find(r => r.id === S.resultId);
+    if (rec) return rec;
+    const ids = Object.keys(S.firstTry), okN = ids.filter(k => S.firstTry[k].ok).length, dt = docTotals(), Z = S.quiz;
+    const items = resultItems();
+    rec = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), app: CONFIG.appTitle, version: CONFIG.platform || (C.meta || {}).version || '', build: 'v0.1-mobile',   // MOBILE: version = "mobile" in the shared Sheet
+      nickname: player() || 'anonymous', date: new Date().toISOString(), level: L(), container: container().name, route: route().name, incoterm: cur().incoterm,
+      firstTry: `${okN}/${ids.length}`, firstTryPct: ids.length ? Math.round(okN / ids.length * 100) : 0,
+      documents: dt.max ? `${dt.pts}/${dt.max}` : 'n/a', quiz: Z ? `${Object.values(Z.answers).filter(a => a.ok).length}/${Z.order.length}` : 'n/a',
+      toReview: items.filter(x => !x.ok).map(x => `${x.tag}: ${x.label}`).join(' | '),
+      questions: items.map(x => ({ id: x.id, label: `${x.tag}: ${x.label}`, ok: x.ok })), sent: false };
+    list.push(rec); saveResults(list); S.resultId = rec.id; save();
+    sendResult(rec);
+    return rec;
+  }
+  function sendResult(rec) {
+    if (!CONFIG.resultsEndpoint || !window.fetch) return;
+    const body = JSON.stringify(Object.assign({ token: CONFIG.resultsToken }, rec, { sent: undefined }));
+    // text/plain avoids a CORS pre-flight; Apps Script answers with an opaque response, so success = no network error
+    fetch(CONFIG.resultsEndpoint, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body })
+      .then(() => { const list = loadResults(), r = list.find(x => x.id === rec.id); if (r) { r.sent = true; saveResults(list); }
+        const el = $('#smSent'); if (el) el.textContent = plain(C.ui.resultsSent); })
+      .catch(() => { const el = $('#smSent'); if (el) el.textContent = plain(C.ui.resultsLocal); });
+  }
+  function retryUnsent() { loadResults().filter(r => !r.sent).forEach(sendResult); }
+  function downloadCsv() {
+    const me = player(), list = loadResults().filter(r => !me || r.nickname === me);
+    const q = v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`;
+    const head = ['date', 'nickname', 'level', 'container', 'route', 'incoterm', 'first_try', 'first_try_pct', 'documents', 'final_quiz', 'question_id', 'question', 'correct_first_try', 'version'];
+    const rows = [head.join(',')];
+    list.forEach(r => (r.questions.length ? r.questions : [{ id: '', label: '', ok: '' }]).forEach(x => rows.push([r.date, r.nickname, r.level, r.container, r.route, r.incoterm, r.firstTry, r.firstTryPct, r.documents, r.quiz, x.id, x.label, x.ok === '' ? '' : x.ok ? 'yes' : 'no', r.version].map(q).join(','))));
+    const blob = new Blob(['\ufeff' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = `bobs-adventure-results-${(me || 'me').replace(/[^\w-]+/g, '_')}.csv`;
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
   }
 
   /* ---------- Popovers, toast, events ---------- */
@@ -1397,6 +1805,8 @@ const CONFIG = {
   document.addEventListener('mouseover', e => { const t = e.target.closest && e.target.closest('.term'); if (t && matchMedia('(hover:hover)').matches && !$('#pop').classList.contains('open')) openPop(t, termHtml(t.dataset.term), true); });
   document.addEventListener('mouseout', e => { const t = e.target.closest && e.target.closest('.term'); if (t && popHover && !(e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('#pop'))) closePop(); });
   document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && xferOpen()) { e.preventDefault(); return closeXfer(); }
+    if (e.key === 'Tab' && xferOpen()) { const f = $$('#xfer button'); if (f.length) { const i = f.indexOf(document.activeElement); e.preventDefault(); f[(i + (e.shiftKey ? f.length - 1 : 1)) % f.length].focus(); } return; }
     if (e.key === 'Escape') { if ($('#pop').classList.contains('open')) return closePop(true); if (dv) return closeDoc(); if (sheetOpen()) return closeSheet(); }
     if (e.key === 'Tab') {
       const box = dv ? $('#docv') : sheetOpen() ? $('#sheet') : null; if (!box) return;
@@ -1408,6 +1818,7 @@ const CONFIG = {
   $('#backdrop').onclick = closeSheet;
   $('#bHome').onclick = goHome;
   $('#bMenu').onclick = e => openMenuSheet(e.currentTarget);
+  $('#bMeter').onclick = e => openMeter(e.currentTarget);
   $('#bInco').onclick = e => { e.stopPropagation(); $('#pop').classList.contains('open') && popReturn === e.currentTarget ? closePop() : incoPop(e.currentTarget); };
   if ('ResizeObserver' in window) new ResizeObserver(placeHs).observe($('#stage')); else addEventListener('resize', placeHs);
 
@@ -1416,7 +1827,7 @@ const CONFIG = {
      ===================================================================== */
   const GY = 368;
   const DEFS = `<defs>
-    <linearGradient id="gBox" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--c-box)" stop-opacity=".85"/><stop offset=".15" stop-color="var(--c-box)"/><stop offset="1" stop-color="var(--c-box-dark)"/></linearGradient>
+    <linearGradient id="gBox" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--c-box)" stop-opacity=".85"/><stop offset=".15" style="stop-color:var(--c-box)"/><stop offset="1" style="stop-color:var(--c-box-dark)"/></linearGradient>
     <linearGradient id="gReefer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBFCFD"/><stop offset="1" stop-color="#C9D3DB"/></linearGradient>
     <linearGradient id="gTank" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4F7F9"/><stop offset=".45" stop-color="#C3CDD5"/><stop offset="1" stop-color="#8996A2"/></linearGradient>
     <pattern id="corr" width="14" height="10" patternUnits="userSpaceOnUse"><rect width="5" height="10" fill="#000" opacity=".12"/><rect x="5" width="2" height="10" fill="#fff" opacity=".1"/></pattern>
@@ -1427,17 +1838,23 @@ const CONFIG = {
     <linearGradient id="gGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B8CFA0"/><stop offset="1" stop-color="#93AE7C"/></linearGradient>
     <linearGradient id="gSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5E9FC6"/><stop offset="1" stop-color="#2F6E95"/></linearGradient>
     <linearGradient id="gHull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E4A60"/><stop offset=".7" stop-color="#1E3446"/><stop offset=".7" stop-color="#8E2B22"/><stop offset="1" stop-color="#6E1F18"/></linearGradient>
-    <linearGradient id="gCab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F7AA3"/><stop offset="1" stop-color="var(--c-primary-dark)"/></linearGradient>
+    <linearGradient id="gCab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F7AA3"/><stop offset="1" style="stop-color:var(--c-primary-dark)"/></linearGradient>
     <linearGradient id="gGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E9F5FB"/><stop offset="1" stop-color="#9CC6DB"/></linearGradient>
     <linearGradient id="gCarton" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDB880"/><stop offset="1" stop-color="#B98D52"/></linearGradient>
     <linearGradient id="gCrane" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3F6E8C"/><stop offset="1" stop-color="#2A4F68"/></linearGradient>
     <radialGradient id="gHub"><stop offset="0" stop-color="#D5DCE2"/><stop offset="1" stop-color="#7C8790"/></radialGradient>
     <filter id="soft" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>
+    <linearGradient id="bobGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--c-box)" stop-opacity=".9"/><stop offset=".2" style="stop-color:var(--c-box)"/><stop offset="1" style="stop-color:var(--c-box-dark)"/></linearGradient>
   </defs>`;
+  // v0.5 FIX (texture bug): the gradients used to be copied into every scene AND into a hidden <svg> in the start menu.
+  // Duplicate ids mean url(#gSea) etc. resolved to the FIRST copy in the document — the one inside the hidden menu
+  // (display:none) — so cartons, cab, sea and hull rendered empty/transparent. Now there is exactly one copy, mounted once
+  // in #svgDefs (never display:none), and scene re-renders never touch it.
+  function mountDefs() { const d = document.getElementById('svgDefs'); if (d && !d.firstChild) d.innerHTML = DEFS; }
   const PALETTE = ['#8FA3B3', '#9DB59A', '#B9A58F', '#A9A0BE', '#8FB1B0', '#C49A8A', '#7F9BB8'];
   function svgOpen(s) {
     return `<svg id="scene" viewBox="0 0 960 460" preserveAspectRatio="xMidYMax meet" role="img" aria-labelledby="sT sD" focusable="false">
-      <title id="sT">Step ${s.id}: ${esc(plain(s.title))}</title><desc id="sD">${esc(plain(s.sceneDesc))}</desc>${DEFS}`;
+      <title id="sT">Step ${s.id}: ${esc(plain(s.title))}</title><desc id="sD">${esc(plain(s.sceneDesc))}</desc>`;
   }
   const ground = (fill) => `<rect x="-700" y="${GY}" width="2360" height="300" fill="${fill || 'url(#gGround)'}"/><rect x="-700" y="${GY}" width="2360" height="4" fill="#fff" opacity=".35"/>`;
   const wheel = (cx, cy, r) => { r = r || 17; return `<g class="wheel"><circle cx="${cx}" cy="${cy}" r="${r}" fill="#1E2328"/><circle cx="${cx}" cy="${cy}" r="${r * .45}" fill="url(#gHub)"/><line x1="${cx - r * .7}" y1="${cy}" x2="${cx + r * .7}" y2="${cy}" stroke="#4B555E" stroke-width="${Math.max(1.5, r / 6)}"/></g>`; };
@@ -1610,19 +2027,36 @@ const CONFIG = {
       <g transform="translate(${bx + bw + 6} ${y - 30})"><rect x="-2" y="24" width="44" height="10" fill="#2B3238"/><path d="M8 24 V5 Q8 0 13 0 H32 Q38 0 38 6 V24 Z" fill="#E8C33A" stroke="#6B5410" stroke-width="1.5"/>
         <rect x="14" y="4" width="20" height="11" rx="2" fill="url(#gGlass)"/><rect x="2" y="2" width="4" height="22" fill="#3F4750"/>${wheel(30, 34, 8)}</g></g>`;
   }
-  // Ship-to-shore (STS) quay crane: landside leg at x=40, waterside leg at x=245 (the truck lane runs between them), boom at y=40–55.
+  // Ship-to-shore (STS) quay crane, side view (v0.5 redraw). Anchors kept from v0.4 so the animations still line up:
+  // landside leg x=34–48, waterside leg x=238–252 (truck lane between them), boom rail (trolley runs on it) y=40–55.
+  // Parts: portal frame with sill beams and knee braces · A-frame with fore- and backstays · truss boom over the water
+  // and backreach over land · machinery house · trolley with the operator cab hanging under it (drawn in quay()).
   function quayCrane() {
+    const truss = (x0, x1, y0, y1, step) => { let o = ''; for (let x = x0, k = 0; x < x1; x += step, k++) o += `<line x1="${x}" y1="${k % 2 ? y0 : y1}" x2="${x + step}" y2="${k % 2 ? y1 : y0}"/>`; return o; };
     return `<g>
-      <line x1="150" y1="-60" x2="-60" y2="42" stroke="#2A4F68" stroke-width="3"/><line x1="150" y1="-60" x2="900" y2="42" stroke="#2A4F68" stroke-width="3"/><line x1="150" y1="-60" x2="560" y2="42" stroke="#2A4F68" stroke-width="2.5"/>
-      <polygon points="136,-60 164,-60 245,42 40,42" fill="none" stroke="#2A4F68" stroke-width="8" stroke-linejoin="round"/>
-      <rect x="-70" y="40" width="1080" height="15" fill="url(#gCrane)"/>
-      ${Array.from({ length: 21 }, (_, i) => `<line x1="${-70 + i * 52}" y1="41" x2="${-44 + i * 52}" y2="54" stroke="#1E3446" stroke-width="1.5" opacity=".55"/>`).join('')}
-      <rect x="60" y="10" width="130" height="30" rx="3" fill="#EEF2F5" stroke="#97A4AF"/><rect x="66" y="16" width="30" height="10" fill="url(#gGlass)"/>
-      <rect x="34" y="55" width="14" height="${GY - 55}" fill="url(#gCrane)"/><rect x="238" y="55" width="14" height="${GY - 55}" fill="url(#gCrane)"/>
-      <rect x="34" y="120" width="218" height="12" fill="url(#gCrane)"/>
-      <line x1="48" y1="132" x2="80" y2="132" stroke="#2A4F68" stroke-width="2"/><line x1="48" y1="56" x2="48" y2="120" stroke="#1E3446" stroke-width="1" opacity=".4"/>
-      <rect x="24" y="${GY - 16}" width="34" height="16" rx="2" fill="#1E3446"/><rect x="228" y="${GY - 16}" width="34" height="16" rx="2" fill="#1E3446"/>
-      <circle class="blink" cx="1006" cy="38" r="4" fill="#FF5A4A"/><circle class="blink" cx="150" cy="-64" r="4" fill="#FF5A4A"/></g>`;
+      <g stroke="#2A4F68" stroke-width="3" fill="none"><line x1="150" y1="-60" x2="-60" y2="40"/><line x1="150" y1="-60" x2="1000" y2="40"/><line x1="150" y1="-60" x2="620" y2="40"/></g>
+      <polygon points="134,-62 166,-62 252,40 238,40 150,-44 48,40 34,40" fill="url(#gCrane)" stroke="#1E3446" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="138" y="-70" width="24" height="12" rx="2" fill="#1E3446"/>
+      <rect x="-70" y="38" width="1084" height="4" fill="#1E3446"/><rect x="-70" y="50" width="1084" height="6" fill="url(#gCrane)"/>
+      <g stroke="#2A4F68" stroke-width="2">${truss(-70, 1010, 42, 50, 26)}</g>
+      <path d="M1014 38 l10 6 v12 h-10 z" fill="#1E3446"/>
+      <rect x="-64" y="10" width="96" height="28" rx="3" fill="#EEF2F5" stroke="#97A4AF"/><rect x="-56" y="16" width="22" height="9" fill="url(#gGlass)"/><text x="-14" y="29" font-size="8" font-weight="800" fill="#55616D">MACHINERY</text>
+      <rect x="34" y="56" width="14" height="${GY - 56}" fill="url(#gCrane)"/><rect x="238" y="56" width="14" height="${GY - 56}" fill="url(#gCrane)"/>
+      <rect x="34" y="118" width="218" height="14" fill="url(#gCrane)"/><rect x="34" y="56" width="218" height="8" fill="url(#gCrane)"/>
+      <g fill="url(#gCrane)"><path d="M48 132 h26 l-26 30 z"/><path d="M238 132 h-26 l26 30 z"/><path d="M48 64 h20 l-20 22 z"/><path d="M238 64 h-20 l20 22 z"/></g>
+      <g stroke="#2A4F68" stroke-width="3"><line x1="41" y1="${GY - 18}" x2="41" y2="168"/><line x1="245" y1="${GY - 18}" x2="245" y2="168"/></g>
+      <rect x="18" y="${GY - 20}" width="46" height="12" rx="2" fill="#1E3446"/><rect x="222" y="${GY - 20}" width="46" height="12" rx="2" fill="#1E3446"/>
+      ${[24, 40, 56, 228, 244, 260].map(x => `<circle cx="${x}" cy="${GY - 4}" r="4" fill="#2B3238"/>`).join('')}
+      <circle class="blink" cx="1018" cy="36" r="4" fill="#FF5A4A"/><circle class="blink" cx="150" cy="-74" r="4" fill="#FF5A4A"/></g>`;
+  }
+  // Spreader seen from the side, hanging under the hoist ropes. Its twistlocks lock into the 4 corner castings of the box
+  // (2 visible in side view). Drawn relative to the box's top-left corner; bw = box width on screen.
+  function spreaderSVG(bw) {
+    return `<rect x="${bw / 2 - 14}" y="-26" width="28" height="9" rx="2" fill="#3F4750"/>
+      <line x1="${bw / 2 - 10}" y1="-17" x2="6" y2="-9" stroke="#2B3238" stroke-width="1.5"/><line x1="${bw / 2 + 10}" y1="-17" x2="${bw - 6}" y2="-9" stroke="#2B3238" stroke-width="1.5"/>
+      <rect x="-3" y="-10" width="${bw + 6}" height="8" rx="1.5" fill="#E8C33A" stroke="#6B5410"/>
+      <rect x="-3" y="-3" width="8" height="5" fill="#2B3238"/><rect x="${bw - 5}" y="-3" width="8" height="5" fill="#2B3238"/>
+      <path d="M-3 -10 l-5 -6 h5 z M${bw + 3} -10 l5 -6 h-5 z" fill="#6B5410"/>`;
   }
   function landscape(o) {  // shared by pre-carriage (step 3) and on-carriage (step 10)
     return `<rect x="-700" y="296" width="2360" height="170" fill="url(#gSea)"/><g class="waves">${Array.from({ length: 30 }, (_, i) => `<path d="M${-200 + (i % 15) * 90} ${318 + Math.floor(i / 15) * 40} q10 -6 20 0 t20 0" stroke="#fff" stroke-width="1.5" fill="none" opacity=".5"/>`).join('')}</g>
@@ -1659,21 +2093,31 @@ const CONFIG = {
   };
 
   /* --- Step 2: stuffing, sealing, VGM (and step 11 reuses parts) --- */
-  function pallets(w, h, attrs, until) {
-    let p = ''; const cols = Math.floor((w - 32) / 74), rowsY = [h - 74, h - 140];
-    for (let tier = 0; tier < 2; tier++) for (let col = 0; col < cols; col++) {
-      const x = 16 + col * 74, y = rowsY[tier], order = (cols - 1 - col) * 2 + tier;
-      p += `<g data-tx="${attrs(order)}"><rect x="${x}" y="${y}" width="68" height="58" rx="3" fill="url(#gCarton)" stroke="#7A5A2E"/><line x1="${x}" y1="${y + 20}" x2="${x + 68}" y2="${y + 20}" stroke="#7A5A2E" opacity=".5"/><line x1="${x + 34}" y1="${y}" x2="${x + 34}" y2="${y + 58}" stroke="#7A5A2E" opacity=".5"/><rect x="${x}" y="${y + 58}" width="68" height="6" fill="#8B6A3E"/></g>`;
-    }
-    return p;
+  // v0.5 FIX (truck & cartons): cartons are now their OWN objects, never nested in the truck group.
+  // cartonSlots() gives every carton's place inside the box (box drawn at x=320, top y) and its place in the
+  // warehouse stock (4 columns × 3 tiers behind the open dock). Cartons move between the two ONLY while the
+  // truck is parked (stuff / unstuff beats) and are hidden before the truck moves again, so nothing trails behind it.
+  function cartonSlots(w, h, y) {
+    const cols = Math.floor((w - 32) / 74), rowsY = [h - 74, h - 140], out = [];
+    for (let tier = 0; tier < 2; tier++) for (let col = 0; col < cols; col++) out.push({ bx: 320 + 16 + col * 74, by: y + rowsY[tier], order: (cols - 1 - col) * 2 + tier });
+    out.sort((a, b) => a.order - b.order);
+    out.forEach((c, k) => { c.sx = 24 + (k % 4) * 70; c.sy = GY - 64 * (Math.floor(k / 4) + 1); });
+    return out;
   }
+  const carton = (x, y) => `<rect x="${x}" y="${y}" width="68" height="58" rx="3" fill="url(#gCarton)" stroke="#7A5A2E"/><line x1="${x}" y1="${y + 20}" x2="${x + 68}" y2="${y + 20}" stroke="#7A5A2E" opacity=".5"/><line x1="${x + 34}" y1="${y}" x2="${x + 34}" y2="${y + 58}" stroke="#7A5A2E" opacity=".5"/><rect x="${x}" y="${y + 58}" width="68" height="6" fill="#8B6A3E"/>`;
+  // Inside view of the warehouse (open front) so the stock reads as "in the warehouse", not floating in front of it.
+  const dockInterior = () => `<rect x="24" y="168" width="282" height="200" rx="4" fill="#3A4652"/><rect x="24" y="168" width="282" height="8" fill="#2B3540"/><rect x="24" y="360" width="282" height="8" fill="#55616D"/>`;
   SCENES.warehouse = s => {
     const c = container(), { w, h } = boxDims(c), f = c.family, t = c.id, y = GY - (h + 33);
     const open = f === 'dry' || f === 'reefer' || t === '40OT';
-    const inside = open && t !== '40OT' ? pallets(w, h, o => `start:-460,0;stuff:0,0@${o * 160}~900`) : '';
+    const cartons = open && t !== '40OT', slots = cartons ? cartonSlots(w, h, y) : [];
+    // static cartons inside the box (in the truck group): shown once the doors are closed, so they ride along hidden
+    const inside = cartons ? `<g data-at="seal">${slots.map(c => carton(c.bx - 320, c.by - y)).join('')}</g>` : '';
+    // loose cartons (NOT in the truck group): warehouse stock → into the box during "stuff", then hidden
+    const loose = cartons ? `<g data-until="stuff">${slots.map((c, k) => `<g data-tx="start:${c.sx - c.bx},${c.sy - c.by};stuff:0,0@${k * 160}~900">${carton(c.bx, c.by)}</g>`).join('')}</g>` : '';
     let loader = '';
     if (t === '40OT' || t === '40FR') loader = `<g><rect x="${330 + w / 2 - 6}" y="20" width="12" height="40" fill="#E8C33A"/><line x1="${330 + w / 2}" y1="0" x2="${330 + w / 2}" y2="40" stroke="#3F4750" stroke-width="3"/>
-        <g data-tx="start:0,-230;stuff:0,0~1800" data-at="stuff"><line x1="${330 + w / 2}" y1="${y - 200}" x2="${330 + w / 2}" y2="${y + 10}" stroke="#3F4750" stroke-width="3" data-until="stuff"/>${t === '40OT' ? `<g transform="translate(320 ${y})">${machine(70, 4, w - 140, h - 20)}</g>` : ''}</g>
+        <g data-tx="start:0,-230;stuff:0,0~1800" data-at="stuff"><line x1="${330 + w / 2}" y1="${y - 200}" x2="${330 + w / 2}" y2="${y + 10}" stroke="#3F4750" stroke-width="3" data-until="stuff"/>${t === '40OT' ? `<g transform="translate(320 ${y})" data-until="stuff">${machine(70, 4, w - 140, h - 20)}</g>` : ''}</g>
         <text x="${330 + w / 2}" y="16" text-anchor="middle" font-size="11" font-weight="800" fill="#1B2631">MOBILE CRANE HOOK</text></g>`;
     if (f === 'tank') loader = `<g><rect x="40" y="170" width="120" height="190" rx="10" fill="url(#gTank)" stroke="#6E7B86"/><text x="100" y="200" text-anchor="middle" font-size="11" font-weight="800" fill="#1B2631">STORAGE TANK</text>
         <path d="M160 300 C 240 300, 260 ${y - 40}, ${320 + w / 2} ${y + 6}" stroke="#1B2631" stroke-width="7" fill="none" data-at="stuff" data-until="stuff"/>
@@ -1681,11 +2125,10 @@ const CONFIG = {
     return `${svgOpen(s)}${ground()}${skyline([[330, 250, 46], [380, 214, 38], [424, 236, 52], [884, 226, 40], [930, 250, 60]])}
       <g opacity=".7"><rect x="610" y="96" width="10" height="272" fill="#7F97A9"/><rect x="680" y="96" width="10" height="272" fill="#7F97A9"/><rect x="470" y="88" width="300" height="12" fill="#7F97A9"/><circle class="blink" cx="655" cy="80" r="4" fill="#FF5A4A"/>
         <g class="hook"><line x1="520" y1="100" x2="520" y2="150" stroke="#5E7486" stroke-width="2"/><rect x="508" y="150" width="24" height="7" fill="#5E7486"/></g></g>
-      ${f === 'tank' ? '' : warehouseSVG(20, plain(C.ui.shipperWarehouse))}
-      ${f !== 'tank' ? `<g class="stock" data-until="arrive">${[[44, 300], [104, 300], [44, 240]].map(([a, b]) => `<rect x="${a}" y="${b}" width="56" height="58" fill="url(#gCarton)" stroke="#7A5A2E"/>`).join('')}</g>` : ''}
+      ${f === 'tank' ? '' : warehouseSVG(20, plain(C.ui.shipperWarehouse))}${f === 'tank' ? '' : dockInterior()}
       <rect class="wb" x="330" y="${GY - 4}" width="610" height="8" rx="2" fill="#7E8A95"/><rect x="330" y="${GY - 4}" width="610" height="8" rx="2" fill="#F2C14E" data-at="vgm" data-until="vgm"/>
       ${rig(c, { attrs: 'data-tx="start:780,0;arrive:0,0~2200;depart:1160,0~2600"', boxOpts: open && t !== '40OT' ? { inside, wallAttr: 'data-until="arrive"', wall2Attr: 'data-at="seal"', plate: true } : { plate: true, cargo: t === '40FR' ? true : undefined, cargoAttr: t === '40FR' ? 'data-at="stuff" data-delay="1600"' : '', tarpAttr: 'data-at="seal"' } })}
-      ${loader}
+      ${loose}${loader}
       <g data-at="stuff" data-until="stuff" data-delay="1800">${tag(555, 140, plain(C.ui.loadCentre))}</g>
       <g data-at="seal" data-until="seal"><line x1="262" y1="152" x2="314" y2="${y + 60}" stroke="#1B2631" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="230" cy="96" r="64" fill="#fff" stroke="#1B2631" stroke-width="2"/>
         ${t === '40FR' ? `<text x="230" y="92" text-anchor="middle" font-size="12" font-weight="800" fill="#1B2631">NO DOORS</text><text x="230" y="110" text-anchor="middle" font-size="11" fill="#1B2631">lashing checked</text>`
@@ -1719,7 +2162,9 @@ const CONFIG = {
       <rect x="0" y="286" width="262" height="8" fill="#5B6670"/>${o.bridge ? '<rect x="258" y="286" width="548" height="8" fill="#5B6670"/>' : `<rect x="258" y="286" width="548" height="8" fill="#5B6670" opacity="0"/>`}
       ${bridge}${left}${right}
       ${!o.bridge ? `<rect x="250" y="286" width="560" height="8" fill="#5B6670"/><g>${Array.from({ length: 8 }, (_, i) => `<rect x="${280 + i * 70}" y="294" width="6" height="40" fill="#7D8891"/>`).join('')}</g>` : ''}
-      <g data-ch="${key}:truck"><g data-tx="${toRight}" class="rig">${small(34, 262, 62, 20)}<rect x="30" y="282" width="72" height="4" fill="#3F4750"/><path d="M100 266 h14 l6 8 v12 h-20 z" fill="var(--c-primary)"/>${wheel(42, 288, 5)}${wheel(86, 288, 5)}${wheel(110, 288, 5)}</g></g>
+      <g data-ch="${key}:truck"><g data-tx="${toRight}" class="rig">${small(34, 261, 62, 21)}<rect x="30" y="282" width="74" height="4" fill="#3F4750"/><rect x="28" y="281" width="3" height="5" fill="#C0392B"/>
+        <path d="M102 287 V268 q0 -4 4 -4 h11 q4 0 5 4 l3 11 v8 z" fill="url(#gCab)" stroke="#06293A" stroke-width="1"/><path d="M113 267 h5 q2 0 3 3 l2 8 h-10 z" fill="url(#gGlass)"/><rect x="103" y="258" width="2" height="8" fill="#55616D"/>
+        ${wheel(40, 288, 5)}${wheel(52, 288, 5)}${wheel(108, 288, 5)}${wheel(120, 288, 5)}</g></g>
       <g data-ch="${key}:barge"><g data-tx="start:0,0;${o.travel}:600,0~3200"><g class="bob"><polygon points="20,332 180,332 170,350 30,350" fill="#4B5A66"/>${small(40, 316, 32, 16)}<rect x="74" y="316" width="32" height="16" fill="#8FA3B3" stroke="#55616D"/>${small(108, 316, 32, 16)}<rect x="150" y="314" width="18" height="18" fill="#E4EEF4" stroke="#55616D"/></g></g></g>
       <g data-ch="${key}:rail"><g data-tx="start:-170,0;${o.travel}:20,0~3000" class="rig"><rect x="16" y="222" width="36" height="20" rx="3" fill="var(--c-primary)"/><rect x="56" y="238" width="58" height="4" fill="#3F4750"/>${small(58, 222, 54, 16)}<rect x="118" y="238" width="58" height="4" fill="#3F4750"/>${small(120, 222, 54, 16)}${wheel(26, 244, 4)}${wheel(66, 244, 4)}${wheel(104, 244, 4)}${wheel(128, 244, 4)}${wheel(166, 244, 4)}</g></g>
       ${o.extra || ''}
@@ -1784,8 +2229,8 @@ const CONFIG = {
     const truckTx = `start:-760,0;gate:0,0~2400;yard:${lane - bx0},0~1600`;
     const boxBody = `<g transform="translate(${bx0} ${by0}) scale(${K})">${boxSVG(c, { plate: false })}</g>`;
     const lifts = [`yard:0,${(liftTop - by0).toFixed(1)}@1700~800`, `yard:${slotX - lane},0@2500~1300`, `yard:0,${(slotY - liftTop).toFixed(1)}@3800~800`].map(x => 'start:0,0;' + x);
-    const cables = `<g transform="translate(${bx0} ${by0})"><line x1="${bw / 2 - 14}" y1="-8" x2="${bw / 2 - 14}" y2="-500" stroke="#2B3238" stroke-width="2"/><line x1="${bw / 2 + 14}" y1="-8" x2="${bw / 2 + 14}" y2="-500" stroke="#2B3238" stroke-width="2"/></g>`;
-    const spreader = `<g transform="translate(${bx0} ${by0})"><rect x="-4" y="-8" width="${bw + 8}" height="7" rx="1" fill="#E8C33A" stroke="#6B5410"/></g>`;
+    const cables = `<g transform="translate(${bx0} ${by0})" stroke="#2B3238" stroke-width="2"><line x1="${bw / 2 - 9}" y1="-24" x2="${bw / 2 - 9}" y2="-500"/><line x1="${bw / 2 + 9}" y1="-24" x2="${bw / 2 + 9}" y2="-500"/></g>`;
+    const spreader = `<g transform="translate(${bx0} ${by0})">${spreaderSVG(bw)}</g>`;
     return `${svgOpen(s)}<defs><clipPath id="rtgClip"><rect x="-700" y="146" width="2400" height="400"/></clipPath></defs>${ground()}${skyline([[300, 236, 44], [360, 252, 50], [990, 230, 46]])}
       <g opacity=".55" transform="translate(0 -26) scale(1 1)">${stackRow(300, [2, 3, 3, 2], 5)}</g>
       ${stackRow(460, [2, 3], 1)}
@@ -1821,7 +2266,13 @@ const CONFIG = {
       for (let t = 0; t < n; t++) { const y = -30 - (t + 1) * TH + 1, k = b * 3 + t + 2;
         deckSvg += k % 3 === 0 ? ctr(x, y, 82, TH - 1, PALETTE[k % 7]) + ctr(x + 83, y, 82, TH - 1, PALETTE[(k + 3) % 7]) : ctr(x, y, 165, TH - 1, PALETTE[k % 7]); } });
     const bridgeX = bayX(4) + 8;
+    // lashing bridges between bays (2 tiers high) and hatch covers under each bay
+    const lashBridges = tiers.map((n, b) => b ? `<rect x="${bayX(b) - 5}" y="${-30 - 2 * TH}" width="4" height="${2 * TH}" fill="#55616D"/><rect x="${bayX(b) - 9}" y="${-30 - TH}" width="12" height="3" fill="#55616D"/>` : '').join('');
     const shipBody = `<path d="M0 -30 H1180 Q1232 -30 1222 10 L1192 52 H26 L0 -30 Z" fill="url(#gHull)" stroke="#132331" stroke-width="2"/>
+      <rect x="2" y="-30" width="1196" height="6" fill="#E9EEF2" opacity=".9"/><path d="M1160 -30 h40 q22 0 24 -18 h-64 z" fill="#2E4A60" stroke="#132331" stroke-width="1.5"/>
+      <rect x="1196" y="-82" width="4" height="34" fill="#55616D"/><circle cx="1198" cy="-84" r="3" fill="#F2F5F8"/>
+      ${Array.from({ length: 14 }, (_, k) => `<circle cx="${70 + k * 80}" cy="-12" r="2.2" fill="#9FB3C2" opacity=".7"/>`).join('')}
+      ${tiers.map((n, b) => `<rect x="${bayX(b) - 1}" y="-30" width="167" height="6" fill="#55616D"/>`).join('')}${lashBridges}
       <text x="60" y="12" font-size="15" font-weight="800" fill="#fff" letter-spacing="3">${esc(r.vessel)}</text>
       ${deckSvg}
       <rect x="${bridgeX}" y="-250" width="96" height="220" fill="#EEF2F5" stroke="#97A4AF"/><rect x="${bridgeX - 14}" y="-262" width="124" height="14" fill="#DDE3E8" stroke="#97A4AF"/>
@@ -1835,17 +2286,20 @@ const CONFIG = {
     const g0 = load ? 'start:-640,0;berth:0,0~2200;depart:1500,0~4200' : 'start:1500,0;arrive:0,0~3200;yard:-760,0~2000';
     const lifts = load ? loadChain : disChain;
     const boxBody = `<g transform="translate(${bx0} ${by0}) scale(${K})">${boxSVG(c, { plate: false })}</g>`;
-    const cables = `<g transform="translate(${bx0} ${by0})"><line x1="${bw / 2 - 16}" y1="-8" x2="${bw / 2 - 16}" y2="-600" stroke="#2B3238" stroke-width="2"/><line x1="${bw / 2 + 16}" y1="-8" x2="${bw / 2 + 16}" y2="-600" stroke="#2B3238" stroke-width="2"/></g>`;
-    const spreader = `<g transform="translate(${bx0} ${by0})"><rect x="-4" y="-8" width="${bw + 8}" height="7" rx="1" fill="#E8C33A" stroke="#6B5410"/></g>`;
+    // hoist ropes: from the head block up to the trolley (clipped at the trolley, so they shorten/lengthen as the box moves)
+    const cables = `<g transform="translate(${bx0} ${by0})" stroke="#2B3238" stroke-width="2"><line x1="${bw / 2 - 9}" y1="-24" x2="${bw / 2 - 9}" y2="-600"/><line x1="${bw / 2 + 9}" y1="-24" x2="${bw / 2 + 9}" y2="-600"/></g>`;
+    const spreader = `<g transform="translate(${bx0} ${by0})">${spreaderSVG(bw)}</g>`;
     const spAttrs = load ? 'data-until="load"' : 'data-until="discharge"';
     const trolleyTx = load ? `start:0,0;load:${dx.toFixed(1)},0@900~1300` : `start:${dx.toFixed(1)},0;discharge:0,0@900~1300`;
     const truckTx = load ? 'start:-640,0;berth:0,0~2200;load:-760,0@3400~1800' : 'start:-640,0;discharge:0,0~1400;yard:-760,0~2000';
-    return `${svgOpen(s)}<defs><clipPath id="cableClip"><rect x="-700" y="66" width="2400" height="500"/></clipPath></defs>${sea(GY - 6)}
+    return `${svgOpen(s)}<defs><clipPath id="cableClip"><rect x="-700" y="64" width="2400" height="500"/></clipPath></defs>${sea(GY - 6)}
       <rect x="-700" y="${GY - 10}" width="964" height="120" fill="#B9C2C9"/><rect x="-700" y="${GY - 10}" width="964" height="6" fill="#fff" opacity=".4"/><rect x="258" y="${GY - 10}" width="8" height="120" fill="#7E8A95"/>
       ${skyline([[-60, 236, 46], [0, 252, 40]])}
-      <g data-tx="${shipMoves}"><g transform="translate(${SX} ${SY})">${shipBody}</g></g>
+      <g data-tx="${shipMoves}"><g transform="translate(${SX} ${SY})">${shipBody}<path d="M20 48 Q600 60 1196 48" stroke="#fff" stroke-width="3" fill="none" opacity=".55"/></g></g>
       ${quayCrane()}
-      <g data-tx="${trolleyTx}"><g transform="translate(${bx0 + bw / 2 - 30} 55)"><rect width="60" height="12" fill="#1E3446"/><rect x="18" y="12" width="24" height="17" rx="2" fill="#E8C33A" stroke="#6B5410"/><rect x="22" y="15" width="16" height="8" fill="url(#gGlass)"/></g></g>
+      <g data-tx="${trolleyTx}"><g transform="translate(${bx0 + bw / 2 - 30} 50)"><rect x="0" y="0" width="60" height="14" rx="2" fill="#1E3446"/>${wheel(10, 0, 4)}${wheel(50, 0, 4)}
+        <circle cx="21" cy="14" r="4" fill="#55616D"/><circle cx="39" cy="14" r="4" fill="#55616D"/>
+        <rect x="-26" y="16" width="26" height="20" rx="3" fill="#E8C33A" stroke="#6B5410"/><rect x="-22" y="19" width="18" height="9" fill="url(#gGlass)"/><line x1="-13" y1="14" x2="-13" y2="16" stroke="#1E3446" stroke-width="3"/></g></g>
       <g ${spAttrs}><g clip-path="url(#cableClip)">${chain(lifts, cables)}</g>${chain(lifts, spreader)}</g>
       ${chain([truckTx], terminalTractor(bx0, bw))}
       ${chain([g0].concat(lifts), boxBody)}
@@ -1885,15 +2339,17 @@ const CONFIG = {
   SCENES.unstuff = s => {
     const c = container(), { w, h } = boxDims(c), f = c.family, t = c.id, y = GY - (h + 33);
     const open = f === 'dry' || f === 'reefer';
-    const inside = open ? pallets(w, h, o => `start:0,0;unstuff:-470,0@${(11 - o) * 140}~900`) : '';
+    const slots = open ? cartonSlots(w, h, y) : [];
+    // loose cartons (NOT in the truck group): in the open box → into the consignee's warehouse; hidden before the truck leaves
+    const loose = open ? `<g data-until="unstuff">${slots.slice().reverse().map((c, k) => `<g data-tx="start:0,0;unstuff:${c.sx - c.bx},${c.sy - c.by}@${k * 140}~900">${carton(c.bx, c.by)}</g>`).join('')}</g>` : '';
     let bg = ''; [430, 546, 662, 778].forEach((x, i) => { for (let k = 0; k < 3; k++) bg += `<rect x="${x}" y="${314 - k * 56}" width="112" height="54" fill="${PALETTE[(i + k) % 5]}" stroke="#6E7C88"/>`; });
     return `${svgOpen(s)}${ground()}
-      ${warehouseSVG(20, plain(C.ui.consigneeWarehouse), { attrs: 'data-until="unstuff"' })}
+      ${warehouseSVG(20, plain(C.ui.consigneeWarehouse), { attrs: 'data-until="unstuff"' })}<g data-until="unstuff">${dockInterior()}</g>
       <g data-at="return" opacity=".9"><g opacity=".55">${bg}</g><rect x="20" y="20" width="236" height="30" rx="6" fill="#fff" stroke="#97A4AF"/><text x="138" y="41" text-anchor="middle" font-size="14" font-weight="800" fill="#1B2631">EMPTY DEPOT · ${esc(route().pod.toUpperCase())}</text>
         <rect x="80" y="${GY - 120}" width="140" height="120" fill="#D3DBE1" stroke="#97A4AF"/><text x="150" y="${GY - 96}" text-anchor="middle" font-size="11" font-weight="800" fill="#1B2631">${f === 'reefer' ? 'WASH + PTI' : f === 'tank' ? 'TANK CLEANING' : 'M&amp;R WORKSHOP'}</text></g>
       ${t === '40OT' || t === '40FR' ? `<g data-at="unstuff" data-until="unstuff"><line x1="${320 + w / 2}" y1="0" x2="${320 + w / 2}" y2="${y + 10}" stroke="#3F4750" stroke-width="3"/>${tag(320 + w / 2, 40, 'CRANE LIFTS THE CARGO OUT')}</g>` : ''}
       ${f === 'tank' ? `<g data-at="unstuff" data-until="unstuff"><path d="M${320 + w / 2} ${y + 6} C 260 ${y - 40}, 220 300, 160 300" stroke="#1B2631" stroke-width="7" fill="none"/>${tag(320 + w / 2 + 60, y - 40, 'DISCHARGING…', '', '#0B4F6C')}</g>` : ''}
-      ${rig(c, { attrs: 'data-tx="start:0,0;return:1200,0~2400"', boxOpts: { inside, wallAttr: open ? 'data-until="start"' : '', plate: true, cargo: false } })}
+      ${rig(c, { attrs: 'data-tx="start:0,0;return:1200,0~2400"', boxOpts: { wallAttr: open ? 'data-until="start"' : '', wall2Attr: open ? 'data-at="return"' : '', plate: true, cargo: false } })}${loose}
       ${rig(c, { attrs: 'data-tx="start:-1200,0;gatein:0,0~2400;depart:1200,0~2600"', boxOpts: { plate: true, cargo: false } })}
       ${inset(470, 14, 232, 112, 'EIR — EMPTY RETURN', [`Container ${CONTAINER_NO}`, 'Empty, clean ✓', 'Damage: none recorded', 'Detention clock: STOP'], 'data-at="gatein" data-delay="2400"')}
       ${tag(782, 150, '⏱ IMPORT DETENTION STOPS', 'data-at="gatein" data-delay="2600"', '#1D7048')}
@@ -1913,7 +2369,14 @@ const CONFIG = {
     $('#clouds').innerHTML = [[8, 120, 70, -10], [22, 90, 95, -45], [14, 150, 120, -80], [30, 70, 85, -20]].map(([top, w, dur, delay]) =>
       `<span class="cloud" style="top:${top}%;width:${w}px;animation-duration:${dur}s;animation-delay:${delay}s"></span>`).join('');
   }
-  applyConfig(); buildClouds();
+  applyConfig(); mountDefs(); buildClouds(); retryUnsent();
+  /* MOBILE: one surface at a time — body.surface hides the narration and fact while a sheet, a document,
+     the transfer moment or a popover is open. */
+  const surf = () => { document.body.classList.toggle('surface', ['#sheet', '#docv', '#xfer', '#pop'].some(q => $(q).classList.contains('open'))); };
+  ['#sheet', '#docv', '#xfer', '#pop'].forEach(q => new MutationObserver(surf).observe($(q), { attributes: true, attributeFilter: ['class'] }));
+  if (window.visualViewport) visualViewport.addEventListener('resize', () => { const a = document.activeElement; if (a && a.id === 'mNick') a.scrollIntoView({ block: 'center' }); });
+  $('.rotate .rbob').innerHTML = avatar(64);
+  addEventListener('orientationchange', () => setTimeout(placeHs, 300));
   S = load();
   if (S && (S.v !== 3 || !S.settings)) S = null;
   if (S) { draft = Object.assign({}, S.settings); initChoices(); }
@@ -1924,6 +2387,8 @@ const CONFIG = {
   // Test/debug hook (console only).
   window.__cj = { state: () => S, C, renderIntro, goStep, go, openQuestion, startQuiz, renderSummary, renderMenu, consult,
     answerRight: () => { const s = step(); answer(R(s.question).options.find(o => o.correct).id); },
+    consultAll: () => { essentials(step()).forEach(h => { const arr = S.consulted[S.step] || (S.consulted[S.step] = []); if (!arr.includes(h.id)) arr.push(h.id); }); save(); renderHs(); renderBar(); },
+    footprint: () => footprint(), closeXfer, resultItems: () => resultItems(), results: () => loadResults(),
     reset: () => { try { localStorage.removeItem(STORE); } catch (e) {} location.reload(); } };
 })();
 </script>

@@ -9,7 +9,7 @@
    "id": "berth",
    "ms": 2800,
    "narration": {
-    "1": "My ship {vessel} arrives at the quay. A terminal truck brings me under a giant [[quay-crane|quay crane]].",
+    "1": "A terminal truck brings me under a giant [[quay-crane|quay crane]], next to my ship {vessel}.",
     "2": "{vessel} berths in its window; terminal tractors bring boxes from the yard in the crane sequence built from the stowage plan. [TO VERIFY:v61]",
     "3": "Berth window and crane intensity are agreed between carrier and terminal; a late vessel compresses the window and can leave boxes behind ('cut and run'). [TO VERIFY:v61]"
    }
@@ -18,7 +18,7 @@
    "id": "load",
    "ms": 2700,
    "narration": {
-    "1": "Up I go! The crane lifts me high and places me exactly where the plan says.",
+    "1": "Up I go: the crane places me exactly where the plan says!",
     "2": "Loading: the crane driver places the box in its planned slot; the terminal tallies every move and updates the bay plan. [TO VERIFY:v62]",
     "3": "Discrepancies (box loaded in wrong slot, overstow) are fixed or recorded; the final BAPLIE goes to the carrier and the next ports. [TO VERIFY:v61]"
    }
@@ -46,7 +46,7 @@
    "id": "docs",
    "ms": 1600,
    "narration": {
-    "1": "The ship sails! Now that I'm on board, the carrier can issue the [[bl|Bill of Lading]] saying I'm 'shipped on board'.",
+    "1": "The ship sails, so the carrier can issue the [[bl|Bill of Lading]]: I'm 'shipped on board'.",
     "2": "After loading, documentation issues the shipped-on-board B/L (or annotates a received B/L) and finalises the [[manifest]]. [TO VERIFY:v50]",
     "3": "On-board date and vessel must be true: they're checked against L/C terms. Freight prepaid originals are often released only after payment. [TO VERIFY:v33] [TO VERIFY:v50]"
    }
@@ -66,7 +66,7 @@
   "beat": "load",
   "text": {
    "1": "A quay crane can move a container every one to two minutes. [TO VERIFY:v62]",
-   "2": "Each quay crane typically makes about 25–35 moves per hour; big ships work several cranes at once. [TO VERIFY:v62]"
+   "2": "A quay crane makes about 25–35 moves an hour; big ships use several. [TO VERIFY:v62]"
   }
  },
  "hotspots": [
@@ -237,21 +237,21 @@
       {
        "id": "a",
        "correct": true,
-       "text": "The on-board notation with the date and vessel"
+       "text": "The on-board notation with the date and the vessel"
       },
       {
        "id": "b",
-       "text": "Freight prepaid",
+       "text": "The 'freight prepaid' mention in the freight box",
        "fb": "Freight terms don't say whether the goods are on board."
       },
       {
        "id": "c",
-       "text": "Three originals",
+       "text": "The full set of three originals issued and signed",
        "fb": "The number of originals is unrelated."
       },
       {
        "id": "d",
-       "text": "The 'to order' consignee",
+       "text": "The 'to order' consignee field, endorsed in blank",
        "fb": "That makes it negotiable, not 'on board'."
       }
      ],
@@ -263,21 +263,21 @@
       {
        "id": "a",
        "correct": true,
-       "text": "The documents are discrepant: the shipper must seek an L/C amendment or the buyer's waiver — the B/L date stays true"
+       "text": "Discrepant: seek an L/C amendment or the buyer's waiver; the B/L date stays true"
       },
       {
        "id": "b",
-       "text": "Re-date the B/L to Day 6 as a courtesy",
+       "text": "Re-date the B/L to Day 6 as a courtesy, since the delay is only one or two days",
        "fb": "Antedating a B/L is fraud."
       },
       {
        "id": "c",
-       "text": "Issue a second B/L dated Day 6",
+       "text": "Issue a second B/L dated Day 6 and keep the true one in the carrier's own file",
        "fb": "Two B/Ls for one shipment is fraud too."
       },
       {
        "id": "d",
-       "text": "Nothing: banks don't check dates",
+       "text": "Nothing to do: banks check amounts and names on the B/L, never the dates",
        "fb": "Banks check dates strictly under UCP 600."
       }
      ],
@@ -355,8 +355,8 @@
      "correct": true,
      "text": {
       "_by": "transship",
-      "yes": "I sail to the hub in {hub}, change ship, then cross to {pod}.",
-      "*": "I cross the ocean to {pod}: {transit}."
+      "yes": "I sail to {hub}, change ship there, then cross to {pod}.",
+      "*": "I cross the whole ocean to {pod}, a trip of several weeks."
      },
      "confirm": {
       "_by": "transship",
@@ -366,14 +366,14 @@
     },
     {
      "id": "b",
-     "text": "I'm delivered to the customer the next day.",
+     "text": "The ship drops me off at the customer's door the very next day.",
      "why": "The ship has an ocean to cross first.",
      "realLife": "Even the fastest services take weeks between continents.",
      "whenRight": "Short-sea or domestic services can take a day or two — not this route."
     },
     {
      "id": "c",
-     "text": "I'm unloaded at the next port and checked by customs there.",
+     "text": "I'm unloaded at the next port on the way and checked there.",
      "why": "Ships call at several ports, but I stay on board until my port of discharge (unless transshipped).",
      "realLife": "Boxes not due at a port stay on board; unloading the wrong box costs a lot.",
      "whenRight": "Only for boxes destined for that port."
@@ -388,8 +388,8 @@
      "correct": true,
      "text": {
       "_by": "transship",
-      "yes": "Feeder voyage to {hub}, discharge and transshipment onto the mainline vessel, then the long-haul leg to {pod}.",
-      "*": "Ocean voyage to {pod} ({transit}); the carrier monitors the voyage and sends the arrival notice before arrival."
+      "yes": "Feeder to {hub}, transshipment onto the mainline vessel, then the long-haul leg to {pod}.",
+      "*": "Ocean voyage to {pod}; the carrier tracks the vessel and sends the arrival notice in time."
      },
      "confirm": {
       "_by": "transship",
@@ -399,21 +399,21 @@
     },
     {
      "id": "b",
-     "text": "The consignee lodges the import declaration on board.",
+     "text": "The consignee lodges the import declaration on board, as soon as the vessel has sailed.",
      "why": "Import declarations are lodged with destination customs, typically when the goods arrive or shortly before.",
      "realLife": "Early lodging is possible in some regimes, but nothing is done 'on board'.",
      "whenRight": "Pre-arrival lodging exists in some regimes. [TO VERIFY:v67]"
     },
     {
      "id": "c",
-     "text": "The original B/L is surrendered to the carrier at departure.",
+     "text": "The original B/L is surrendered to the carrier at departure, so that the release can be prepared early.",
      "why": "Originals go to the shipper (and banks) and are surrendered at destination to get release.",
      "realLife": "Surrendering at origin = express (telex) release, a deliberate choice.",
      "whenRight": "When the shipper chooses express release, originals are surrendered at origin."
     },
     {
      "id": "d",
-     "text": "The ENS is filed now that the vessel has sailed.",
+     "text": "The ENS for destination customs is filed now, as the vessel has actually left the port.",
      "why": "For deep-sea containers, the ENS is due before loading at origin.",
      "realLife": "Filing after loading would already have triggered problems. [TO VERIFY:v23]",
      "whenRight": "Other transport modes have different deadlines."
@@ -426,26 +426,26 @@
     {
      "id": "a",
      "correct": true,
-     "text": "Retrieve the full set of 3/3 originals, cancel them and reissue a corrected set (amendment fee); update the manifest and advance filings.",
+     "text": "Retrieve all 3/3 originals, cancel them and reissue a corrected set; update manifest and filings.",
      "confirm": "Right. A negotiable B/L can only be amended against surrender of the full set, otherwise two valid documents would circulate. Manifest/ICS2 data must be corrected too. [TO VERIFY:v12] [TO VERIFY:v68]"
     },
     {
      "id": "b",
-     "text": "Issue a corrected B/L now; the old one will be ignored.",
+     "text": "Issue a corrected set of originals now, and tell the bank in writing that the first set no longer counts.",
      "why": "Two valid negotiable sets would circulate.",
      "realLife": "Risk of double claims and misdelivery.",
      "whenRight": "Never while the original set is outstanding."
     },
     {
      "id": "c",
-     "text": "Correct only the manifest; leave the B/L as it is.",
+     "text": "Correct only the manifest and the advance filings, and leave the issued original B/L set as it is.",
      "why": "B/L and manifest must match, and the bank will see the error.",
      "realLife": "Release problems at destination and L/C discrepancies.",
      "whenRight": "Only for data that isn't on the B/L."
     },
     {
      "id": "d",
-     "text": "Send the bank a letter saying the name is wrong.",
+     "text": "Send the bank a signed carrier letter stating that the consignee's name on the B/L is misspelled.",
      "why": "A letter doesn't change a document of title.",
      "realLife": "The bank will still treat the B/L as presented.",
      "whenRight": "Never as a substitute for reissuing."

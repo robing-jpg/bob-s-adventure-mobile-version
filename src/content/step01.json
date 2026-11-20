@@ -4,25 +4,25 @@
   "beats": [
     { "id": "book", "ms": 1800,
       "narration": {
-        "1": "Before I travel, someone must reserve space for me on a ship: that's the [[booking]]. The [[shipper]] — or a [[freight-forwarder]] — asks the carrier for one {box}, from {pol} to {pod}.",
+        "1": "The [[shipper]] reserves space for me on a ship, from {pol} to {pod}: that's the [[booking]].",
         "2": "It starts with a [[booking]] request: equipment type and quantity, {pol} → {pod}, commodity ({cargo}), estimated weight, preferred sailing and the contract or quote behind the rate. [TO VERIFY:v30]",
         "3": "Booking request via portal, platform or EDI against a service contract or spot quote. Special cargo — reefer, DG, OOG — needs approval before confirmation. [TO VERIFY:v30]" },
       "caption": { "2": "Under {incoterm}, the {freightBy} side contracts the ocean freight with the carrier." } },
     { "id": "confirm", "ms": 1800,
       "narration": {
-        "1": "The carrier checks there is space and an empty box nearby, then sends a [[booking-confirmation]]. It's my travel plan: ship, places and deadlines.",
+        "1": "The carrier confirms space and an empty box with a [[booking-confirmation]]: my travel plan.",
         "2": "Customer service validates allocation, equipment and approvals, then issues the [[booking-confirmation]]. Open it: every line drives a later step.",
         "3": "Confirmation against allocation and equipment availability. Watch the fine print: cut-offs, free time, pick-up and return locations, special-cargo approvals." },
       "caption": { "2": "Carriers may accept slightly more bookings than slots to offset no-shows. [TO VERIFY:v31]" } },
     { "id": "release", "ms": 3600,
       "narration": {
-        "1": "A truck collects me at the [[depot]], a yard full of empty containers. A lifting machine puts me on the truck.",
+        "1": "A truck collects me, empty, at the [[depot]].",
         "2": "The haulier presents the [[release-order|release reference]]. [[equipment-control|Equipment control]] allocated the type and, if needed, a grade (food quality, {family}).",
         "3": "Empty release against the reference; grade and condition must match the commodity. Reefers need a passed [[pti]], tanks a cleanliness check, OOG equipment the right fittings. [TO VERIFY:v57]" },
       "caption": { "2": { "_by": "family", "reefer": "Reefer: [[pti]] passed, [[set-point]] {setPoint} programmed before release. [TO VERIFY:v56]", "tank": "Tank: last cargo and cleaning checked — tanks are usually supplied by tank operators. [TO VERIFY:v59]", "oog": "Special equipment is scarce: the depot may need time to supply it. [TO VERIFY:v58]", "*": "Wrong box for the cargo (dirty, damaged) = refused at stuffing and a second truck trip." } } },
     { "id": "gateout", "ms": 1600,
       "narration": {
-        "1": "At the gate, someone checks me all around and writes down my condition on an [[eir]]. From now on, my [[detention]] clock is ticking.",
+        "1": "At the gate, my condition is noted on an [[eir]] and my [[detention]] clock starts.",
         "2": "Gate-out inspection recorded on the [[eir]], often digital with photos. The export [[detention]] clock runs until full gate-in at the terminal. [TO VERIFY:v21]",
         "3": "EIR at gate-out, movement reported to the carrier (EDI CODECO). Export detention clock starts per tariff. [TO VERIFY:v36] [TO VERIFY:v21]" } },
     { "id": "incident", "levels": [3], "kind": "incident",
@@ -30,8 +30,8 @@
   ],
 
   "fact": { "beat": "release", "text": {
-    "1": "Asia ships far more goods to Europe than it receives, so many containers go back to Asia empty — at the carrier's cost. [TO VERIFY:v38]",
-    "2": "Empty boxes are estimated at around 20% of all container handling in ports — the price of trade imbalances. [TO VERIFY:v38]" } },
+    "1": "Asia ships more to Europe than it buys back, so many boxes return empty. [TO VERIFY:v38]",
+    "2": "Empties are about 20% of all container handling in ports. [TO VERIFY:v38]" } },
 
   "hotspots": [
     { "id": "booker", "beat": "book", "until": "confirm", "x": 413, "y": 128, "label": "Shipper / forwarder", "kind": "Stakeholder", "essential": [1],
@@ -91,17 +91,17 @@
       "check": {
         "2": { "prompt": "Which deadline comes first in this booking?",
           "options": [
-            { "id": "a", "correct": true, "text": "The SI (documentation) cut-off — {siCutoff}" },
-            { "id": "b", "text": "The port (CY) cut-off — {cyCutoff}", "fb": "The full box can arrive last; paperwork closes earlier." },
-            { "id": "c", "text": "The VGM cut-off — {vgmCutoff}", "fb": "Here the VGM closes after the SI." },
-            { "id": "d", "text": "The vessel departure — {etd}", "fb": "ETD comes after every cut-off." } ],
+            { "id": "a", "correct": true, "text": "The documentation (SI) cut-off — {siCutoff}" },
+            { "id": "b", "text": "The port (CY) container cut-off — {cyCutoff}", "fb": "The full box can arrive last; paperwork closes earlier." },
+            { "id": "c", "text": "The VGM submission cut-off — {vgmCutoff}", "fb": "Here the VGM closes after the SI." },
+            { "id": "d", "text": "The vessel's scheduled departure (ETD) — {etd}", "fb": "ETD comes after every cut-off." } ],
           "explain": "Here the SI closes first, then the VGM, then the port cut-off. Sequences vary by carrier and port — always read the confirmation. [TO VERIFY:v20]" },
         "3": { "prompt": "Empty picked up Day 1, full gate-in at {polTerminal} Day 5, free time {freeDays} days (export detention). What is billed?",
           "options": [
-            { "id": "a", "correct": true, "text": "Nothing — the clock stopped within the free time" },
-            { "id": "b", "text": "4 days of detention", "fb": "Days are charged only beyond the free time." },
-            { "id": "c", "text": "5 days of demurrage", "fb": "Demurrage covers time inside the terminal, not this period." },
-            { "id": "d", "text": "It depends on the Incoterm", "fb": "Billing follows the tariff or contract; the Incoterm only shapes who should bear it between seller and buyer." } ],
+            { "id": "a", "correct": true, "text": "Nothing — the box was back within the free time" },
+            { "id": "b", "text": "4 days of detention, counted from Day 1 to Day 5", "fb": "Days are charged only beyond the free time." },
+            { "id": "c", "text": "5 days of demurrage at the export terminal yard", "fb": "Demurrage covers time inside the terminal, not this period." },
+            { "id": "d", "text": "It depends on the Incoterm agreed in the sale contract", "fb": "Billing follows the tariff or contract; the Incoterm only shapes who should bear it between seller and buyer." } ],
           "explain": "Detention runs gate-out to gate-in per tariff; 4 days < {freeDays} free days. Who ultimately bears D&D between seller and buyer is a sales-contract question. [TO VERIFY:v21]" }
       }
     }
@@ -124,20 +124,20 @@
   "question": {
     "1": { "prompt": "I'm an empty container on a truck, just out of the depot. What happens next?", "hint": "I'm empty. Where are the goods waiting?",
       "options": [
-        { "id": "a", "correct": true, "text": "The truck takes me to the shipper's warehouse, where the goods are loaded into me.", "confirm": "Exactly. The goods are waiting at the shipper's premises, so I go there to be filled ('stuffed'). Under {incoterm}, this trip is arranged by {preBy}." },
-        { "id": "b", "text": "The truck takes me straight to the port to be loaded on the ship.", "why": "I'm still empty! The goods are at the shipper's warehouse.", "realLife": "An empty box at the export terminal would be refused, and the shipper would pay for an extra trip.", "whenRight": "Carriers do move empties to ports to reposition them — but that's their own move, not a customer's booking." },
-        { "id": "c", "text": "The carrier fills me with the goods at the depot.", "why": "Depots only handle empty containers. For a full container load ([[fcl]]), the shipper loads its own goods.", "realLife": "The depot has no goods and no staff to load them: the truck would wait for nothing.", "whenRight": "Small shipments ([[lcl]]) are consolidated at a [[cfs]] — a different service and place." } ] },
+        { "id": "a", "correct": true, "text": "The truck takes me to the seller's warehouse, where the goods are put inside me.", "confirm": "Exactly. The goods are waiting at the shipper's premises, so I go there to be filled ('stuffed'). Under {incoterm}, this trip is arranged by {preBy}." },
+        { "id": "b", "text": "The truck takes me straight to the port, and I'm loaded onto the ship still empty.", "why": "I'm still empty! The goods are at the shipper's warehouse.", "realLife": "An empty box at the export terminal would be refused, and the shipper would pay for an extra trip.", "whenRight": "Carriers do move empties to ports to reposition them — but that's their own move, not a customer's booking." },
+        { "id": "c", "text": "I stay at the depot, and the seller brings the goods here in small vans, one by one.", "why": "Depots only handle empty containers. For a full container load ([[fcl]]), the shipper loads its own goods.", "realLife": "The depot has no goods and no staff to load them: the truck would wait for nothing.", "whenRight": "Small shipments ([[lcl]]) are consolidated at a [[cfs]] — a different service and place." } ] },
     "2": { "prompt": "Booking confirmed, empty {box} gated out with a clean EIR. What happens next?",
       "options": [
-        { "id": "a", "correct": true, "text": "The haulier positions the empty at the shipper's premises for stuffing, within free time and ahead of the cut-offs.", "confirm": "Correct. FCL cargo is stuffed at origin by the shipper. Too early burns detention free time; too late puts the VGM and port cut-offs at risk. Under {incoterm}, this leg is for {preBy}." },
-        { "id": "b", "text": "Deliver the empty to the export terminal; the cargo will be stuffed there before loading.", "why": "Export terminals receive full containers for loading, not empties for stuffing.", "realLife": "Refused or charged for handling and storage; a second truck move puts the cut-offs at risk.", "whenRight": "For [[lcl]] or port-side services, cargo is stuffed at a [[cfs]] near the port — another booking and service." },
-        { "id": "c", "text": "Submit the SI and ask for the original B/L to be issued against the booking.", "why": "A B/L needs actual cargo details (seal, packages, weights) and the carrier must have taken charge of the goods — the box is still empty.", "realLife": "A B/L issued before receiving the goods certifies something untrue: fraud exposure and L/C problems.", "whenRight": "Early SI submission is fine once data is final; the B/L comes after receipt or loading." },
-        { "id": "d", "text": "Ask the depot to weigh the empty so the VGM can be declared.", "why": "The [[tare]] is marked on the door and the [[csc-plate]]. The VGM is the packed container's weight — after stuffing.", "realLife": "A 'VGM' declared before stuffing is not verified: misdeclaration and unsafe stowage. [TO VERIFY:v02]", "whenRight": "Method 2 uses the marked tare plus weighed contents — no depot weighing needed." } ] },
+        { "id": "a", "correct": true, "text": "The haulier positions the empty at the shipper's premises for stuffing, within the free time.", "confirm": "Correct. FCL cargo is stuffed at origin by the shipper. Too early burns detention free time; too late puts the VGM and port cut-offs at risk. Under {incoterm}, this leg is for {preBy}." },
+        { "id": "b", "text": "The haulier delivers the empty to the export terminal, where the cargo is stuffed before loading.", "why": "Export terminals receive full containers for loading, not empties for stuffing.", "realLife": "Refused or charged for handling and storage; a second truck move puts the cut-offs at risk.", "whenRight": "For [[lcl]] or port-side services, cargo is stuffed at a [[cfs]] near the port — another booking and service." },
+        { "id": "c", "text": "The shipper submits the SI and asks the carrier to issue the original B/L against the booking.", "why": "A B/L needs actual cargo details (seal, packages, weights) and the carrier must have taken charge of the goods — the box is still empty.", "realLife": "A B/L issued before receiving the goods certifies something untrue: fraud exposure and L/C problems.", "whenRight": "Early SI submission is fine once data is final; the B/L comes after receipt or loading." },
+        { "id": "d", "text": "The depot weighs the empty container so that the shipper can declare the VGM to the carrier.", "why": "The [[tare]] is marked on the door and the [[csc-plate]]. The VGM is the packed container's weight — after stuffing.", "realLife": "A 'VGM' declared before stuffing is not verified: misdeclaration and unsafe stowage. [TO VERIFY:v02]", "whenRight": "Method 2 uses the marked tare plus weighed contents — no depot weighing needed." } ] },
     "3": { "prompt": "Case: allocation is cut and the booking is on the roll list. The customer's L/C requires shipment this week. What should you do first?",
       "options": [
-        { "id": "a", "correct": true, "text": "Tell the customer now, with options: priority on another service or sailing this week, or time to ask the bank for an L/C amendment.", "confirm": "Right. Early, documented communication with alternatives is the professional standard; the shipper can then act with its bank. Never adjust a B/L date to fit the L/C. [TO VERIFY:v31]" },
-        { "id": "b", "text": "Keep the booking and plan to issue the B/L showing this week's vessel anyway.", "why": "A B/L must reflect the vessel and date the goods were actually shipped on.", "realLife": "Misdated or false B/Ls are fraud: the carrier loses its defences and may face L/C fraud claims.", "whenRight": "Never." },
-        { "id": "c", "text": "Wait for the final load list before saying anything, to avoid worrying the customer.", "why": "Waiting removes the customer's options (other service, L/C amendment).", "realLife": "The customer discovers the rolling at the last minute: missed L/C, penalties, lost account.", "whenRight": "Only if the roll list is still provisional — and even then, a heads-up is better." },
-        { "id": "d", "text": "Cancel the booking and refund the customer.", "why": "Cancelling doesn't ship the goods; the customer needs a solution, not a refund.", "realLife": "The customer must rebook at a possibly higher spot rate and still misses the L/C date.", "whenRight": "If the customer chooses to cancel after being offered alternatives." } ] }
+        { "id": "a", "correct": true, "text": "Tell the customer now and offer options: another service this week, or time to amend the L/C.", "confirm": "Right. Early, documented communication with alternatives is the professional standard; the shipper can then act with its bank. Never adjust a B/L date to fit the L/C. [TO VERIFY:v31]" },
+        { "id": "b", "text": "Keep the booking quietly and issue the B/L with this week's vessel and date, as the L/C requires.", "why": "A B/L must reflect the vessel and date the goods were actually shipped on.", "realLife": "Misdated or false B/Ls are fraud: the carrier loses its defences and may face L/C fraud claims.", "whenRight": "Never." },
+        { "id": "c", "text": "Wait for the final load list before telling the customer, to avoid worrying them for nothing.", "why": "Waiting removes the customer's options (other service, L/C amendment).", "realLife": "The customer discovers the rolling at the last minute: missed L/C, penalties, lost account.", "whenRight": "Only if the roll list is still provisional — and even then, a heads-up is better." },
+        { "id": "d", "text": "Cancel the booking, refund the customer and suggest they look for space with another carrier.", "why": "Cancelling doesn't ship the goods; the customer needs a solution, not a refund.", "realLife": "The customer must rebook at a possibly higher spot rate and still misses the L/C date.", "whenRight": "If the customer chooses to cancel after being offered alternatives." } ] }
   }
 }

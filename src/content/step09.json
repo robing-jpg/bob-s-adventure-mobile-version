@@ -42,7 +42,7 @@
    "id": "notice",
    "ms": 1600,
    "narration": {
-    "1": "The customer received my arrival notice. Now two 'yes' are needed: one from customs, one from the carrier.",
+    "1": "With my arrival notice, the customer needs two 'yes': one from customs, one from the carrier.",
     "2": "Import starts with the arrival notice: charges, free time and release conditions. Two releases are needed — customs (legal) and carrier (commercial). [TO VERIFY:v66]",
     "3": "Release = customs release + carrier release (transport document, payment, holds) + terminal release (PIN or digital pick-up right). Any one missing blocks the gate-out. [TO VERIFY:v68]"
    }
@@ -51,7 +51,7 @@
    "id": "declare",
    "ms": 2400,
    "narration": {
-    "1": "A customs broker declares me to {importCustoms}: what's inside, its value and its origin. The importer pays duties and taxes.",
+    "1": "A customs broker declares me to {importCustoms}, and the importer pays duties and taxes.",
     "2": "The [[import-declaration]] (HS code, customs value, origin, preferential proofs) is lodged by the importer's broker; duties and import VAT are paid or deferred; [[eori]] required in the EU. [TO VERIFY:v67]",
     "3": "Customs value, classification and origin drive duties; risk-based selection may add a scan or physical exam. Under DDP the seller is the importer — check EU representation. [TO VERIFY:v26] [TO VERIFY:v67]"
    },
@@ -63,7 +63,7 @@
    "id": "bl",
    "ms": 2400,
    "narration": {
-    "1": "The customer gives the carrier an original Bill of Lading and pays what's due. It's like showing my ticket to pick up my luggage.",
+    "1": "The customer hands in an original Bill of Lading and pays what's due — like a luggage ticket.",
     "2": "For a 'to order' B/L, the bank [[endorsement|endorses]] an original to the consignee, who surrenders it to the carrier with payment of collect freight and charges. Sea waybill or express release: no original needed. [TO VERIFY:v68]",
     "3": "The carrier checks the endorsement chain and that the presenter is the lawful holder; one original surrendered accomplishes the set. Delivery without original = misdelivery exposure. [TO VERIFY:v75]"
    }
@@ -72,7 +72,7 @@
    "id": "release",
    "ms": 1800,
    "narration": {
-    "1": "Customs says yes, the carrier says yes: I'm released! The terminal gets the message and a secret pick-up code is given to the truck company.",
+    "1": "Customs and carrier both say yes: I'm released, with a secret pick-up code for the truck!",
     "2": "Customs release and carrier release reach the terminal (often via a port community system); the haulier gets a [[pin]] or digital pick-up right and books a slot. [TO VERIFY:v68]",
     "3": "Release data must match the collecting haulier; PIN security matters — cargo theft by fraudulent pick-up is a known risk, hence secure digital pick-up schemes. [TO VERIFY:v68]"
    }
@@ -84,15 +84,15 @@
    ],
    "kind": "incident",
    "narration": {
-    "3": "The originals are stuck at the buyer's bank because of an L/C discrepancy. Demurrage is running. The consignee asks you to release the box against a letter of indemnity ([[loi]])."
+    "3": "The originals are stuck at the buyer's bank (L/C discrepancy) while demurrage runs. The consignee asks you to release the box against a letter of indemnity ([[loi]])."
    }
   }
  ],
  "fact": {
   "beat": "bl",
   "text": {
-   "1": "Three original Bills of Lading are usually issued, but presenting just one is enough to collect the goods — the others then become void.",
-   "2": "Delivering cargo without the original B/L is one of the most common causes of large claims against carriers. [TO VERIFY:v75]"
+   "1": "Three original B/Ls are usually issued; one is enough to collect the goods.",
+   "2": "Delivery without the original B/L causes many large claims. [TO VERIFY:v75]"
   }
  },
  "hotspots": [
@@ -268,21 +268,21 @@
       {
        "id": "a",
        "correct": true,
-       "text": "The bank (Demo Trade Bank)"
+       "text": "The bank (Demo Trade Bank), on the back of the B/L"
       },
       {
        "id": "b",
-       "text": "The shipper",
+       "text": "The shipper, on the front of the B/L, next to its name",
        "fb": "The shipper isn't the named party here — the bank is."
       },
       {
        "id": "c",
-       "text": "The carrier",
+       "text": "The carrier, which signed and issued the original B/L",
        "fb": "The carrier receives the B/L; it doesn't endorse it."
       },
       {
        "id": "d",
-       "text": "The notify party",
+       "text": "The notify party, which receives the arrival notice",
        "fb": "Being notify party gives no right to the goods."
       }
      ],
@@ -347,21 +347,21 @@
       {
        "id": "a",
        "correct": true,
-       "text": "The valid pick-up right (PIN or digital token), with customs release on the box and a slot if required"
+       "text": "A valid pick-up right (PIN or digital token), customs release on the box, a slot if required"
       },
       {
        "id": "b",
-       "text": "The arrival notice",
+       "text": "The arrival notice printed out, signed by the consignee and stamped by the terminal office",
        "fb": "That's information for the consignee, not a pick-up right."
       },
       {
        "id": "c",
-       "text": "The original B/L",
+       "text": "The original B/L, which the driver hands to the gate clerk together with the truck papers",
        "fb": "The B/L goes to the carrier, not to the gate."
       },
       {
        "id": "d",
-       "text": "The VGM",
+       "text": "The VGM certificate from origin, to prove the weight before the box goes on the road again",
        "fb": "Not needed for import collection."
       }
      ],
@@ -373,21 +373,21 @@
       {
        "id": "a",
        "correct": true,
-       "text": "PIN security: pick-up rights must go only to the appointed haulier, ideally via secure digital release"
+       "text": "PIN security: pick-up rights must go only to the appointed haulier, via secure release"
       },
       {
        "id": "b",
-       "text": "Nothing — any truck with the PIN is legitimate",
+       "text": "Nothing: any truck that shows a valid PIN at the gate is a legitimate collector of the box",
        "fb": "The PIN proves knowledge of a code, not authority."
       },
       {
        "id": "c",
-       "text": "Customs released too early",
+       "text": "Customs released the box too early, before the consignee had appointed its own haulier",
        "fb": "Customs release isn't the issue here."
       },
       {
        "id": "d",
-       "text": "The B/L wasn't endorsed",
+       "text": "The B/L wasn't endorsed by the bank, so the PIN was generated before the release was due",
        "fb": "The documents were fine; the pick-up right leaked."
       }
      ],
@@ -452,19 +452,19 @@
     {
      "id": "a",
      "correct": true,
-     "text": "A truck (or a train or a barge) takes me from the port to the customer.",
+     "text": "A truck, a train or a barge takes me from the port to the customer.",
      "confirm": "Yes! That's the on-carriage. Under {incoterm}, it's organised by {onBy}."
     },
     {
      "id": "b",
-     "text": "The customer unloads me inside the port.",
+     "text": "The customer comes to the port and unloads me right there on the quay.",
      "why": "Full containers usually travel to the customer's premises to be unloaded.",
      "realLife": "Terminals don't let customers unload boxes on the quay.",
      "whenRight": "LCL or port-side warehouses (CFS) — a different service."
     },
     {
      "id": "c",
-     "text": "I go back to {pol} first.",
+     "text": "I sail back to {pol} first, to show the seller that I arrived safely.",
      "why": "My cargo is for this customer — I don't need to go back.",
      "realLife": "That would cost a fortune and take weeks.",
      "whenRight": "Never in a normal shipment."
@@ -477,26 +477,26 @@
     {
      "id": "a",
      "correct": true,
-     "text": "On-carriage: the appointed haulier collects the box with the pick-up right; a gate-out EIR is issued; import detention starts.",
+     "text": "On-carriage: the appointed haulier collects the box with the pick-up right; gate-out EIR; detention starts.",
      "confirm": "Correct. Gate-out ends demurrage; import detention runs until the empty is returned. Under {incoterm}, on-carriage is organised by {onBy}. [TO VERIFY:v21]"
     },
     {
      "id": "b",
-     "text": "The consignee unstuffs the box at the terminal.",
+     "text": "The consignee sends staff to the terminal to unstuff the box there, in the import yard, before delivery.",
      "why": "FCL boxes are unstuffed at the consignee's premises.",
      "realLife": "Terminals don't offer that for FCL, except via a CFS service.",
      "whenRight": "CFS devanning for LCL."
     },
     {
      "id": "c",
-     "text": "The box must first return to the origin depot.",
+     "text": "The box must first go back to the origin depot to be inspected before it may be delivered to anyone.",
      "why": "The box delivers its cargo first; the empty is returned at destination.",
      "realLife": "Nonsense in practice.",
      "whenRight": "Never."
     },
     {
      "id": "d",
-     "text": "Customs escorts the box to the consignee.",
+     "text": "Customs escorts the box to the consignee's warehouse and breaks the seal on arrival, as for all imports.",
      "why": "Released goods move freely; escorts are exceptional.",
      "realLife": "Only for specific procedures (e.g. some transit or high-risk goods).",
      "whenRight": "Special customs procedures."
@@ -509,26 +509,26 @@
     {
      "id": "a",
      "correct": true,
-     "text": "Apply the company's LOI policy: usually decline, or accept only with a bank-countersigned LOI approved by legal; meanwhile inform the consignee that demurrage continues.",
+     "text": "Apply the LOI policy: usually decline, or bank-countersigned LOI approved by legal; demurrage still runs.",
      "confirm": "Right. Releasing without the original exposes the carrier to the lawful holder (here possibly the bank). A countersigned LOI reduces but doesn't remove the risk. [TO VERIFY:v75]"
     },
     {
      "id": "b",
-     "text": "Release immediately: the consignee is a good customer.",
+     "text": "Release at once against the consignee's own LOI: it is a good customer and the bank will follow anyway.",
      "why": "The original holder may still claim the goods.",
      "realLife": "Misdelivery claims can equal the full cargo value.",
      "whenRight": "Never without policy approval."
     },
     {
      "id": "c",
-     "text": "Release against a copy of the B/L.",
+     "text": "Release against a scanned copy of the original B/L, sent by the bank, to stop the demurrage now.",
      "why": "A copy doesn't transfer title.",
      "realLife": "Same exposure as releasing without anything.",
      "whenRight": "Never for a negotiable B/L."
     },
     {
      "id": "d",
-     "text": "Stop the demurrage clock until the bank releases the originals.",
+     "text": "Stop the demurrage clock until the bank releases the originals, then release the box against them.",
      "why": "Bank delays are a cargo-side matter under most tariffs.",
      "realLife": "Unauthorised waivers create billing disputes.",
      "whenRight": "Only if agreed commercially and documented."

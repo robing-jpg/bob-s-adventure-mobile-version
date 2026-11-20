@@ -9,7 +9,7 @@
       "caption": { "2": "Who hired this truck depends on [[merchant-haulage]] vs [[carrier-haulage]]." } },
     { "id": "stuff", "ms": 2700,
       "narration": {
-        "1": { "_by": "family", "tank": "Here I am at the shipper's site, clean and checked. A hose fills my tank with {cargo}.", "oog": "Here I am at the shipper's site. A crane lowers {cargo} into place — it's too big for a normal box.", "*": "Here I am at the [[shipper]]'s warehouse. The team loads {cargo} into me — that's [[stuffing]] — spreading the weight evenly." },
+        "1": { "_by": "family", "tank": "At the shipper's site, a hose fills my clean tank with {cargo}.", "oog": "At the shipper's site, a crane lowers {cargo} into place — it's too big for a normal box.", "*": "At the [[shipper]]'s warehouse, the team loads {cargo} into me evenly: that's [[stuffing]]." },
         "2": { "_by": "family",
           "reefer": "[[stuffing|Stuffing]] of pre-cooled {cargo}: the cargo, not the box, must already be at temperature — a reefer keeps temperature, it doesn't cool warm cargo fast. [TO VERIFY:v56]",
           "tank": "Filling {cargo} by hose. Tanks must not be over- or under-filled: a minimum and maximum filling level applies to limit surge and expansion. [TO VERIFY:v59]",
@@ -23,13 +23,13 @@
       "caption": { "2": "The carrier never sees inside me — hence the [[slac]] clause on the B/L." } },
     { "id": "seal", "ms": 1500,
       "narration": {
-        "1": { "_by": "container", "40FR": "I have no doors, so no seal: instead, the lashing is checked and photographed before I leave.", "*": "Doors closed: a numbered [[seal]] goes on my door. If anyone opens me on the way, the broken seal will show it." },
+        "1": { "_by": "container", "40FR": "I have no doors, so no seal: instead, the lashing is checked and photographed before I leave.", "*": "Doors closed: a numbered [[seal]] will show if anyone opens me on the way." },
         "2": { "_by": "container", "40FR": "Flat racks can't be sealed. The lashing is checked, photographed and documented instead. [TO VERIFY:v58]", "*": "High-security bolt [[seal]] applied ([[iso-17712]] class H). [TO VERIFY:v07] Open the seal record: its number must flow into the next documents." },
         "3": { "_by": "container", "40FR": "No seal: pre-shipment survey and photos are the evidence for any later claim.", "*": "Seal number door → SI → B/L → manifest. Customs may cut it and apply their own: the new number must be recorded. [TO VERIFY:v07]" } },
       "caption": { "2": { "_by": "family", "tank": "DG: [[placard|placards]] on all four sides, DG declaration from the shipper. [TO VERIFY:v25]", "*": "A seal mismatch is a classic trigger for a customs inspection." } } },
     { "id": "vgm", "ms": 2200, "fx": "weigh",
       "narration": {
-        "1": "Before any ship takes me, the carrier needs my [[vgm]]: my total weight, cargo included. No VGM, no loading — it's a worldwide safety rule.",
+        "1": "No ship takes me without my [[vgm]]: my total weight, cargo included.",
         "2": "Under [[solas]] Ch. VI Reg. 2 the B/L shipper must submit my [[vgm]] before the VGM [[cut-off]]. [TO VERIFY:v01] Open the declaration to see how {vgm} kg was established.",
         "3": "VGM: Method 1 (weigh packed box) or Method 2 (certified sum + tare). Estimates are prohibited; the signatory must be authorised by the shipper. [TO VERIFY:v02] [TO VERIFY:v17]" },
       "caption": { "2": "Who owes it? {vgmBy}." } },
@@ -38,8 +38,8 @@
   ],
 
   "fact": { "beat": "vgm", "text": {
-    "1": "Since 1 July 2016, no packed export container may be loaded on a ship without a verified weight. [TO VERIFY:v01]",
-    "2": "After the MSC Napoli was beached in 2007, about 20% of 660 boxes checked were more than 3 t off their declared weight. [TO VERIFY:v09]" } },
+    "1": "Since 1 July 2016, no packed box may be loaded without a verified weight. [TO VERIFY:v01]",
+    "2": "MSC Napoli, 2007: about 20% of 660 boxes checked were over 3 t off. [TO VERIFY:v09]" } },
 
   "hotspots": [
     { "id": "shipper", "beat": "arrive", "x": 150, "y": 236, "label": "Shipper", "kind": "Stakeholder",
@@ -57,7 +57,7 @@
     { "id": "seal", "beat": "seal", "x": 300, "y": 262, "essential": [1, 2, 3], "when": { "container": ["20DV", "40DV", "40HC", "40RF", "40OT", "20TK"] },
       "label": { "1": "Seal", "2": "Seal record" }, "kind": "Document / equipment", "doc": { "2": "seal", "3": "seal" },
       "body": { "1": "A single-use, numbered lock that can only be removed by cutting it. Its number goes into the shipping documents: a broken or different seal shows that someone opened me." } },
-    { "id": "lashing", "beat": "seal", "x": 560, "y": 230, "essential": [1, 2, 3], "when": { "container": ["40FR"] }, "label": "Lashing check", "kind": "Safety",
+    { "id": "lashing", "beat": "seal", "x": 560, "y": 230, "essential": [2, 3], "when": { "container": ["40FR"] }, "label": "Lashing check", "kind": "Safety",
       "body": { "1": "A flat rack has no doors to seal. The chains and straps holding the cargo are checked and photographed instead.", "2": "Lashing must withstand sea forces (rolling, pitching). Photos and a survey report are the evidence if a claim arises. [TO VERIFY:v58]" } },
     { "id": "dg", "beat": "seal", "x": 700, "y": 200, "when": { "family": ["tank"] }, "label": "DG labels", "kind": "Rule",
       "body": { "1": "The orange-red diamond tells everyone the tank holds a flammable liquid (class 3).", "2": "[[placard|Placards]] on all sides, UN number displayed, DG declaration and container packing certificate from the shipper. [TO VERIFY:v25] [TO VERIFY:v59]" } },
@@ -89,16 +89,16 @@
         "2": { "prompt": "Where must this seal number appear next?",
           "options": [
             { "id": "a", "correct": true, "text": "In the shipping instructions (SI), then on the B/L" },
-            { "id": "b", "text": "Only on the truck driver's delivery note", "fb": "The road note is not where the carrier and customs look." },
-            { "id": "c", "text": "On the VGM declaration instead of the B/L", "fb": "The VGM is about weight; the seal belongs in the SI and B/L." },
-            { "id": "d", "text": "Nowhere — the seal itself is the proof", "fb": "A seal proves nothing unless its number is recorded and compared." } ],
+            { "id": "b", "text": "Only on the truck driver's delivery note at the gate", "fb": "The road note is not where the carrier and customs look." },
+            { "id": "c", "text": "On the VGM declaration, which replaces the B/L field", "fb": "The VGM is about weight; the seal belongs in the SI and B/L." },
+            { "id": "d", "text": "Nowhere: the physical seal itself is the only proof", "fb": "A seal proves nothing unless its number is recorded and compared." } ],
           "explain": "Door → SI → B/L → manifest. Terminals and customs compare the door with the documents; a mismatch triggers checks and L/C discrepancies." },
         "3": { "prompt": "Origin customs inspects the box after stuffing and applies their seal CU-0099. The SI already shows {sealNo}. What is correct?",
           "options": [
-            { "id": "a", "correct": true, "text": "Update the SI/B/L draft and the manifest data with the new seal number before issuance and filing" },
-            { "id": "b", "text": "Keep {sealNo}: the shipper's seal is the contractual one", "fb": "The door now carries CU-0099; documents must match the door." },
-            { "id": "c", "text": "Ask the terminal to replace CU-0099 with a copy of {sealNo}", "fb": "Nobody may re-seal with a fake number." },
-            { "id": "d", "text": "Nothing: customs seals are never checked at destination", "fb": "Destination customs and the consignee check the seal against the documents." } ],
+            { "id": "a", "correct": true, "text": "Update the SI/B/L draft and manifest data with the new seal before issuance" },
+            { "id": "b", "text": "Keep {sealNo} on all documents: the shipper's seal is the contractual one", "fb": "The door now carries CU-0099; documents must match the door." },
+            { "id": "c", "text": "Ask the terminal to replace CU-0099 with a new seal bearing {sealNo}", "fb": "Nobody may re-seal with a fake number." },
+            { "id": "d", "text": "Change nothing: customs seals are never checked against the B/L at destination", "fb": "Destination customs and the consignee check the seal against the documents." } ],
           "explain": "Seal changes must be documented; otherwise the box risks a hold at destination and the carrier's position in a shortage claim is weakened." }
       }
     },
@@ -121,14 +121,14 @@
         "2": { "prompt": "Which weights does the VGM include?",
           "options": [
             { "id": "a", "correct": true, "text": "Cargo, packaging, pallets, dunnage and the container's tare" },
-            { "id": "b", "text": "Cargo and its packaging only", "fb": "That's closer to the B/L gross weight — it excludes the tare." },
-            { "id": "c", "text": "Everything inside, but not the tare", "fb": "The crane lifts the container too: the tare is included." },
-            { "id": "d", "text": "The packed container plus the truck and chassis", "fb": "The truck is weighed, then subtracted (Method 1)." } ],
+            { "id": "b", "text": "The cargo and its packaging only, as on the packing list", "fb": "That's closer to the B/L gross weight — it excludes the tare." },
+            { "id": "c", "text": "Cargo, packaging, pallets and dunnage, but not the tare", "fb": "The crane lifts the container too: the tare is included." },
+            { "id": "d", "text": "The packed container plus the truck, chassis and fuel", "fb": "The truck is weighed, then subtracted (Method 1)." } ],
           "explain": "The VGM is the packed container as it will be lifted: everything inside plus the tare. The B/L gross weight, by contrast, excludes the tare." },
         "3": { "prompt": "The shipper uses Method 2. Which practice is NOT acceptable?",
           "options": [
             { "id": "a", "correct": true, "text": "Estimating dunnage and pallet weight from last month's average shipment" },
-            { "id": "b", "text": "Using the tare marked on the container door", "fb": "Method 2 explicitly uses the marked tare." },
+            { "id": "b", "text": "Using the tare weight marked on the container's door for the box", "fb": "Method 2 explicitly uses the marked tare." },
             { "id": "c", "text": "Weighing each package type on calibrated scales and adding them up", "fb": "That is Method 2 when the procedure is certified/approved." },
             { "id": "d", "text": "Using manufacturer-sealed package weights clearly marked on the packages", "fb": "Accepted under the IMO guidelines for sealed packages, depending on national rules." } ],
           "explain": "Method 2 requires actual (certified/approved) weights of all contents, including packing and securing material; estimates are not allowed. [TO VERIFY:v02]" }
@@ -151,22 +151,22 @@
   },
 
   "question": {
-    "1": { "prompt": "I'm stuffed, sealed and my total weight is known. What happens next?", "hint": "Where am I right now — and what does the carrier need before a ship can take me?",
+    "1": { "prompt": "I'm full, closed with a numbered seal, and my total weight is known. What happens next?", "hint": "Where am I right now — and what does the carrier need before a ship can take me?",
       "options": [
-        { "id": "a", "correct": true, "text": "A truck takes me to the port terminal, and my VGM is sent to the carrier before the deadline.", "confirm": "Right. I travel to the port terminal (that's 'pre-carriage'), and the carrier must have my VGM before the cut-off. Under {incoterm}, this trip is paid by {preBy}." },
-        { "id": "b", "text": "I'm lifted straight onto the ship.", "why": "I'm still at the warehouse, far from the sea. I first have to reach the port and enter the terminal.", "realLife": "A box without a VGM, or not on the loading list, stays on the quay and waits for the next ship — usually a week later.", "whenRight": "Never straight from a warehouse." },
-        { "id": "c", "text": "I'm delivered to the customer at destination.", "why": "I haven't left {pol} yet! Export customs, loading, the voyage and import customs all come first.", "realLife": "Customs on both sides must clear the goods, and the carrier only releases me to the right party.", "whenRight": "That's step 10 — near the end of the journey." } ] },
+        { "id": "a", "correct": true, "text": "A truck takes me to the port, and my weight is sent to the shipping line in time.", "confirm": "Right. I travel to the port terminal (that's 'pre-carriage'), and the carrier must have my VGM before the cut-off. Under {incoterm}, this trip is paid by {preBy}." },
+        { "id": "b", "text": "A big crane lifts me straight from the warehouse onto the ship that is waiting.", "why": "I'm still at the warehouse, far from the sea. I first have to reach the port and enter the terminal.", "realLife": "A box without a VGM, or not on the loading list, stays on the quay and waits for the next ship — usually a week later.", "whenRight": "Never straight from a warehouse." },
+        { "id": "c", "text": "I go directly to the customer's door, without passing through any port.", "why": "I haven't left {pol} yet! Export customs, loading, the voyage and import customs all come first.", "realLife": "Customs on both sides must clear the goods, and the carrier only releases me to the right party.", "whenRight": "That's step 10 — near the end of the journey." } ] },
     "2": { "prompt": "Stuffed, sealed, VGM determined (Method 1). What happens next?",
       "options": [
-        { "id": "a", "correct": true, "text": "Pre-carriage to the export terminal; the VGM reaches the carrier before the VGM cut-off, and the SI follows before the documentation cut-off.", "confirm": "Correct. The full box moves to the terminal before the port cut-off, while VGM and SI meet their own cut-offs — sequence and timings vary by carrier and port. [TO VERIFY:v20]" },
-        { "id": "b", "text": "The carrier issues the Bill of Lading now that the seal number and weights are known.", "why": "The B/L is drafted from the SI, not yet submitted — and a 'shipped on board' B/L needs the box to be loaded.", "realLife": "An early B/L certifies something untrue: claims, L/C discrepancies, amendment fees.", "whenRight": "A 'received for shipment' B/L can follow the carrier's receipt of the goods, on the basis of the SI." },
-        { "id": "c", "text": "Load the container on the first available vessel; the VGM can follow with the manifest.", "why": "SOLAS: a packed container without a VGM must not be loaded. [TO VERIFY:v01]", "realLife": "Shut-out: rolled to the next sailing, extra storage and detention.", "whenRight": "Never for the VGM." },
-        { "id": "d", "text": "Return the laden container to the empty depot so the carrier can check weight and seal.", "why": "Depots handle empty equipment. Weight and seal are the shipper's responsibility.", "realLife": "The depot refuses it: an extra trip and a possibly missed cut-off.", "whenRight": "Under carrier haulage via an inland depot named in the booking, laden boxes can be received inland — not at the empty depot." } ] },
+        { "id": "a", "correct": true, "text": "Pre-carriage to the export terminal; VGM to the carrier before the VGM cut-off, SI before the SI cut-off.", "confirm": "Correct. The full box moves to the terminal before the port cut-off, while VGM and SI meet their own cut-offs — sequence and timings vary by carrier and port. [TO VERIFY:v20]" },
+        { "id": "b", "text": "The carrier issues the Bill of Lading at once, now that the seal number and the weights are known.", "why": "The B/L is drafted from the SI, not yet submitted — and a 'shipped on board' B/L needs the box to be loaded.", "realLife": "An early B/L certifies something untrue: claims, L/C discrepancies, amendment fees.", "whenRight": "A 'received for shipment' B/L can follow the carrier's receipt of the goods, on the basis of the SI." },
+        { "id": "c", "text": "The box is loaded on the first available vessel; the VGM can follow later, together with the cargo manifest.", "why": "SOLAS: a packed container without a VGM must not be loaded. [TO VERIFY:v01]", "realLife": "Shut-out: rolled to the next sailing, extra storage and detention.", "whenRight": "Never for the VGM." },
+        { "id": "d", "text": "The laden box returns to the empty depot so that the carrier can check its weight and seal there.", "why": "Depots handle empty equipment. Weight and seal are the shipper's responsibility.", "realLife": "The depot refuses it: an extra trip and a possibly missed cut-off.", "whenRight": "Under carrier haulage via an inland depot named in the booking, laden boxes can be received inland — not at the empty depot." } ] },
     "3": { "prompt": "Case: the VGM is 3.5 t above the booking estimate; the customer asks you to use the booking weight instead. What should you do?",
       "options": [
-        { "id": "a", "correct": true, "text": "Refuse: only the shipper's verified VGM can be used. If the shipper doubts it, they must re-verify and submit a corrected VGM before the cut-off.", "confirm": "Right. The VGM is the shipper's legal declaration; the carrier may not substitute an estimate. A re-weigh is possible, but a corrected VGM must still arrive before cut-off or the box is shut out. [TO VERIFY:v01] [TO VERIFY:v03]" },
-        { "id": "b", "text": "Enter the booking weight in the system — it's what the customer says.", "why": "A booking weight is an estimate, not a verified mass.", "realLife": "Wrong weights endanger stowage and stability; the carrier becomes party to a misdeclaration.", "whenRight": "Never." },
-        { "id": "c", "text": "Accept the higher VGM but load the box anyway even if it exceeds road limits.", "why": "Road limits concern the haulier; the issue here is which weight is valid.", "realLife": "Overweight on the road can mean fines and a stopped truck. [TO VERIFY:v13]", "whenRight": "Accepting the VGM is right; ignoring road limits is not." },
-        { "id": "d", "text": "Average the two weights to be safe.", "why": "There's no such thing as an 'average VGM'.", "realLife": "An invented weight is a misdeclaration with liability for whoever enters it.", "whenRight": "Never." } ] }
+        { "id": "a", "correct": true, "text": "Refuse: only the shipper's VGM counts. If they doubt it, they re-verify and send a corrected VGM in time.", "confirm": "Right. The VGM is the shipper's legal declaration; the carrier may not substitute an estimate. A re-weigh is possible, but a corrected VGM must still arrive before cut-off or the box is shut out. [TO VERIFY:v01] [TO VERIFY:v03]" },
+        { "id": "b", "text": "Enter the booking weight in the system: the customer knows the cargo and takes responsibility for it.", "why": "A booking weight is an estimate, not a verified mass.", "realLife": "Wrong weights endanger stowage and stability; the carrier becomes party to a misdeclaration.", "whenRight": "Never." },
+        { "id": "c", "text": "Accept the higher VGM and load the box anyway, even if it is above the legal road weight limit at destination.", "why": "Road limits concern the haulier; the issue here is which weight is valid.", "realLife": "Overweight on the road can mean fines and a stopped truck. [TO VERIFY:v13]", "whenRight": "Accepting the VGM is right; ignoring road limits is not." },
+        { "id": "d", "text": "Use the average of the two weights, so that the stowage plan stays within a safe margin either way.", "why": "There's no such thing as an 'average VGM'.", "realLife": "An invented weight is a misdeclaration with liability for whoever enters it.", "whenRight": "Never." } ] }
   }
 }
